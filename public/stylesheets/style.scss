@@ -18,6 +18,7 @@ body {
   }
 }
 
+// HOME
 .top-home {
   background-image: url("../images/bg-home.png");
   background-size: cover;
@@ -56,10 +57,53 @@ body {
   }
 }
 
+// SEARCH ROW
 .searchRow {
   height: 7vh;
   display: flex;
   form {
     display: flex;
+  }
+}
+
+// RECIPES
+.title {
+  padding: 5vh 2vw 0;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  padding: 5vh 2vw;
+
+  .each-recipe {
+    width: 17vw;
+
+    text-align: center;
+    margin: 0 0 5vh;
+
+    background-color: #dc3545;
+
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 250px;
+    }
+    p {
+      margin-top: 12px;
+      color: white;
+      font-size: 1.4rem;
+    }
+  }
+
+  .each-recipe:hover {
+    background-color: #db1e2b;
+
+    a {
+      text-decoration: none;
+    }
   }
 }

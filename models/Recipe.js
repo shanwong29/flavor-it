@@ -17,7 +17,8 @@ const schemaRecipe = new Schema({
   },
   image: {
     type: String,
-    default: "http://something..."
+    default:
+      "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/238353.jpg"
   },
   creator: {
     type: Schema.Types.ObjectId,
