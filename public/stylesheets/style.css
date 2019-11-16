@@ -44,4 +44,31 @@ body {
   .searchRow form {
     display: flex; }
 
+.title {
+  padding: 5vh 2vw 0; }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 5vh 2vw; }
+  .flex-container .each-recipe {
+    width: 17vw;
+    text-align: center;
+    margin: 0 0 5vh;
+    background-color: #dc3545; }
+    .flex-container .each-recipe img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 250px; }
+    .flex-container .each-recipe p {
+      margin-top: 12px;
+      color: white;
+      font-size: 1.4rem; }
+  .flex-container .each-recipe:hover {
+    background-color: #db1e2b; }
+    .flex-container .each-recipe:hover a {
+      text-decoration: none; }
+
 /*# sourceMappingURL=style.css.map */

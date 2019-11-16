@@ -7,3 +7,17 @@
     <a class="btn btn-outline-danger" href="/auth/signup">Create your account</a>
   </div>
 </div>
+<br>
+<div class="title">
+  <h1>Recipes</h1>
+</div>
+<div class="flex-container">
+  {{#each recipes}}
+  <div class="each-recipe">
+    <a href="recipes/{{_id}}">
+      <img src="{{image}}">
+      <p>{{name}}</p>
+    </a>
+  </div>
+  {{/each}}
+</div>
