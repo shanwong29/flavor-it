@@ -1,0 +1,46 @@
+<form action="/recipe/update" method="POST" id="recipe-form">
+  <h1><input id="recipe-name" type="text" name="recipe-name" placeholder="Name of Recipe"></h1>:
+  <div>
+    <img src="" alt="">
+  </div>
+
+
+  <div>
+    <h6>Ingredients: </h6>
+    <div>
+      <input type="text" name="ingredient-name" id="ingredient-name">
+      <input type="text" name="ingredient-amount" id="ingredient-amount">
+      <select>
+        <option value="null">--</option>
+        <option value="Drinks">Drinks</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Mains">Mains</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Snacks">Snacks</option>
+      </select>
+    </div>
+
+    <h6>dishTypes: </h6>
+    <select>
+      <option value="null">--</option>
+      <option value="Drinks">Drinks</option>
+      <option value="Dessert">Dessert</option>
+      <option value="Mains">Mains</option>
+      <option value="Breakfast">Breakfast</option>
+      <option value="Snacks">Snacks</option>
+    </select>
+
+
+    <h6>creator</h6>:
+
+    <h6>cook time</h6>
+    <input type="number" name="cook-time" id="cook-time">
+
+    <h6>portion</h6>
+    <input type="number" name="portion" id="portion">
+
+    <h6>source: </h6>
+    <input type="text" name="source" id="source">
+  </div>
+
+</form>
