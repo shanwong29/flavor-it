@@ -3,7 +3,7 @@
   padding: 0; }
 
 body {
-  font: 10px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 #nav {
   width: 100vw;
@@ -70,5 +70,32 @@ body {
     background-color: #db1e2b; }
     .flex-container .each-recipe:hover a {
       text-decoration: none; }
+
+.subpage-header {
+  background-image: url("../images/header-create-recipe.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 11rem; }
+
+.subpage-title {
+  color: white; }
+
+#recipe-form {
+  display: flex;
+  flex-direction: column; }
+
+.recipe-form-top {
+  display: flex;
+  justify-content: space-around; }
+
+.recipe-form-right {
+  margin: 3rem;
+  width: 30rem; }
+
+#source-note {
+  font-size: 0.8rem; }
+
+#method {
+  margin: 1rem 10rem; }
 
 /*# sourceMappingURL=style.css.map */
