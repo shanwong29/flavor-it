@@ -16,13 +16,36 @@
     <div>
       <a class="navbar-brand" href="/">FLAVOR IT</a>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+    <div class="searchRow">
+      <input type='button' value=&#127859 title="Search Recipe" />
+      <input type='button' value=&#128100 title="Search User" />
+      <form>
+        <input type="text" class="form-control">
+        <select>
+          <option value="null">Dish Type</option>
+          <option value="Drinks">Drinks</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Mains">Mains</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Snacks">Snacks</option>
+        </select>
+        <div>
+          <button class="btn btn-outline-secondary" type="button">Search</button>
+        </div>
+      </form>
+    </div>
+
     <div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="btn btn-outline-success" href="/recipe/create">Create Recipe</a>
+          </li>
           <li class="nav-item">
             <a class="btn btn-outline-success" href="/auth/login">Login</a>
           </li>
@@ -32,6 +55,7 @@
           <li class="nav-item">
             <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
           </li>
+
         </ul>
       </div>
     </div>

@@ -39,7 +39,8 @@ body {
       border-color: #dc3545; }
 
 .searchRow {
-  height: 7vh; }
+  height: 7vh;
+  display: flex; }
   .searchRow form {
     display: flex; }
 
