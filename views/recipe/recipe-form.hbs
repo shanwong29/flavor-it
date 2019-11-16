@@ -1,46 +1,125 @@
+<div class="subpage-header">
+  <h3 class="subpage-title">Create Recipe</h3>
+</div>
+
+
+
+
+
 <form action="/recipe/update" method="POST" id="recipe-form">
-  <h1><input id="recipe-name" type="text" name="recipe-name" placeholder="Name of Recipe"></h1>:
-  <div>
-    <img src="" alt="">
-  </div>
-
-
-  <div>
-    <h6>Ingredients: </h6>
+  <div class="recipe-form-top">
     <div>
-      <input type="text" name="ingredient-name" id="ingredient-name">
-      <input type="text" name="ingredient-amount" id="ingredient-amount">
-      <select>
-        <option value="null">--</option>
-        <option value="Drinks">Drinks</option>
-        <option value="Dessert">Dessert</option>
-        <option value="Mains">Mains</option>
-        <option value="Breakfast">Breakfast</option>
-        <option value="Snacks">Snacks</option>
-      </select>
+      <h1>IMG testing</h1>
     </div>
 
-    <h6>dishTypes: </h6>
-    <select>
-      <option value="null">--</option>
-      <option value="Drinks">Drinks</option>
-      <option value="Dessert">Dessert</option>
-      <option value="Mains">Mains</option>
-      <option value="Breakfast">Breakfast</option>
-      <option value="Snacks">Snacks</option>
-    </select>
+    <div class="recipe-form-right">
+      <div class="form-row">
+
+        <div class="form-group col-12">
+          <label for="recipe-name">Recipe Name: </label>
+          <input id="recipe-name" class="form-control" type="text" name="recipe-name" placeholder="Name of Recipe">
+        </div>
+
+        <label class="recipe-form-label col-12">Ingredients: </label>
+
+        <div class="form-group col-md-6">
+          <input class="form-control" type="text" name="ingredient-name" id="ingredient-name" placeholder="e.g. Apple">
+        </div>
+
+        <div class="form-group col-md-3">
+          <input class="form-control" type="number" name="ingredient-amount" id="ingredient-amount"
+            placeholder="amount">
+        </div>
+
+        <div class="form-group col-md-3">
+          <select class="form-control">
+            <option value="">choose unit</option>
+            <option value="">N/A</option>
+            <option value="gram">gram</option>
+            <option value="ml">ml</option>
+            <option value="teaspoon">teaspoon</option>
+            <option value="tablespoon">tablespoon</option>
+          </select>
+        </div>
+
+        {{!-- <input type="button"> --}}
+
+        {{!-- <div class="form-group col-md-6">
+          <input class="form-control" type="text" name="ingredient-name" id="ingredient-name" placeholder="e.g. Apple">
+        </div>
+
+        <div class="form-group col-md-3">
+          <input class="form-control" type="number" name="ingredient-amount" id="ingredient-amount"
+            placeholder="amount">
+        </div>
+
+        <div class="form-group col-md-3">
+          <select class="form-control">
+            <option value="">choose unit</option>
+            <option value="">N/A</option>
+            <option value="gram">gram</option>
+            <option value="ml">ml</option>
+            <option value="teaspoon">teaspoon</option>
+            <option value="tablespoon">tablespoon</option>
+          </select>
+        </div> --}}
+      </div>
 
 
-    <h6>creator</h6>:
+      <div class="form-row">
+        <div class="form-group col-md-5">
+          <label class="recipe-form-label">Dish Type: </label>
+          <select class="form-control">
+            <option value="">choose Dish Type</option>
+            <option value="Mains">Mains</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Drinks">Drinks</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <div>
+            <label class="recipe-form-label">Preparetion time: </label>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <input class="form-control" type="number" name="preparation-time" id="preparation-time">
+            </div>
 
-    <h6>cook time</h6>
-    <input type="number" name="cook-time" id="cook-time">
+            <span id="min">min</span>
+          </div>
 
-    <h6>portion</h6>
-    <input type="number" name="portion" id="portion">
 
-    <h6>source: </h6>
-    <input type="text" name="source" id="source">
+        </div>
+        <div class="form-group col-md-3">
+          <label class="recipe-form-label" for="portion">Portion(s): </label>
+          <input class="form-control" type="number" name="portions" id="portions">
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group col-md-4">
+          <div>
+            <label class="recipe-form-label" for="creator">Creator: </label>
+            <p>Username</p>
+          </div>
+        </div>
+        <div class="form-group col-md-8">
+          <label class="recipe-form-label" for="source">Source:</label>
+          <input class="form-control" type="text" name="source" id="source">
+          <p id="source-note">If you are not the original author of this recipe , enter the original author's name/
+            source here to give
+            them
+            credit</p>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div id="method">
+    <h6 class="recipe-form-label">Method:</h6>
+    <input class="method-input form-control" type="text" name="source">
+  </div>
 </form>
