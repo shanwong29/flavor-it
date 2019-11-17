@@ -16,21 +16,21 @@
         <div class="form-row">
           <div class="form-group col-12">
             <label for="recipe-name">Recipe Name: </label>
-            <input class="form-control" type="text" name="recipe-name" placeholder="Name of Recipe">
+            <input class="form-control" type="text" name="title" placeholder="Name of Recipe">
           </div>
 
           <label class="form-group col-12">Ingredients: </label>
 
           <div id="ingredient-box-parent" class="form-group col-5">
-            <input class="form-control" type="text" name="ingredient-name" placeholder="e.g. Apple">
+            <input class="form-control" type="text" name="name" placeholder="e.g. Apple">
           </div>
 
           <div id="qty-box-parent" class="form-group col-2">
-            <input class="form-control" type="number" name="ingredient-qty" placeholder="qty">
+            <input class="form-control" type="number" name="qty" placeholder="qty">
           </div>
 
           <div id="unit-box-parent" class="form-group col-3">
-            <select class="form-control unit-selector">
+            <select name="unit" class="form-control unit-selector">
               <option value="">unit</option>
               <option value="N/A">N/A</option>
               <option value="gram">gram</option>
@@ -49,7 +49,7 @@
         <div class="form-row">
           <div class="form-group col-md-5">
             <label>Dish Type:</label>
-            <select class="form-control" id="dish-type-selector">
+            <select class="form-control" id="dish-type-selector" name="dishType">
               <option value="">choose Dish Type</option>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
@@ -66,7 +66,7 @@
 
             <div class="row">
               <div class="col-8">
-                <input class="form-control" type="number" name="preparation-time">
+                <input class="form-control" type="number" name="preparationTime">
               </div>
               <span id="min">min</span>
             </div>
@@ -74,7 +74,7 @@
 
           <div class="form-group col-md-3">
             <label for="portion">Portion(s):</label>
-            <input class="form-control" type="number" name="portions">
+            <input class="form-control" type="number" name="portion">
           </div>
         </div>
 
@@ -109,16 +109,7 @@
 
   <div id="method">
     <h3>Method:</h3>
-
-    <textarea class="form-control" name="method" rows="10" form="recipe-form"></textarea>
-    {{!-- <div class="row-12">
-      <div class="form-group col-11">
-        <input class="method-input form-control" type="text" name="source" placeholder="Step 1">
-      </div> --}}
-    {{!-- <div class="form-group  col-1">
-        <button id="add-step-btn" type="button">&#43</button>
-      </div> --}}
-    {{!-- </div> --}}
+    <textarea class="form-control" name="method" rows="10"></textarea>
   </div>
   <br>
   <br>
@@ -134,3 +125,14 @@
   <br>
   <br>
 </form>
+
+
+
+{{!-- <div class="row-12">
+      <div class="form-group col-11">
+        <input class="method-input form-control" type="text" name="source" placeholder="Step 1">
+      </div> --}}
+{{!-- <div class="form-group  col-1">
+        <button id="add-step-btn" type="button">&#43</button>
+      </div> --}}
+{{!-- </div> --}}

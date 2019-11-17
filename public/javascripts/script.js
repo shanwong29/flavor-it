@@ -26,19 +26,20 @@ addIngredientBtn.onclick = () => {
   const NameInputAttr = {
     class: "form-control",
     type: "text",
-    name: "ingredient-name"
+    name: "name"
   };
   addElement(ingredientBoxParent, "input", NameInputAttr);
 
   const qtyInputAttr = {
     class: "form-control",
     type: "number",
-    name: "ingredient-qty"
+    name: "qty"
   };
   addElement(qtyBoxParent, "input", qtyInputAttr);
 
   let selectAttr = {
-    class: "form-control unit-selector"
+    class: "form-control unit-selector",
+    name: "unit"
   };
   addElement(selectParent, "select", selectAttr);
 
