@@ -79,7 +79,6 @@
         </div>
 
 
-
         <div class="form-row">
           <div class="form-group col-md-4">
             <div>
@@ -90,7 +89,7 @@
 
           <div class="form-group col-md-8">
             <label for="source">Source:</label>
-            <input class="form-control" type="text" name="source">
+            <textarea class="form-control" name="source" maxlength="200"></textarea>
             <p id="source-note">
               If you are not the original author of this recipe , enter the original author's name or source here to
               give
@@ -109,15 +108,17 @@
   <br>
 
   <div id="method">
-    <h3 class="recipe-form-label">Method:</h3>
-    <div class="row-12">
+    <h3>Method:</h3>
+
+    <textarea class="form-control" name="method" rows="10" form="recipe-form"></textarea>
+    {{!-- <div class="row-12">
       <div class="form-group col-11">
         <input class="method-input form-control" type="text" name="source" placeholder="Step 1">
-      </div>
-      <div class="form-group  col-1">
+      </div> --}}
+    {{!-- <div class="form-group  col-1">
         <button id="add-step-btn" type="button">&#43</button>
-      </div>
-    </div>
+      </div> --}}
+    {{!-- </div> --}}
   </div>
   <br>
   <br>
