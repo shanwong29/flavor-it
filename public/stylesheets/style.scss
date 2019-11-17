@@ -121,39 +121,32 @@ body {
   color: white;
 }
 
-#recipe-form {
-  display: flex;
-  flex-direction: column;
-
-  .recipe-form-top {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .recipe-form-right {
-    margin: 3rem;
-    width: 30rem;
-  }
-
-  #source-note {
-    font-size: 0.8rem;
-  }
-
-  #method {
-    margin: 1rem 10vw;
-  }
-
-  #add-ingredient-btn {
-    padding: 0.2rem 0.4rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .del-btn {
-    padding: 0.1rem 0.3rem;
-    margin-bottom: 0.74rem;
-  }
-
-  #amount-display > p {
-    text-align: right;
-  }
+.recipe-layout-top {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-left: 9vw;
+  padding-right: 10vw;
 }
+
+#source-note {
+  font-size: 0.8rem;
+}
+
+#method {
+  margin: 1rem 18vw 1rem 11vw;
+}
+
+#add-ingredient-btn {
+  padding: 0.2rem 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.del-btn {
+  padding: 0.1rem 0.3rem;
+  margin-bottom: 0.74rem;
+}
+
+#amount-display > p {
+  text-align: right;
+}
+// }

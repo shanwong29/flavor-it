@@ -1,108 +1,115 @@
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-    console.log("IronGenerator JS imported successfully!");
+    console.log("JS imported successfully!");
   },
   false
 );
 
-{
-  /* <div id="ingredient-display" class="col-md-6">
-<li>Apple</li>
-<li>Orange</li>
-</div>
-<div id="amount-display" class="col-md-3">
-<p>12</p>
-</div>
-<div id="unit-display" class="col-md-2">
-<p>--</p>
-</div>
-<div id="add-ingredient-btn" class="col-md-1">
-<button>&#10799</button>
-</div> */
+function addElement(parentClass, newEl, attrObj) {
+  let child = document.createElement(newEl);
+  for (const key in attrObj) {
+    child.setAttribute(key, attrObj[key]);
+  }
+  parentClass.appendChild(child);
 }
 
-// function addIngredient() {
-//   let ingredientDisplay = document.getElementById("ingredient-display");
-//   let li = document.createElement("li");
+const addIngredientBtn = document.getElementById("add-ingredient-btn");
 
-//   li.innerHTML = document.getElementById("ingredient-name").value;
-//   ingredientDisplay.appendChild(li);
-//   document.getElementById("ingredient-name").value = "";
-// }
+const ingredientBoxParent = document.getElementById("ingredient-box-parent");
+const qtyBoxParent = document.getElementById("qty-box-parent");
+const selectParent = document.getElementById("unit-box-parent");
+const delBtnParent = document.getElementById("add&del-btn");
+const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
 
-{
-  /* <div id="ingredient-box" class="form-group col-md-6">
-<input id="ingredient-name" class="form-control" type="text" name="ingredient-name" placeholder="e.g. Apple">
-</div>
+addIngredientBtn.onclick = () => {
+  const NameInputAttr = {
+    class: "form-control",
+    type: "text",
+    name: "ingredient-name"
+  };
+  addElement(ingredientBoxParent, "input", NameInputAttr);
 
-<div id="amount-box" class="form-group col-md-3">
-<input id="ingredient-amount" class="form-control" type="number" name="ingredient-amount"
-  placeholder="amount">
-</div>
+  const qtyInputAttr = {
+    class: "form-control",
+    type: "number",
+    name: "ingredient-qty"
+  };
+  addElement(qtyBoxParent, "input", qtyInputAttr);
 
-      <div id="unit-box-parent" class="form-group col-md-2">
-          <select class="form-control" id="ingredient-unit">
-            <option value="">unit</option>
-            <option value="--">N/A</option>
-            <option value="gram">gram</option>
-            <option value="ml">ml</option>
-            <option value="teaspoon">teaspoon</option>
-            <option value="tablespoon">tablespoon</option>
-          </select>
-        </div>
-}*/
+  let selectAttr = {
+    class: "form-control unit-selector"
+  };
+  addElement(selectParent, "select", selectAttr);
 
-  function addElement(parentClass, newEl, attribute, attName) {
-    let child = document.createElement(newEl);
-    child.setAttribute(attribute, attName);
-    parentClass.appendChild(child);
-  }
-  let addIngredientBtn = document.getElementById("add-ingredient-btn");
+  let selectCollection = selectParent.getElementsByClassName("unit-selector");
+  let lastSelectEl = selectCollection[selectCollection.length - 1];
 
-  let ingredientBoxParent = document.getElementById("ingredient-box-parent");
-  let amountBoxParent = document.getElementById("amount-box-parent");
-  let selectParent = document.getElementById("unit-box-parent");
-  let delBtnParent = document.getElementById("add-del-btn");
-
-  console.log(selectParent);
-
-  addIngredientBtn.onclick = () => {
-    addElement(ingredientBoxParent, "input", "class", "form-control");
-    addElement(amountBoxParent, "input", "class", "form-control");
-
-    addElement(selectParent, "select", "class", "form-control");
-
-    let selectCollection = selectParent.getElementsByTagName("select");
-    let lastSelectEl = selectCollection[selectCollection.length - 1];
-
-    addElement(lastSelectEl, "option", "value", "");
-    lastSelectEl.getElementsByTagName("option")[0].innerText = "unit";
-
-    addElement(lastSelectEl, "option", "value", "--");
-    lastSelectEl.getElementsByTagName("option")[1].innerText = "N/A";
-
-    addElement(lastSelectEl, "option", "value", "gram");
-    lastSelectEl.getElementsByTagName("option")[2].innerText = "gram";
-
-    addElement(lastSelectEl, "option", "value", "ml");
-    lastSelectEl.getElementsByTagName("option")[3].innerText = "ml";
-
-    addElement(lastSelectEl, "option", "value", "teaspoon");
-    lastSelectEl.getElementsByTagName("option")[4].innerText = "teaspoon";
-
-    addElement(lastSelectEl, "option", "value", "tablespoon");
-    lastSelectEl.getElementsByTagName("option")[5].innerText = "tablespoon";
-
-    addElement(delBtnParent, "button", "type", "button");
-
-    let btnCollection = delBtnParent.getElementsByTagName("button");
-    let lastDelBtn = btnCollection[btnCollection.length - 1];
-    lastDelBtn.setAttribute("class", "del-btn");
-    lastDelBtn.innerHTML = "&#10799";
+  let optionAttr = {
+    0: { value: "" },
+    1: { value: "N/A" },
+    2: { value: "gram" },
+    3: { value: "ml" },
+    4: { value: "teaspoon" },
+    5: { value: "tablespoon" }
   };
 
-  // <button id="add-ingredient-btn" type="button">
-  //
-  // </button>;
-}
+  for (
+    let numOfUnitOption = 0;
+    numOfUnitOption < Object.keys(optionAttr).length;
+    numOfUnitOption++
+  ) {
+    console.log(numOfUnitOption);
+    addElement(lastSelectEl, "option", optionAttr[numOfUnitOption]);
+    if (numOfUnitOption > 0) {
+      lastSelectEl.getElementsByTagName("option")[numOfUnitOption].innerText =
+        optionAttr[numOfUnitOption].value;
+    }
+  }
+  lastSelectEl.getElementsByTagName("option")[0].innerText = "unit";
+
+  let delBtnAttr = {
+    type: "button",
+    class: "del-btn"
+  };
+  addElement(delBtnParent, "button", delBtnAttr);
+
+  const lastDelBtn =
+    ingredientBtnCollection[ingredientBtnCollection.length - 1];
+  lastDelBtn.innerHTML = "&#10799";
+};
+
+// window.onload = function() {
+//   for (var i = 1; i < delBtnCollection.length; i++) {
+//     delBtnCollection[i].onclick = delIngredientFunc;
+//   }
+// };
+
+// const delIngredients = [ingredientBoxParent, qtyBoxParent];
+// const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
+
+// function delBtn() {
+//   // the first btn is the add btn
+//   for (i = 1; i < delBtnCollection.length; i++) {
+//     console.log("AAAAA");
+//     delBtnCollection[i].onclick = function() {
+//       targetNodeArr.forEach(node => {
+//         node.removeChild(node.childNodes[i]);
+//       });
+//     };
+//   }
+// }
+
+// function delBtn(delBtnCollection, targetNodeArr) {
+//   // the first btn is the add btn
+//   for (i = 1; i < delBtnCollection.length; i++) {
+//     console.log("AAAAA");
+//     delBtnCollection[i].onclick = function() {
+//       targetNodeArr.forEach(node => {
+//         node.removeChild(node.childNodes[i]);
+//       });
+//     };
+//   }
+// }
+
+// del btn function for ingredient list

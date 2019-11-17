@@ -1,110 +1,135 @@
 <div class="subpage-header">
-  <h3 class="subpage-title">Create Recipe</h3>
+  <h1 class="subpage-title">Create Recipe</h1>
 </div>
 
 
-
-
-
-<form action="/recipe/update" method="POST" id="recipe-form">
-  <div class="recipe-form-top">
-    <div id="testing">
-      <h1>IMG testing</h1>
-    </div>
-
-    <div class="recipe-form-right">
-      <div class="form-row">
-
-        <div class="form-group col-12">
-          <label for="recipe-name">Recipe Name: </label>
-          <input id="recipe-name" class="form-control" type="text" name="recipe-name" placeholder="Name of Recipe">
-        </div>
-
-        <label class="recipe-form-label col-12">Ingredients: </label>
-
-        <div id="ingredient-box-parent" class="form-group col-6">
-          <input class="form-control" type="text" name="ingredient-name" id="ingredient-name" placeholder="e.g. Apple">
-        </div>
-
-        <div id="amount-box-parent" class="form-group col-3">
-          <input class="form-control" type="number" name="ingredient-amount" id="ingredient-amount"
-            placeholder="amount">
-        </div>
-
-        <div id="unit-box-parent" class="form-group col-2">
-          <select class="form-control" id="ingredient-unit">
-            <option value="">unit</option>
-            <option value="--">N/A</option>
-            <option value="gram">gram</option>
-            <option value="ml">ml</option>
-            <option value="teaspoon">teaspoon</option>
-            <option value="tablespoon">tablespoon</option>
-          </select>
-        </div>
-
-        <div id="add-del-btn" class="form-group col-1">
-          <button id="add-ingredient-btn" type="button">&#43</button>
-        </div>
-
-
-
+{{!-- Recipe form --}}
+<form action="/recipe/update" method="POST">
+  <div class="container recipe-layout-top">
+    <div class="row d-flex">
+      <div class="recipe-img-container col-md-6">
+        <h1>IMG testing</h1>
       </div>
 
+      <div class="recipe-layout-right col-md-6">
 
-      <div class="form-row">
-        <div class="form-group col-md-5">
-          <label class="recipe-form-label">Dish Type: </label>
-          <select class="form-control">
-            <option value="">choose Dish Type</option>
-            <option value="Mains">Mains</option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Snacks">Snacks</option>
-            <option value="Dessert">Dessert</option>
-            <option value="Drinks">Drinks</option>
-          </select>
-        </div>
-        <div class="form-group col-md-4">
-          <div>
-            <label class="recipe-form-label">Preparetion time: </label>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="recipe-name">Recipe Name: </label>
+            <input class="form-control" type="text" name="recipe-name" placeholder="Name of Recipe">
           </div>
-          <div class="row">
-            <div class="col-8">
-              <input class="form-control" type="number" name="preparation-time" id="preparation-time">
+
+          <label class="form-group col-12">Ingredients: </label>
+
+          <div id="ingredient-box-parent" class="form-group col-5">
+            <input class="form-control" type="text" name="ingredient-name" placeholder="e.g. Apple">
+          </div>
+
+          <div id="qty-box-parent" class="form-group col-2">
+            <input class="form-control" type="number" name="ingredient-qty" placeholder="qty">
+          </div>
+
+          <div id="unit-box-parent" class="form-group col-3">
+            <select class="form-control unit-selector">
+              <option value="">unit</option>
+              <option value="N/A">N/A</option>
+              <option value="gram">gram</option>
+              <option value="ml">ml</option>
+              <option value="teaspoon">teaspoon</option>
+              <option value="tablespoon">tablespoon</option>
+            </select>
+          </div>
+
+          <div id="add&del-btn" class="form-group col-1">
+            <button id="add-ingredient-btn" type="button">&#43</button>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <label>Dish Type:</label>
+            <select class="form-control" id="dish-type-selector">
+              <option value="">choose Dish Type</option>
+              <option value="Mains">Mains</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Snacks">Snacks</option>
+              <option value="Dessert">Dessert</option>
+              <option value="Drinks">Drinks</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div>
+              <label>Preparetion time: </label>
             </div>
 
-            <span id="min">min</span>
+            <div class="row">
+              <div class="col-8">
+                <input class="form-control" type="number" name="preparation-time">
+              </div>
+              <span id="min">min</span>
+            </div>
           </div>
 
+          <div class="form-group col-md-3">
+            <label for="portion">Portion(s):</label>
+            <input class="form-control" type="number" name="portions">
+          </div>
+        </div>
 
+
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <div>
+              <label for="creator">Creator: </label>
+              <p>Username</p>
+            </div>
+          </div>
+
+          <div class="form-group col-md-8">
+            <label for="source">Source:</label>
+            <input class="form-control" type="text" name="source">
+            <p id="source-note">
+              If you are not the original author of this recipe , enter the original author's name or source here to
+              give
+              them credit
+            </p>
+          </div>
         </div>
-        <div class="form-group col-md-3">
-          <label class="recipe-form-label" for="portion">Portion(s): </label>
-          <input class="form-control" type="number" name="portions" id="portions">
-        </div>
+
       </div>
 
-      <div class="form-row">
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
 
-        <div class="form-group col-md-4">
-          <div>
-            <label class="recipe-form-label" for="creator">Creator: </label>
-            <p>Username</p>
-          </div>
-        </div>
-        <div class="form-group col-md-8">
-          <label class="recipe-form-label" for="source">Source:</label>
-          <input class="form-control" type="text" name="source" id="source">
-          <p id="source-note">If you are not the original author of this recipe , enter the original author's name/
-            source here to give
-            them
-            credit</p>
-        </div>
+  <div id="method">
+    <h3 class="recipe-form-label">Method:</h3>
+    <div class="row-12">
+      <div class="form-group col-11">
+        <input class="method-input form-control" type="text" name="source" placeholder="Step 1">
+      </div>
+      <div class="form-group  col-1">
+        <button id="add-step-btn" type="button">&#43</button>
       </div>
     </div>
   </div>
-
-  <div id="method">
-    <h6 class="recipe-form-label">Method:</h6>
-    <input class="method-input form-control" type="text" name="source">
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="form-row d-flex justify-content-center">
+    <div class="rol">
+      <button class="btn btn-success">Submit</button>
+    </div>
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
 </form>

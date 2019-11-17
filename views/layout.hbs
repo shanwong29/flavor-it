@@ -18,8 +18,17 @@
     </div>
 
     <div class="searchRow">
-      <input type='button' value=&#127859 title="Search Recipe" />
-      <input type='button' value=&#128100 title="Search User" />
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+          <input type="radio" name="options" id="option1" autocomplete="off" value="recipe" checked> &#127859
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="options" id="option2" autocomplete="off" value="user"> &#128100
+        </label>
+      </div>
+
+      {{!-- <input type='button' value=&#127859 title="Search Recipe" />
+      <input type='button' value=&#128100 title="Search User" /> --}}
       <form>
         <input type="text" class="form-control">
         <select>
