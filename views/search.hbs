@@ -1,0 +1,23 @@
+<div class="subpage-header">
+  <h1 class="subpage-title">Result</h1>
+</div>
+
+<div class="flex-container">
+  {{#each recipes}}
+  <div class="each-recipe">
+    <a href="recipes/{{_id}}">
+      <img src="{{image}}">
+      <p>{{title}}</p>
+    </a>
+  </div>
+  {{/each}}
+
+  {{#each users}}
+  <div class="each-recipe">
+    <a href="user/{{_id}}">
+      <img src="{{photo}}">
+      <p>{{username}}</p>
+    </a>
+  </div>
+  {{/each}}
+</div>

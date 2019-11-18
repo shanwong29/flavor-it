@@ -18,29 +18,26 @@
     </div>
 
     <div class="searchRow">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active">
-          <input type="radio" name="options" id="option1" autocomplete="off" value="recipe" checked> &#127859
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="options" id="option2" autocomplete="off" value="user"> &#128100
-        </label>
-      </div>
-
-      {{!-- <input type='button' value=&#127859 title="Search Recipe" />
-      <input type='button' value=&#128100 title="Search User" /> --}}
-      <form>
-        <input type="text" class="form-control">
-        <select>
-          <option value="">Dish Type</option>
+      <form action="/search" method="get" class="input-group btn-group">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-outline-secondary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" value="recipe" checked> &#127859
+          </label>
+          <label class="btn btn-outline-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off" value="user"> &#128100
+          </label>
+        </div>
+        <input type="text" class="form-control" name="searchInput">
+        <select class="custom-select" name="dishType">
+          <option value="" selected>Select Dish Type</option>
           <option value="Mains">Mains</option>
           <option value="Breakfast">Breakfast</option>
           <option value="Snacks">Snacks</option>
           <option value="Dessert">Dessert</option>
           <option value="Drinks">Drinks</option>
         </select>
-        <div>
-          <button class="btn btn-outline-secondary" type="button">Search</button>
+        <div class="btn-group">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
       </form>
     </div>

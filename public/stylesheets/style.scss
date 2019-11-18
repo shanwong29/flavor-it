@@ -63,6 +63,7 @@ body {
   display: flex;
   form {
     display: flex;
+    align-items: center;
   }
 }
 
@@ -115,6 +116,8 @@ body {
 
   width: 100vw;
   height: 11rem;
+
+  padding: 5vh 2vw;
 }
 
 .subpage-title {
