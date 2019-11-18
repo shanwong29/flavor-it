@@ -102,6 +102,8 @@ router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
 
     .then(doc => {
+      let a = { recipe: doc };
+      console.log(a.recipe.method);
       res.render("recipe/recipe-details", { recipe: doc });
     })
     .catch(err => {
