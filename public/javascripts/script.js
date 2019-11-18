@@ -17,6 +17,7 @@ function addElement(parentClass, newEl, attrObj) {
 const addIngredientBtn = document.getElementById("add-ingredient-btn");
 
 addIngredientBtn.onclick = () => {
+  delBtn();
   const ingredientBoxParent = document.getElementById("ingredient-box-parent");
   const qtyBoxParent = document.getElementById("qty-box-parent");
   const selectParent = document.getElementById("unit-box-parent");
@@ -88,21 +89,22 @@ addIngredientBtn.onclick = () => {
 // const delIngredients = [ingredientBoxParent, qtyBoxParent];
 // const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
 
-// window.onload =
-
 /*HERE******************** */
-// function delBtn() {
-//   // the first btn is the add btn
-//   const delBtnParent = document.getElementById("add&del-btn");
-//   const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
-//   for (i = 1; i < ingredientBtnCollection.length; i++) {
-//     console.log("AAAAA");
-//     ingredientBtnCollection[i].onclick = function() {
-//       ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
-//     };
-//   }
-//   // };
-// }
+
+function delBtn() {
+  // the first btn is the add btn
+  // window.onload = () => {
+  console.log("AAAAA");
+  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
+  const delBtnParent = document.getElementById("add&del-btn");
+  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+  for (i = 1; i < ingredientBtnCollection.length; i++) {
+    ingredientBtnCollection[i].addEventListener("click", function() {
+      ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
+    });
+  }
+  // };
+}
 
 // function delBtn(ingredientBtnCollection, targetNodeArr) {
 //   // the first btn is the add btn
