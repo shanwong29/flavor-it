@@ -91,11 +91,21 @@ router.post("/create", uploadCloud.single("imagePath"), (req, res) => {
     image: imagePath
   })
     .then(doc => {
-      // res.send(doc);
-      res.render("recipe/recipe-details", { recipe: doc });
+      res.redirect(`/recipe/${doc._id}`);
     })
     .catch(err => {
       console.log(err);
+    });
+});
+
+router.get("/:recipeId", (req, res, next) => {
+  Recipe.findById(req.params.recipeId)
+
+    .then(doc => {
+      res.render("recipe/recipe-details", { recipe: doc });
+    })
+    .catch(err => {
+      next(err);
     });
 });
 
