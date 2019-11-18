@@ -1,6 +1,6 @@
 const recipes = [
   {
-    name: "Savoury White Fish With Simmered Tomatoes",
+    title: "Savoury White Fish With Simmered Tomatoes",
     ingredients: [
       "2 tablespoons olive oil",
       "3 cloves garlic, thinly sliced",
@@ -25,7 +25,7 @@ const recipes = [
     likes: 5
   },
   {
-    name: "Mac & Cheese",
+    title: "Mac & Cheese",
     ingredients: [
       "5 cups milk (1 ¼ L)",
       "1 lb elbow macaroni (455 g), dry",
@@ -42,7 +42,7 @@ const recipes = [
     likes: 15
   },
   {
-    name: "The Best Fudgy Brownies",
+    title: "The Best Fudgy Brownies",
     ingredients: [
       "8 oz good-quality chocolate (225 g), semi-sweet",
       "12 tablespoons butter, melted",
@@ -68,7 +68,7 @@ const recipes = [
     likes: 43
   },
   {
-    name: "Ratatouille Salad",
+    title: "Ratatouille Salad",
     ingredients: [
       "olive oil, for cooking",
       "1 large eggplant, or 2 small, cubed",
@@ -103,7 +103,7 @@ const recipes = [
     likes: 10
   },
   {
-    name: "Classic Pad Thai",
+    title: "Classic Pad Thai",
     ingredients: [
       "½ lb wide rice noodle (225 g)",
       "¼ cup palm sugar (50 g)",
