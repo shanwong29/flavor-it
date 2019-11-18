@@ -8,7 +8,7 @@ router.get("/create", (req, res) => {
   res.render("recipe/recipe-form");
 });
 
-router.post("/update", uploadCloud.single("imagePath"), (req, res) => {
+router.post("/create", uploadCloud.single("imagePath"), (req, res) => {
   if (!req.body.title) {
     res.render("recipe/recipe-form", { message: "Recipe name can't be empty" });
     return;
@@ -90,8 +90,9 @@ router.post("/update", uploadCloud.single("imagePath"), (req, res) => {
     source: req.body.source,
     image: imagePath
   })
-    .then(() => {
-      res.send(req.body);
+    .then(doc => {
+      // res.send(doc);
+      res.render("recipe/recipe-details", { recipe: doc });
     })
     .catch(err => {
       console.log(err);

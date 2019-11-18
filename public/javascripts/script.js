@@ -16,13 +16,13 @@ function addElement(parentClass, newEl, attrObj) {
 
 const addIngredientBtn = document.getElementById("add-ingredient-btn");
 
-const ingredientBoxParent = document.getElementById("ingredient-box-parent");
-const qtyBoxParent = document.getElementById("qty-box-parent");
-const selectParent = document.getElementById("unit-box-parent");
-const delBtnParent = document.getElementById("add&del-btn");
-const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
-
 addIngredientBtn.onclick = () => {
+  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
+  const qtyBoxParent = document.getElementById("qty-box-parent");
+  const selectParent = document.getElementById("unit-box-parent");
+  const delBtnParent = document.getElementById("add&del-btn");
+  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+
   const NameInputAttr = {
     class: "form-control",
     type: "text",

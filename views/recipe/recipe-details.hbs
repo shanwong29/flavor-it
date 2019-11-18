@@ -1,0 +1,89 @@
+<div class="recipe-details-header">
+
+</div>
+
+<div class="container-fluid recipe-layout-container">
+
+  <div class="recipe-layout-top row">
+    <div class="recipe-img-container col-md-5">
+      <img src="{{recipe.image}}" alt="recipe-image">
+    </div>
+
+    <div class="recipe-layout-right col-md-7">
+
+      <div class="row">
+
+        <h1>{{recipe.title}}</h1>
+
+        <div class="form-group col-md-5">
+          <h4>{{recipe.dishType}}</h4>
+        </div>
+
+        <div class="form-group col-md-4">
+          <div>
+            <h4>cooks in {{recipe.preparationTime}} min</h4>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <h4>serves {{recipe.serves}}</h4>
+        </div>
+
+        {{#if recipe.ingredients}}
+        <div class="form-group col-12">
+
+          <h6>Source / Additional info: </h6>
+          <p>{{recipe.source}}</p>
+        </div>
+        {{/if}}
+
+        <div class="col-3">
+          <p>Like</p>
+        </div>
+
+        <div class="form-group col-8">
+          <div>
+            <p>Username</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="form-row recipe-layout-bottom">
+    <div class="col-md-6">
+
+      <h3>Ingredients: </h3>
+
+      <ul>
+        {{#each recipe.ingredients}}
+        <li>{{@index}} {{this.name}} <span>{{@index}} {{this.qty}}</span> <span>{{@index}} {{this.unit}}</span></li>
+        {{/each}}
+      </ul>
+
+    </div>
+
+    <div id="method" class="col-md-6">
+      <h3>Method:</h3>
+      {{#each recipe.method}}
+      <ol>
+
+        <li>{{@index}} {{this.method}}</li>
+      </ol>
+      {{/each}}
+    </div>
+
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
