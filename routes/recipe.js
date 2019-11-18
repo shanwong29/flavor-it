@@ -8,9 +8,17 @@ router.get("/create", (req, res) => {
 });
 
 router.post("/update", (req, res) => {
+  if (!req.body.title) {
+    res.render("recipe/recipe-form", { message: "Recipe name can't be empty" });
+    return;
+  }
+  // if (req.body.name === "") {
+  //   res.render("recipe-form", { message: "Ingredient name can't be empty" });
+  // }
+
   let ingredients = [];
 
-  if (typeof req.body.name == "string") {
+  if (typeof req.body.name === "string") {
     let obj = { name: req.body.name, qty: req.body.qty, unit: req.body.unit };
     ingredients.push(obj);
   } else {
@@ -26,10 +34,8 @@ router.post("/update", (req, res) => {
 
   let method = req.body.method.split("\n");
 
-  // res.send(ingredients);
-
   Recipe.create({
-    name: req.body.title,
+    title: req.body.title,
     ingredients,
     dishType: req.body.dishType,
     preparationTime: req.body.preparationTime,
@@ -43,8 +49,6 @@ router.post("/update", (req, res) => {
     .catch(err => {
       console.log(err);
     });
-
-  // ;
 });
 
 module.exports = router;

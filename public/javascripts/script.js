@@ -89,18 +89,20 @@ addIngredientBtn.onclick = () => {
 // const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
 
 // window.onload =
-function delBtn() {
-  // the first btn is the add btn
-  const delBtnParent = document.getElementById("add&del-btn");
-  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
-  for (i = 1; i < ingredientBtnCollection.length; i++) {
-    console.log("AAAAA");
-    ingredientBtnCollection[i].onclick = function() {
-      ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
-    };
-  }
-  // };
-}
+
+/*HERE******************** */
+// function delBtn() {
+//   // the first btn is the add btn
+//   const delBtnParent = document.getElementById("add&del-btn");
+//   const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+//   for (i = 1; i < ingredientBtnCollection.length; i++) {
+//     console.log("AAAAA");
+//     ingredientBtnCollection[i].onclick = function() {
+//       ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
+//     };
+//   }
+//   // };
+// }
 
 // function delBtn(ingredientBtnCollection, targetNodeArr) {
 //   // the first btn is the add btn
