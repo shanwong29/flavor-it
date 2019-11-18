@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const uploadCloud = require("../config/cloudinary");
 
 const Recipe = require("../models/Recipe");
 
@@ -7,7 +8,7 @@ router.get("/create", (req, res) => {
   res.render("recipe/recipe-form");
 });
 
-router.post("/update", (req, res) => {
+router.post("/update", uploadCloud.single("imagePath"), (req, res) => {
   if (!req.body.title) {
     res.render("recipe/recipe-form", { message: "Recipe name can't be empty" });
     return;
@@ -57,6 +58,10 @@ router.post("/update", (req, res) => {
     return;
   }
 
+  const defaultRecipeImage =
+    "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087425/images/unknown-plate.png.png";
+  let imagePath = req.file ? req.file.url : defaultRecipeImage;
+
   let ingredients = [];
 
   if (typeof req.body.name === "string") {
@@ -82,7 +87,8 @@ router.post("/update", (req, res) => {
     preparationTime: req.body.preparationTime,
     method,
     portions: req.body.portions,
-    source: req.body.source
+    source: req.body.source,
+    image: imagePath
   })
     .then(() => {
       res.send(req.body);

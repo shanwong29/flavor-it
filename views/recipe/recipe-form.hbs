@@ -3,13 +3,14 @@
 </div>
 
 
-<form action="/recipe/update" method="POST">
+<form action="/recipe/update" method="POST" enctype="multipart/form-data">
 
   <div class="container-fluid recipe-layout-container">
 
     <div class="recipe-layout-top row">
       <div class="recipe-img-container col-md-5">
         <h1>IMG testing</h1>
+        <input id="image" type="file" name="imagePath">
       </div>
 
       <div class="recipe-layout-right col-md-7">

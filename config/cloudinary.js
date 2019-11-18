@@ -10,7 +10,7 @@ cloudinary.config({
 
 const storage = cloudinaryStorage({
   cloudinary,
-  folder: "user-image", // The name of the folder in cloudinary
+  folder: "images", // The name of the folder in cloudinary
   allowedFormats: ["jpg", "png"],
   transformation: [
     {
