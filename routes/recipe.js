@@ -24,19 +24,21 @@ router.post("/update", (req, res) => {
     });
   }
 
+  let method = req.body.method.split("\n");
+
   // res.send(ingredients);
 
   Recipe.create({
     name: req.body.title,
     ingredients,
-    dishTypes: req.body.dishType,
+    dishType: req.body.dishType,
     preparationTime: req.body.preparationTime,
-    preparation: [req.body.method],
+    method,
     portions: req.body.portions,
     source: req.body.source
   })
     .then(() => {
-      res.send("Success");
+      res.send(req.body);
     })
     .catch(err => {
       console.log(err);

@@ -10,7 +10,7 @@ const schemaRecipe = new Schema({
     type: [],
     required: true
   },
-  dishTypes: {
+  dishType: {
     type: String,
     enum: ["Drinks", "Dessert", "Mains", "Breakfast", "Snacks"],
     required: true
@@ -28,7 +28,7 @@ const schemaRecipe = new Schema({
     type: Number,
     required: true
   },
-  preparation: {
+  method: {
     type: [],
     required: true
   },

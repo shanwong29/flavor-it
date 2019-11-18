@@ -13,9 +13,9 @@ const recipes = [
       "24 oz white fish fillet (680 g), such as cod, halibut, or sea bass, skin removed",
       "¼ cup fresh basil (10 g), thinly sliced"
     ],
-    dishTypes: "Mains",
+    dishType: "Mains",
     preparationTime: 45,
-    preparation: [
+    method: [
       "Heat the olive oil in a large skillet over medium-low heat. Add the garlic and 1 teaspoon of Savory spice blend and cook until fragrant, stirring often and ensuring the garlic does not brown, about 3 minutes.",
       "Increase the heat to medium. Add the tomatoes and their juices, crushing well with your hands, then add the wine and bay leaves. Bring to a boil, then reduce the heat to medium-low and simmer for 5 minutes. Season with salt and pepper.",
       "Season the fish with the remaining teaspoon of Savory spice blend, salt, and pepper and place in the skillet. Cover and cook at a bare simmer until the fish is opaque throughout and beginning to flake, 5–7 minutes (thicker pieces will take longer to cook).",
@@ -31,9 +31,9 @@ const recipes = [
       "1 lb elbow macaroni (455 g), dry",
       "2 cups shredded cheddar cheese (200 g)"
     ],
-    dishTypes: "Mains",
+    dishType: "Mains",
     preparationTime: 30,
-    preparation: [
+    method: [
       "In a large pot, bring the milk to a boil.",
       "Add the pasta and stir constantly until the pasta is cooked, about 10 minutes.",
       "Turn off the heat, then add the cheddar. Stir until the cheese is melted and the pasta is evenly coated."
@@ -53,9 +53,9 @@ const recipes = [
       "¼ cup cocoa powder (30 g)",
       "1 teaspoon salt"
     ],
-    dishTypes: "Dessert",
+    dishType: "Dessert",
     preparationTime: 60,
-    preparation: [
+    method: [
       "Preheat the oven to 350°F (180°C). Line an 8-inch (20 cm) square baking dish with parchment paper.",
       "Chop the chocolate into chunks. Melt half of the chocolate in the microwave in 20-second intervals, saving the other half for later.",
       "In a large bowl, mix the butter and sugar with an electric hand mixer, then beat in the eggs and vanilla for 1-2 minutes, until the mixture becomes fluffy and light in color.",
@@ -87,9 +87,9 @@ const recipes = [
       "2 ½ cups water (600 mL)",
       "1 tablespoon fresh basil, chopped"
     ],
-    dishTypes: "Mains",
+    dishType: "Mains",
     preparationTime: 40,
-    preparation: [
+    method: [
       "Heat a bit of olive oil in a large skillet over medium heat. Add the eggplant, season with salt and pepper, and cook, stirring occasionally, until golden brown and softened, 5-10 minutes. Remove from the pan and drain on paper towels.",
       "Heat more oil in the pan, then add the bell peppers. Cook, stirring occasionally, until softened, 2-3 minutes.",
       "Add the onion and garlic and cook, stirring, until the onions are soft and golden, about 3 minutes.",
@@ -122,9 +122,9 @@ const recipes = [
       "peanut, for serving",
       "red thai chile, diced, for serving, optional"
     ],
-    dishTypes: "Mains",
+    dishType: "Mains",
     preparationTime: 60,
-    preparation: [
+    method: [
       "Soak rice noodles in room temperature water 30 minutes prior to cooking.",
       "In a small saucepan over medium-high heat, whisk together palm sugar, tamarind paste, and fish sauce. Bring to a boil, reduce heat, and reduce for 5 minutes until the sauce thickens and coats the back of a wooden spoon. Remove sauce from heat and set aside.",
       "Heat a cast-iron pan or wok over high heat.",

@@ -60,7 +60,6 @@ addIngredientBtn.onclick = () => {
     numOfUnitOption < Object.keys(optionAttr).length;
     numOfUnitOption++
   ) {
-    console.log(numOfUnitOption);
     addElement(lastSelectEl, "option", optionAttr[numOfUnitOption]);
     if (numOfUnitOption > 0) {
       lastSelectEl.getElementsByTagName("option")[numOfUnitOption].innerText =
@@ -81,31 +80,33 @@ addIngredientBtn.onclick = () => {
 };
 
 // window.onload = function() {
-//   for (var i = 1; i < delBtnCollection.length; i++) {
-//     delBtnCollection[i].onclick = delIngredientFunc;
+//   for (var i = 1; i < ingredientBtnCollection.length; i++) {
+//     ingredientBtnCollection[i].onclick = delIngredientFunc;
 //   }
 // };
 
 // const delIngredients = [ingredientBoxParent, qtyBoxParent];
 // const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
 
-// function delBtn() {
-//   // the first btn is the add btn
-//   for (i = 1; i < delBtnCollection.length; i++) {
-//     console.log("AAAAA");
-//     delBtnCollection[i].onclick = function() {
-//       targetNodeArr.forEach(node => {
-//         node.removeChild(node.childNodes[i]);
-//       });
-//     };
-//   }
-// }
+// window.onload =
+function delBtn() {
+  // the first btn is the add btn
+  const delBtnParent = document.getElementById("add&del-btn");
+  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+  for (i = 1; i < ingredientBtnCollection.length; i++) {
+    console.log("AAAAA");
+    ingredientBtnCollection[i].onclick = function() {
+      ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
+    };
+  }
+  // };
+}
 
-// function delBtn(delBtnCollection, targetNodeArr) {
+// function delBtn(ingredientBtnCollection, targetNodeArr) {
 //   // the first btn is the add btn
-//   for (i = 1; i < delBtnCollection.length; i++) {
+//   for (i = 1; i < ingredientBtnCollection.length; i++) {
 //     console.log("AAAAA");
-//     delBtnCollection[i].onclick = function() {
+//     ingredientBtnCollection[i].onclick = function() {
 //       targetNodeArr.forEach(node => {
 //         node.removeChild(node.childNodes[i]);
 //       });
