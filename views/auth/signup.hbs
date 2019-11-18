@@ -2,13 +2,17 @@
 
 
 
-<form action="/auth/signup" method="POST" id="form-container">
-  {{!-- <input type="file" name="pic" accept="image/*"> --}}
+<form action="/auth/signup" method="POST" id="form-container" enctype="multipart/form-data">
 
   <br><br>
 
-  <label for="username">Username</label>
+  <label for=" username">Username</label>
   <input id="username" type="text" name="username" placeholder="">
+
+  <br><br>
+
+  <label for="image">User image</label>
+  <input id="image" type="file" name="imagePath">
 
   <br><br>
 
