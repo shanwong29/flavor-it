@@ -12,9 +12,50 @@ router.post("/update", (req, res) => {
     res.render("recipe/recipe-form", { message: "Recipe name can't be empty" });
     return;
   }
-  // if (req.body.name === "") {
-  //   res.render("recipe-form", { message: "Ingredient name can't be empty" });
-  // }
+  if (req.body.dishType === "") {
+    res.render("recipe/recipe-form", {
+      message: "Please select Dish Type"
+    });
+    return;
+  }
+
+  if (req.body.preparationTime === "") {
+    res.render("recipe/recipe-form", {
+      message: "Please enter preparation time"
+    });
+    return;
+  }
+  if (req.body.portions === "") {
+    res.render("recipe/recipe-form", {
+      message: "Please enter portion(s)"
+    });
+    return;
+  }
+
+  //check ingredient field
+  if (req.body.name === "") {
+    res.render("recipe/recipe-form", {
+      message: "Ingredient name can't be empty"
+    });
+    return;
+  }
+  if (typeof req.body.name === "object") {
+    req.body.name.forEach(element => {
+      if (element === "") {
+        res.render("recipe/recipe-form", {
+          message: "Ingredient name can't be empty"
+        });
+      }
+    });
+    return;
+  }
+
+  if (req.body.method === "") {
+    res.render("recipe/recipe-form", {
+      message: "Please provide the cooking methods"
+    });
+    return;
+  }
 
   let ingredients = [];
 
