@@ -24,22 +24,22 @@
           <h1>{{recipe.title}}</h1>
         </div>
 
-        <div class="form-group col-md-3">
-          <span class="dish-tag">{{recipe.dishType}}</span>
+        <div class="recipe-lines col-lg-3">
+          <span id="dish-tag-1">{{recipe.dishType}}</span>
         </div>
 
-        <div class="dish-tag form-group col-md-3">
-          <div>
-            <span>cooks in {{recipe.preparationTime}} min</span>
+        <div class="recipe-lines col-lg-5">
+          <div class="d-inline">
+            <span id="dish-tag-2">cooks in &nbsp;&nbsp; {{recipe.preparationTime}} min</span>
           </div>
         </div>
 
-        <div class="dish-tag form-group col-md-3">
-          <span>serves {{recipe.serves}}</span>
+        <div class="recipe-lines col-lg-4">
+          <span id="dish-tag-3">serves &nbsp;&nbsp; {{recipe.portions}}</span>
         </div>
 
         {{#if recipe.ingredients}}
-        <div class="form-group col-12">
+        <div class="recipe-lines col-12">
 
           <h6>Source / Additional info: </h6>
           <p>{{recipe.source}}</p>
@@ -50,7 +50,7 @@
           <p>Like</p>
         </div>
 
-        <div class="form-group col-8">
+        <div class="recipe-lines col-8">
           <div>
             <p>Username</p>
           </div>
