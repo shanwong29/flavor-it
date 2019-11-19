@@ -120,7 +120,51 @@ router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
-      res.render("recipe/recipe-details", { recipe: doc, loggedIn: req.user });
+      // res.send(doc);
+      let isSameUser = false;
+      if (req.user) {
+        const user = req.user.username;
+        const creator = doc.creator.username;
+        if (user === creator) {
+          isSameUser = true;
+        }
+      }
+
+      // res.send(doc);
+
+      res.render("recipe/recipe-details", {
+        recipe: doc,
+        loggedIn: req.user,
+        isSameUser
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+//update recipe
+router.get("/edit/:recipeId", loginCheck(), (req, res, next) => {
+  Recipe.findById(req.params.recipeId)
+    // .populate("creator")
+    .then(doc => {
+      // const user = req.user.username;
+      // const creator = doc.creator.username;
+      // if (user == creator) {
+
+      // res.render("recipe/recipe-form");
+      res.send(doc);
+
+      // return;
+      //   // res.send(doc);
+      //   // **res.send(req.user._id);
+      //   // **res.send(doc.creator._id);
+      // } else {
+      //   console.log(user);
+      //   console.log(creator);
+      //   res.send("you are not a creator");
+      //   return;
+      // }
     })
     .catch(err => {
       next(err);
