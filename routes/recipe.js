@@ -122,10 +122,11 @@ router.post(
 
 router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
-
+    .populate("creator")
     .then(doc => {
-      let a = { recipe: doc };
-      console.log(a.recipe.method);
+      // let a = { recipe: doc };
+      // console.log(a.recipe.method);
+      // res.send(doc);
       res.render("recipe/recipe-details", { recipe: doc });
     })
     .catch(err => {
