@@ -1,5 +1,5 @@
 <div class="subpage-header">
-  <h1 class="subpage-title">Create Recipe</h1>
+  <h1 class="subpage-title">Update Recipe</h1>
 </div>
 
 
@@ -9,7 +9,7 @@
     <div class="recipe-layout-top row">
       <div class="recipe-img-container col-md-5">
         <input id="image" type="file" name="imagePath">
-        {{!-- {{#if recipe}}<img src="{{recipe.image}}" alt="">{{/if}} --}}
+        <img src="{{recipe.image}}" alt="">
       </div>
 
       <div class="recipe-layout-right col-md-7">
@@ -25,15 +25,14 @@
 
           <div class="form-group col-12">
             <label for="title">Recipe Title: *</label>
-            <input class="form-control" type="text" name="title" placeholder="Title of Recipe"
-              {{#if recipe}}value={{recipe.title}}{{/if}}>
+            <input class="form-control" type="text" name="title" placeholder="Title of Recipe" value={{recipe.title}}>
           </div>
 
 
           <div class="form-group col-md-5">
             <label>Dish Type: *</label>
-            <select class="form-control" id="dish-type-selector" name="dishType" selected="{{recipe.dishType}}"
-              {{#if recipe}}<option value=""></option>{{/if}}>
+            <select class="form-control" id="dish-type-selector" name="dishType">
+              <option value={{recipe.dishType}} selected="selected">{{recipe.dishType}}</option>>
               <option value="">choose Dish Type</option>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
@@ -50,8 +49,7 @@
 
             <div class="row">
               <div class="col-8">
-                <input class="form-control" type="number" name="preparationTime"
-                  {{#if recipe}}value={{recipe.preparationTime}}{{/if}}>
+                <input class="form-control" type="number" name="preparationTime" value={{recipe.preparationTime}}>
               </div>
               <span id="min">min</span>
             </div>
@@ -59,13 +57,13 @@
 
           <div class="form-group col-md-3">
             <label for="portions">Portion(s) *:</label>
-            <input class="form-control" type="number" name="portions" {{#if recipe}}value={{recipe.portions}}{{/if}}>
+            <input class="form-control" type="number" name="portions" value={{recipe.portions}}>
           </div>
 
           <div class="form-group col-12">
             <label for="source">Source / Additional Info: </label>
-            <textarea class="form-control" name="source" maxlength="200">{{#if recipe}}{{recipe.source}}
-              {{/if}}</textarea>
+            <textarea class="form-control" name="source" maxlength="200">{{recipe.source}}
+              </textarea>
             <p id="source-note">
               If you are not the original author of this recipe , enter the original author's name or source here to
               give
@@ -125,8 +123,7 @@
       <div id="method" class="col-md-6">
         <h3>Method: *</h3>
         <textarea class="form-control" name="method" rows="10"
-          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#if recipe}}{{#each recipe.method}}{{this}}&#10;{{/each}}{{/if}}
-            </textarea>
+          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#each recipe.method}}{{this}}&#10;{{/each}}</textarea>
 
 
       </div>

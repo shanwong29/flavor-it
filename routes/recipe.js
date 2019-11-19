@@ -25,7 +25,8 @@ router.post(
   (req, res) => {
     if (!req.body.title) {
       res.render("recipe/recipe-form", {
-        message: "Recipe name can't be empty"
+        message: "Recipe name can't be empty",
+        recipe: req.body
       });
       return;
     }
@@ -144,7 +145,7 @@ router.get("/edit/:recipeId", loginCheck(), (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
-      res.render("recipe/recipe-form", { recipe: doc });
+      res.render("recipe/recipe-update", { recipe: doc });
     })
     .catch(err => {
       next(err);
