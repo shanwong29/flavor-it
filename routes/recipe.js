@@ -4,6 +4,7 @@ const uploadCloud = require("../config/cloudinary");
 
 const Recipe = require("../models/Recipe");
 
+//create recipe
 router.get("/create", (req, res) => {
   res.render("recipe/recipe-form");
 });

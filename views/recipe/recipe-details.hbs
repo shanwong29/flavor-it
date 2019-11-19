@@ -1,35 +1,41 @@
 <div class="recipe-details-header">
-
+  {{!-- for header img --}}
 </div>
 
-<a href="/recipe/update">Update Recipe</a>
-<a href="/recipe/delete">Delete Recipe</a>
 
 <div class="container-fluid recipe-layout-container">
 
   <div class="recipe-layout-top row">
+    <div class="col-12 d-flex justify-content-end">
+      <a class="btn btn-outline-info" href="/recipe/update"> &#43 Update Recipe</a>
+      <a class="btn btn-outline-danger" href="/recipe/delete"> &#10060; Delete Recipe</a>
+    </div>
+
+
     <div class="recipe-img-container col-md-5">
-      <img src="{{recipe.image}}" alt="recipe-image">
+      <img src="{{recipe.image}}" alt="recipe-image" class="recipe-img">
     </div>
 
     <div class="recipe-layout-right col-md-7">
 
       <div class="row">
 
-        <h1>{{recipe.title}}</h1>
-
-        <div class="form-group col-md-5">
-          <h4>{{recipe.dishType}}</h4>
-        </div>
-
-        <div class="form-group col-md-4">
-          <div>
-            <h4>cooks in {{recipe.preparationTime}} min</h4>
-          </div>
+        <div class="col-12">
+          <h1>{{recipe.title}}</h1>
         </div>
 
         <div class="form-group col-md-3">
-          <h4>serves {{recipe.serves}}</h4>
+          <span class="dish-tag">{{recipe.dishType}}</span>
+        </div>
+
+        <div class="dish-tag form-group col-md-3">
+          <div>
+            <span>cooks in {{recipe.preparationTime}} min</span>
+          </div>
+        </div>
+
+        <div class="dish-tag form-group col-md-3">
+          <span>serves {{recipe.serves}}</span>
         </div>
 
         {{#if recipe.ingredients}}

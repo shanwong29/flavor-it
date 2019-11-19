@@ -6,7 +6,6 @@
 <form action="/recipe/create" method="POST" enctype="multipart/form-data">
 
   <div class="container-fluid recipe-layout-container">
-
     <div class="recipe-layout-top row">
       <div class="recipe-img-container col-md-5">
         <h1>IMG testing</h1>
@@ -19,7 +18,7 @@
 
           <div>
             {{#if message}}
-            <p class="warning-msg">{{message}}</p>
+            <p class="warning-msg"> *{{message}}</p>
             <br>
             {{/if}}
           </div>
@@ -87,7 +86,7 @@
     <br>
     <br>
     <br>
-    <br>
+
 
     <div class="form-row recipe-layout-bottom">
       <div class="col-md-6">
@@ -121,7 +120,8 @@
 
       <div id="method" class="col-md-6">
         <h3>Method:</h3>
-        <textarea class="form-control" name="method" rows="10"></textarea>
+        <textarea class="form-control" name="method" rows="10"
+          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'></textarea>
       </div>
 
     </div>
