@@ -25,8 +25,7 @@ router.post(
   (req, res) => {
     if (!req.body.title) {
       res.render("recipe/recipe-form", {
-        message: "Recipe name can't be empty",
-        recipe: req.body
+        message: "Recipe name can't be empty"
       });
       return;
     }
@@ -154,4 +153,14 @@ router.get("/edit/:recipeId", loginCheck(), (req, res, next) => {
 
 //delete recipe
 
+router.get("/:recipeId/delete", (req, res, next) => {
+  const query = { _id: req.params.recipeId };
+  Recipe.deleteOne(query)
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 module.exports = router;

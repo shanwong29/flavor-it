@@ -9,7 +9,8 @@
     <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
       {{#if isSameUser}}
       <a class="btn btn-outline-info" href="/recipe/edit/{{recipe._id}}"> &#9998; Edit Recipe</a>
-      <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/delete"> &#10060; Delete Recipe</a>
+      <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+        Recipe</a>
       {{/if}}
     </div>
 
