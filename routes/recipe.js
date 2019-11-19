@@ -109,10 +109,6 @@ router.post(
     })
       .then(doc => {
         res.redirect(`/recipe/${doc._id}`);
-        //  {
-        //   recipe: doc,
-        //   loggedIn: req.user
-        // }
       })
       .catch(err => {
         console.log(err);
@@ -124,10 +120,7 @@ router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
-      // let a = { recipe: doc };
-      // console.log(a.recipe.method);
-      // res.send(doc);
-      res.render("recipe/recipe-details", { recipe: doc });
+      res.render("recipe/recipe-details", { recipe: doc, loggedIn: req.user });
     })
     .catch(err => {
       next(err);
