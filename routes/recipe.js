@@ -15,7 +15,7 @@ const loginCheck = () => {
 };
 
 router.get("/create", loginCheck(), (req, res) => {
-  res.render("recipe/recipe-form", { loggedIn: req.user });
+  res.render("recipe/recipe-form", { user: req.user });
 });
 
 router.post(

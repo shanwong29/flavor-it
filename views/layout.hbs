@@ -45,7 +45,10 @@
     <div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          {{#if loggedIn}}
+          {{#if user}}
+          <li class="nav-item">
+            <a class="btn btn-outline-success" href="/user/{{user.username}}">Profile</a>
+          </li>
           <li class="nav-item">
             <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
           </li>
