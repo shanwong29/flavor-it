@@ -57,7 +57,7 @@
       <div class="flex-container">
         {{#each userRecipes}}
         <div class="each-recipe">
-          <a href="recipes/{{_id}}">
+          <a href="recipe/{{_id}}">
             <img src="{{image}}">
             <p>{{title}}</p>
           </a>
@@ -73,7 +73,7 @@
       <div class="flex-container">
         {{#each userProfile.likedRecipes}}
         <div class="each-recipe">
-          <a href="recipes/{{this._id}}">
+          <a href="recipe/{{this._id}}">
             <img src="{{this.image}}">
             <p>{{this.title}}</p>
           </a>
@@ -90,9 +90,9 @@
       <div class="flex-container">
         {{#each userProfile.following}}
         <div class="each-recipe">
-          <a href="recipes/{{_id}}">
+          <a href="/{{username}}">
             <img src="{{photo}}">
-            <p>{{name}}</p>
+            <p>{{username}}</p>
           </a>
         </div>
         {{/each}}

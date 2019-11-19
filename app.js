@@ -91,6 +91,6 @@ const recipeRoutes = require("./routes/recipe");
 app.use("/recipe", recipeRoutes);
 
 const userProfile = require("./routes/user");
-app.use("/user", userProfile);
+app.use("/", userProfile);
 
 module.exports = app;

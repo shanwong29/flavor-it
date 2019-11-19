@@ -16,6 +16,7 @@ const loginCheck = () => {
 };
 
 router.get("/:username", (req, res) => {
+  console.log("ok");
   let user = req.params.username;
   User.findOne({ username: user })
     .populate("likedRecipes")
@@ -27,7 +28,7 @@ router.get("/:username", (req, res) => {
         res.render("user/profile", {
           userProfile,
           userRecipes,
-          user: req.user
+          loggedIn: req.user
         });
       });
     });
