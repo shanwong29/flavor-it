@@ -11,8 +11,7 @@ const schemaUser = new Schema({
     required: true
   },
   photo: {
-    type: String,
-    default: "http://something..."
+    type: String
   },
   likedRecipes: [
     {
@@ -32,14 +31,8 @@ const schemaUser = new Schema({
       ref: "User"
     }
   ]
-  // contributions: number of recipies from this user
 });
 
 const User = mongoose.model("User", schemaUser);
 
 module.exports = User;
-
-// timestamps: {
-//   createdAt: 'created_at',
-//   updatedAt: 'updated_at'
-// }

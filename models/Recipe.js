@@ -12,13 +12,10 @@ const schemaRecipe = new Schema({
   },
   dishType: {
     type: String,
-    enum: ["Drinks", "Dessert", "Mains", "Breakfast", "Snacks"],
     required: true
   },
   image: {
-    type: String,
-    default:
-      "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/238353.jpg"
+    type: String
   },
   creator: {
     type: Schema.Types.ObjectId,
