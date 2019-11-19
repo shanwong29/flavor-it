@@ -15,7 +15,7 @@ const loginCheck = () => {
 };
 
 router.get("/create", loginCheck(), (req, res) => {
-  res.render("recipe/recipe-form", { loggedIn: req.user });
+  res.render("recipe/recipe-form", { user: req.user });
 });
 
 router.post(
@@ -104,13 +104,17 @@ router.post(
       method,
       portions: req.body.portions,
       source: req.body.source,
-      image: imagePath
+      image: imagePath,
+      creator: req.user._id
     })
       .then(doc => {
-        res.redirect(`/recipe/${doc._id}`, {
-          recipe: doc,
-          loggedIn: req.user
-        });
+        res.redirect(
+          `/recipe/${doc._id}`
+          // {
+          //   recipe: doc,
+          //   user: req.user
+          // }
+        );
       })
       .catch(err => {
         console.log(err);
@@ -124,7 +128,7 @@ router.get("/:recipeId", (req, res, next) => {
     .then(doc => {
       let a = { recipe: doc };
       console.log(a.recipe.method);
-      res.render("recipe/recipe-details", { recipe: doc });
+      res.render("recipe/recipe-details", { recipe: doc, user: req.user });
     })
     .catch(err => {
       next(err);

@@ -1,0 +1,103 @@
+<div class="recipe-details-header">
+  {{!-- for header img --}}
+</div>
+{{#if userProfile}}
+<div class="container-fluid recipe-layout-container">
+
+  <div class="recipe-layout-top row">
+    <div class="col-12 d-flex justify-content-end">
+      <a class="btn btn-outline-info" href="/user/edit/{{userProfile.username}}"> &#9998; Edit Profile</a>
+      <a class="btn btn-outline-danger" href="/user/delete/{{userProfile._id}}"> &#10060; Delete Account</a>
+    </div>
+
+
+    <div class="recipe-img-container col-md-5">
+      <img src="{{userProfile.photo}}" alt="user-photo" class="recipe-img">
+    </div>
+
+    <div class="recipe-layout-right col-md-7">
+
+      <div class="row">
+
+        <div class="col-12">
+          <h1>{{userProfile.username}}</h1>
+        </div>
+
+        <div class="recipe-lines col-lg-4">
+          <a href="/recipes/likes/{{userProfile.likedRecipes}}">
+            <span id="dish-tag-1">Liked Recipes: {{userProfile.likedRecipes.length}}</span>
+          </a>
+        </div>
+
+        <div class="recipe-lines col-lg-4">
+          <a href="/recipes/followers/{{userProfile.followers}}">
+            <span id="dish-tag-2">Followers: {{userProfile.followers.length}}</span>
+          </a>
+        </div>
+
+        <div class="recipe-lines col-lg-4">
+          <a href="/recipes/following/{{userProfile.following}}">
+            <span id="dish-tag-3">Following: {{userProfile.following.length}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="form-row recipe-layout-bottom">
+    <div class="col-md-12">
+      <div class="title">
+        <h1>User Recipes</h1>
+      </div>
+      <div class="flex-container">
+        {{#each userRecipes}}
+        <div class="each-recipe">
+          <a href="recipes/{{_id}}">
+            <img src="{{image}}">
+            <p>{{title}}</p>
+          </a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="title">
+        <h1>Liked Recipes</h1>
+      </div>
+      <div class="flex-container">
+        {{#each userProfile.likedRecipes}}
+        <div class="each-recipe">
+          <a href="recipes/{{this._id}}">
+            <img src="{{this.image}}">
+            <p>{{this.title}}</p>
+          </a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+
+    <div class="col-md-12">
+      <div class="title">
+        <h1>Following</h1>
+      </div>
+      <div class="flex-container">
+        {{#each userProfile.following}}
+        <div class="each-recipe">
+          <a href="recipes/{{_id}}">
+            <img src="{{photo}}">
+            <p>{{name}}</p>
+          </a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
