@@ -68,12 +68,16 @@ app.locals.title = "Flavor-it";
 // Enable authentication using session + passport
 app.use(
   session({
-    secret: "irongenerator",
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 24 * 60 * 60 },
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
   })
 );
+
 app.use(flash());
 require("./passport")(app);
 

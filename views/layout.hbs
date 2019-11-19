@@ -43,25 +43,23 @@
     </div>
 
     <div>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          {{#if loggedIn}}
           <li class="nav-item">
             <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
           </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
+          </li>
+          {{else}}
           <li class="nav-item">
             <a class="btn btn-outline-success" href="/auth/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-outline-success" href="/auth/signup">Signup</a>
           </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
-          </li>
-
+          {{/if}}
         </ul>
       </div>
     </div>

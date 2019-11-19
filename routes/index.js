@@ -8,7 +8,7 @@ const User = require("../models/User");
 router.get("/", (req, res, next) => {
   Recipe.find({})
     .then(recipes => {
-      res.render("index", { recipes });
+      res.render("index", { recipes, loggedIn: req.user });
     })
     .catch(err => console.log(err));
 });
@@ -24,19 +24,19 @@ router.get("/search", (req, res, next) => {
       $and: [{ title: new RegExp(searchInput, "gi") }, { dishType: dishType }]
     })
       .then(recipes => {
-        res.render("search", { recipes });
+        res.render("search", { recipes, loggedIn: req.user });
       })
       .catch(err => console.log(err));
   } else if (option === "recipe") {
     Recipe.find({ title: new RegExp(searchInput, "gi") })
       .then(recipes => {
-        res.render("search", { recipes });
+        res.render("search", { recipes, loggedIn: req.user });
       })
       .catch(err => console.log(err));
   } else {
     User.find({ username: new RegExp(searchInput, "gi") })
       .then(users => {
-        res.render("search", { users });
+        res.render("search", { users, loggedIn: req.user });
       })
       .catch(err => console.log(err));
   }
