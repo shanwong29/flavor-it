@@ -6,9 +6,9 @@
 <div class="container-fluid recipe-layout-container">
 
   <div class="recipe-layout-top row">
-    <div class="col-12 d-flex justify-content-end">
+    <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
       <a class="btn btn-outline-info" href="/recipe/edit"> &#9998; Edit Recipe</a>
-      <a class="btn btn-outline-danger" href="/recipe/delete"> &#10060; Delete Recipe</a>
+      <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/delete"> &#10060; Delete Recipe</a>
     </div>
 
 
@@ -41,23 +41,24 @@
         {{#if recipe.ingredients}}
         <div class="recipe-lines col-12">
 
-          <h6>Source / Additional info: </h6>
+          <h6 id="source">Source / Additional info: </h6>
           <p>{{recipe.source}}</p>
         </div>
         {{/if}}
 
-        <div class="col-3">
-          <p>Like</p>
+        <div class="recipe-lines col-12">
+          <h6 id="creator">Creator:</h6>
+          <span>User</span><button class="follow-btn-off" title="Follow this user">&#43; Follow</button>
         </div>
 
-        <div class="recipe-lines col-8">
-          <div>
-            <p>Username</p>
-          </div>
+        <div class="recipe-lines col-12">
+          <button class="like-btn-off" title="Like and save the recipe">&#9829; Like</button>
         </div>
+
       </div>
     </div>
   </div>
+
 
   <br>
   <br>

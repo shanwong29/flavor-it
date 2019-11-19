@@ -104,13 +104,15 @@ router.post(
       method,
       portions: req.body.portions,
       source: req.body.source,
-      image: imagePath
+      image: imagePath,
+      creator: req.user._id
     })
       .then(doc => {
-        res.redirect(`/recipe/${doc._id}`, {
-          recipe: doc,
-          loggedIn: req.user
-        });
+        res.redirect(`/recipe/${doc._id}`);
+        //  {
+        //   recipe: doc,
+        //   loggedIn: req.user
+        // }
       })
       .catch(err => {
         console.log(err);
