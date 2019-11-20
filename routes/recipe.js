@@ -23,54 +23,47 @@ router.post(
   uploadCloud.single("imagePath"),
   loginCheck(),
   (req, res) => {
-    if (!req.body.title) {
-      res.render("recipe/recipe-form", {
-        message: "Recipe name can't be empty"
-      });
-      return;
-    }
-    if (req.body.dishType === "") {
-      res.render("recipe/recipe-form", {
-        message: "Please select Dish Type"
-      });
-      return;
+    let warning = "";
+
+    // check if the required inputs are empty
+
+    if (!req.body.dishType) {
+      warning = "Please select Dish Type";
     }
 
-    if (req.body.preparationTime === "") {
-      res.render("recipe/recipe-form", {
-        message: "Please enter preparation time"
-      });
-      return;
-    }
-    if (req.body.portions === "") {
-      res.render("recipe/recipe-form", {
-        message: "Please enter portion(s)"
-      });
-      return;
+    if (!req.body.method) {
+      warning = "Please provide the cooking methods";
     }
 
-    //check ingredient field
     if (req.body.name === "") {
-      res.render("recipe/recipe-form", {
-        message: "Ingredient name can't be empty"
-      });
-      return;
+      warning = "Ingredient name can't be empty";
     }
     if (typeof req.body.name === "object") {
       req.body.name.forEach(element => {
         if (element === "") {
-          res.render("recipe/recipe-form", {
-            message: "Ingredient name can't be empty"
-          });
+          warning = "Ingredient name can't be empty";
         }
       });
-      return;
+    }
+    if (!req.body.portions) {
+      warning = "Please enter portion(s)";
     }
 
-    if (req.body.method === "") {
+    if (!req.body.preparationTime) {
+      warning = "Please enter preparation time";
+    }
+
+    if (!req.body.title) {
+      warning = "Recipe title can't be empty";
+    }
+
+    if (warning) {
       res.render("recipe/recipe-form", {
-        message: "Please provide the cooking methods"
+        warning,
+        filledIn: req.body,
+        loggedIn: req.user
       });
+
       return;
     }
 
@@ -81,12 +74,16 @@ router.post(
     let ingredients = [];
 
     if (typeof req.body.name === "string") {
-      let obj = { name: req.body.name, qty: req.body.qty, unit: req.body.unit };
+      let obj = {
+        name: req.body.name.trim(),
+        qty: req.body.qty,
+        unit: req.body.unit
+      };
       ingredients.push(obj);
     } else {
       req.body.name.forEach((element, index) => {
         let obj = {
-          name: element,
+          name: element.trim(),
           qty: req.body.qty[index],
           unit: req.body.unit[index]
         };
@@ -94,16 +91,18 @@ router.post(
       });
     }
 
-    let method = req.body.method.split("\n");
+    let title = req.body.title.trim();
+    let source = req.body.source.trim();
+    let method = req.body.method.trim().split("\n");
 
     Recipe.create({
-      title: req.body.title,
+      title,
       ingredients,
       dishType: req.body.dishType,
       preparationTime: req.body.preparationTime,
       method,
       portions: req.body.portions,
-      source: req.body.source,
+      source,
       image: imagePath,
       creator: req.user._id
     })
@@ -120,11 +119,109 @@ router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
-      res.render("recipe/recipe-details", { recipe: doc, loggedIn: req.user });
+      let isSameUser = false;
+      let isSourceFilled = false;
+      if (req.user) {
+        const user = req.user.username;
+        const creator = doc.creator.username;
+        if (user === creator) {
+          isSameUser = true;
+        }
+      }
+
+      if (doc.source) {
+        isSourceFilled = true;
+      }
+
+      res.render("recipe/recipe-details", {
+        recipe: doc,
+        loggedIn: req.user,
+        isSameUser,
+        isSourceFilled
+      });
     })
     .catch(err => {
       next(err);
     });
 });
 
+//update recipe
+router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
+  Recipe.findById(req.params.recipeId)
+    .populate("creator")
+    .then(doc => {
+      res.render("recipe/recipe-update", { recipe: doc, loggedIn: req.user });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+//delete recipe
+router.get("/:recipeId/delete", (req, res, next) => {
+  const query = { _id: req.params.recipeId };
+  Recipe.deleteOne(query)
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 module.exports = router;
+
+// router.post(
+//   "/create",
+//   uploadCloud.single("imagePath"),
+//   loginCheck(),
+//   (req, res) => {
+//     if (!req.body.title) {
+//       res.render("recipe/recipe-form", {
+//         message: "Recipe name can't be empty"
+//       });
+//       return;
+//     }
+//     if (req.body.dishType === "") {
+//       res.render("recipe/recipe-form", {
+//         message: "Please select Dish Type"
+//       });
+//       return;
+//     }
+
+//     if (req.body.preparationTime === "") {
+//       res.render("recipe/recipe-form", {
+//         message: "Please enter preparation time"
+//       });
+//       return;
+//     }
+//     if (req.body.portions === "") {
+//       res.render("recipe/recipe-form", {
+//         message: "Please enter portion(s)"
+//       });
+//       return;
+//     }
+
+//     //check ingredient field
+//     if (req.body.name === "") {
+//       res.render("recipe/recipe-form", {
+//         message: "Ingredient name can't be empty"
+//       });
+//       return;
+//     }
+//     if (typeof req.body.name === "object") {
+//       req.body.name.forEach(element => {
+//         if (element === "") {
+//           res.render("recipe/recipe-form", {
+//             message: "Ingredient name can't be empty"
+//           });
+//         }
+//       });
+//       return;
+//     }
+
+//     if (req.body.method === "") {
+//       res.render("recipe/recipe-form", {
+//         message: "Please provide the cooking methods"
+//       });
+//       return;
+//     }
