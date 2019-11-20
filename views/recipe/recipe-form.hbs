@@ -33,8 +33,8 @@
           <div class="form-group col-md-5">
             <label>Dish Type: *</label>
             <select class="form-control" id="dish-type-selector" name="dishType">
-              {{!-- {{#if filledIn}}<option value={{filledIn.dishType}} selected="selected">{{filledIn.dishType}}</option>
-              {{/if}}> --}}
+              {{#if filledIn}}<option value={{filledIn.dishType}} selected="selected">{{filledIn.dishType}}</option>
+              {{/if}}>
               <option value="">choose Dish Type</option>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
@@ -135,8 +135,7 @@
       <div id="method" class="col-md-6">
         <h3>Method: *</h3>
         <textarea class="form-control" name="method" rows="10"
-          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#if filledIn}}{{#each filledIn.method}}{{this}}&#10;{{/each}}{{/if}}
-            </textarea>
+          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#if filledIn}}{{#each filledIn.method}}{{this}}&#10;{{/each}}{{/if}}</textarea>
 
 
       </div>
