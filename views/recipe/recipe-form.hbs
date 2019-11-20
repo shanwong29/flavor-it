@@ -17,8 +17,8 @@
         <div class="form-row">
 
           <div>
-            {{#if message}}
-            <p class="warning-msg"> *{{message}}</p>
+            {{#if warning}}
+            <p class="warning-msg"> *{{warning}}</p>
             <br>
             {{/if}}
           </div>
@@ -26,14 +26,15 @@
           <div class="form-group col-12">
             <label for="title">Recipe Title: *</label>
             <input class="form-control" type="text" name="title" placeholder="Title of Recipe"
-              {{#if recipe}}value={{recipe.title}}{{/if}}>
+              {{#if filledIn}}value={{filledIn.title}}{{/if}}>
           </div>
 
 
           <div class="form-group col-md-5">
             <label>Dish Type: *</label>
-            <select class="form-control" id="dish-type-selector" name="dishType" selected="{{recipe.dishType}}"
-              {{#if recipe}}<option value=""></option>{{/if}}>
+            <select class="form-control" id="dish-type-selector" name="dishType">
+              {{!-- {{#if filledIn}}<option value={{filledIn.dishType}} selected="selected">{{filledIn.dishType}}</option>
+              {{/if}}> --}}
               <option value="">choose Dish Type</option>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
@@ -51,7 +52,7 @@
             <div class="row">
               <div class="col-8">
                 <input class="form-control" type="number" name="preparationTime"
-                  {{#if recipe}}value={{recipe.preparationTime}}{{/if}}>
+                  {{#if filledIn}}value={{filledIn.preparationTime}}{{/if}}>
               </div>
               <span id="min">min</span>
             </div>
@@ -59,12 +60,13 @@
 
           <div class="form-group col-md-3">
             <label for="portions">Portion(s) *:</label>
-            <input class="form-control" type="number" name="portions" {{#if recipe}}value={{recipe.portions}}{{/if}}>
+            <input class="form-control" type="number" name="portions"
+              {{#if filledIn}}value={{filledIn.portions}}{{/if}}>
           </div>
 
           <div class="form-group col-12">
             <label for="source">Source / Additional Info: </label>
-            <textarea class="form-control" name="source" maxlength="200">{{#if recipe}}{{recipe.source}}
+            <textarea class="form-control" name="source" maxlength="200">{{#if filledIn}}{{filledIn.source}}
               {{/if}}</textarea>
             <p id="source-note">
               If you are not the original author of this recipe , enter the original author's name or source here to
@@ -80,7 +82,7 @@
           <div class="form-group col-8">
             <div>
               <label for="creator">Creator: </label>
-
+              <h6>{{loggedIn.username}}</h6>
             </div>
           </div>
         </div>
@@ -125,7 +127,7 @@
       <div id="method" class="col-md-6">
         <h3>Method: *</h3>
         <textarea class="form-control" name="method" rows="10"
-          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#if recipe}}{{#each recipe.method}}{{this}}&#10;{{/each}}{{/if}}
+          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#if filledIn}}{{#each filledIn.method}}{{this}}&#10;{{/each}}{{/if}}
             </textarea>
 
 

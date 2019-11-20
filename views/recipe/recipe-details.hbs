@@ -8,7 +8,7 @@
   <div class="recipe-layout-top row">
     <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
       {{#if isSameUser}}
-      <a class="btn btn-outline-info" href="/recipe/edit/{{recipe._id}}"> &#9998; Edit Recipe</a>
+      <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
       <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
         Recipe</a>
       {{/if}}
@@ -102,3 +102,10 @@
 <br>
 <br>
 <br>
+
+<script>
+  document.getElementById("del-recipe-btn").onclick = event => {
+    alert("Comfirm to delete this recipe.")
+  }
+
+</script>
