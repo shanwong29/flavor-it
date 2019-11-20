@@ -1,0 +1,17 @@
+<div class="recipe-details-header">
+  {{!-- for header img --}}
+</div>
+<div class="title">
+  <h1>{{userProfile.username}}</h1>
+  <h4>Following</h4>
+</div>
+<div class="flex-container">
+  {{#each userProfile.following}}
+  <div class="each-recipe">
+    <a href="/{{username}}">
+      <img src="{{photo}}">
+      <p>{{username}}</p>
+    </a>
+  </div>
+  {{/each}}
+</div>

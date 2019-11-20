@@ -5,10 +5,12 @@
 <div class="container-fluid recipe-layout-container">
 
   <div class="recipe-layout-top row">
+    {{#unless diferentUser}}
     <div class="col-12 d-flex justify-content-end">
       <a class="btn btn-outline-info" href="/user/edit/{{userProfile.username}}"> &#9998; Edit Profile</a>
       <a class="btn btn-outline-danger" href="/user/delete/{{userProfile._id}}"> &#10060; Delete Account</a>
     </div>
+    {{/unless}}
 
 
     <div class="recipe-img-container col-md-4">
@@ -74,8 +76,11 @@
 
   <div class="form-row recipe-layout-bottom">
     <div class="col-md-12">
-      <div class="title">
-        <h1>User Recipes</h1>
+      <div class="col-12 d-flex align-items-center">
+        <h1 class="col-10">User Recipes</h1>
+        <div class="col-2 d-flex justify-content-end">
+          <a class="btn btn-outline-info" href="/recipes/{{userProfile.username}}">See All</a>
+        </div>
       </div>
       <div class="flex-container">
         {{#each userRecipes}}
@@ -90,8 +95,11 @@
     </div>
 
     <div class="col-md-12">
-      <div class="title">
-        <h1>Liked Recipes</h1>
+      <div class="col-12 d-flex align-items-center">
+        <h1 class="col-10">Liked Recipes</h1>
+        <div class="col-2 d-flex justify-content-end">
+          <a class="btn btn-outline-info" href="/likes/{{userProfile.username}}">See All</a>
+        </div>
       </div>
       <div class="flex-container">
         {{#each userProfile.likedRecipes}}
@@ -107,8 +115,11 @@
 
 
     <div class="col-md-12">
-      <div class="title">
-        <h1>Following</h1>
+      <div class="col-12 d-flex align-items-center">
+        <h1 class="col-10">Following</h1>
+        <div class="col-2 d-flex justify-content-end">
+          <a class="btn btn-outline-info" href="/following/{{userProfile.username}}">See All</a>
+        </div>
       </div>
       <div class="flex-container">
         {{#each userProfile.following}}
