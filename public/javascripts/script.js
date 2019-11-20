@@ -78,7 +78,34 @@ addIngredientBtn.onclick = () => {
   const lastDelBtn =
     ingredientBtnCollection[ingredientBtnCollection.length - 1];
   lastDelBtn.innerHTML = "&#10799";
+
+  // for (i = 1; i < ingredientBtnCollection.length; i++) {
+  //   document.getElementById("add&del-btn").getElementsByTagName("button")[
+  //     i
+  //   ].onclick = deleteItem(event);
 };
+
+// function deleteItem(event) {
+//   // the first btn is the add btn
+//   // window.onload = () => {
+//   console.log("AAAAA");
+//   // const ingredientBoxParent = document.getElementById("ingredient-box-parent");
+
+//   for (i = 1; i < ingredientBtnCollection.length; i++) {
+//     document.getElementById("add&del-btn").getElementsByTagName("button")[
+//       i
+//     ].onclick = event => {
+//       document
+//         .querySelector(`#ingredient-box-parent :nth-child(${i})`)
+//         .remove();
+//     };
+
+// addEventListener("click", function() {
+// ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
+// });
+
+// };
+// }
 
 // window.onload = function() {
 //   for (var i = 1; i < ingredientBtnCollection.length; i++) {
@@ -90,21 +117,6 @@ addIngredientBtn.onclick = () => {
 // const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
 
 /*HERE******************** */
-
-function delBtn() {
-  // the first btn is the add btn
-  // window.onload = () => {
-  console.log("AAAAA");
-  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
-  const delBtnParent = document.getElementById("add&del-btn");
-  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
-  for (i = 1; i < ingredientBtnCollection.length; i++) {
-    ingredientBtnCollection[i].addEventListener("click", function() {
-      ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
-    });
-  }
-  // };
-}
 
 // function delBtn(ingredientBtnCollection, targetNodeArr) {
 //   // the first btn is the add btn
@@ -119,3 +131,27 @@ function delBtn() {
 // }
 
 // del btn function for ingredient list
+
+function delBtn() {
+  // the first btn is the add btn
+  // window.onload = () => {
+  console.log("AAAAA");
+  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
+  const delBtnParent = document.getElementById("add&del-btn");
+  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+  for (i = 1; i < ingredientBtnCollection.length; i++) {
+    ingredientBtnCollection[i].addEventListener("click", function() {
+      document
+        .querySelector(`#ingredient-box-parent :nth-child(${i + 1})`)
+        .remove();
+      document.querySelector(`#qty-box-parent :nth-child(${i + 1})`).remove();
+      document.querySelector(`#unit-box-parent :nth-child(${i + 1})`).remove();
+      document
+        .getElementById("add&del-btn")
+        .getElementsByTagName("button")
+        [i].remove();
+      // ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
+    });
+  }
+  // };document.getElementById("qty-box-parent");
+}
