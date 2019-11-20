@@ -11,34 +11,57 @@
     </div>
 
 
-    <div class="recipe-img-container col-md-5">
+    <div class="recipe-img-container col-md-4">
       <img src="{{userProfile.photo}}" alt="user-photo" class="recipe-img">
     </div>
 
-    <div class="recipe-layout-right col-md-7">
+    <div class="recipe-layout-right col-md-8">
 
       <div class="row">
-
         <div class="col-12">
           <h1>{{userProfile.username}}</h1>
         </div>
+        {{#if loggedIn}}
+        {{#if diferentUser}}
+        {{#if isFollowing}}
+        <div class="recipe-lines col-12">
+          <button class="dish-tag-1" id="follow-button">
+            <span id="follow-span">Following</span>
+          </button>
+        </div>
+        {{else}}
+        <div class="recipe-lines col-12">
+          <button class="dish-tag-1" id="follow-button">
+            <span id="follow-span">Follow</span>
+          </button>
+        </div>
+        {{/if}}
+        {{/if}}
+        {{/if}}
 
-        <div class="recipe-lines col-lg-4">
-          <a href="/recipes/likes/{{userProfile.likedRecipes}}">
-            <span id="dish-tag-1">Liked Recipes: {{userProfile.likedRecipes.length}}</span>
-          </a>
+
+        <div class="recipe-lines col-lg-3">
+          {{!-- <a href="/recipes/user/{{userRecipes._id}}"> --}}
+          <span id="dish-tag-1">User Recipes: {{userRecipes.length}}</span>
+          {{!-- </a> --}}
         </div>
 
-        <div class="recipe-lines col-lg-4">
+        <div class="recipe-lines col-lg-3">
+          {{!-- <a href="/recipes/likes/{{userProfile._id}}"> --}}
+          <span id="dish-tag-1">Liked Recipes: {{userProfile.likedRecipes.length}}</span>
+          {{!-- </a> --}}
+        </div>
+
+        {{!-- <div class="recipe-lines col-lg-3">
           <a href="/recipes/followers/{{userProfile.followers}}">
             <span id="dish-tag-2">Followers: {{userProfile.followers.length}}</span>
           </a>
-        </div>
+        </div> --}}
 
-        <div class="recipe-lines col-lg-4">
-          <a href="/recipes/following/{{userProfile.following}}">
-            <span id="dish-tag-3">Following: {{userProfile.following.length}}</span>
-          </a>
+        <div class="recipe-lines col-lg-3">
+          {{!-- <a href="/recipes/following/{{userProfile._id}}"> --}}
+          <span id="dish-tag-3">Following: {{userProfile.following.length}}</span>
+          {{!-- </a> --}}
         </div>
       </div>
     </div>
@@ -101,3 +124,21 @@
   </div>
 </div>
 {{/if}}
+
+<script>
+  let followButton = document.getElementById('follow-button');
+  let followspan = document.getElementById('follow-span');
+  followButton.onclick = event => {
+    event.preventDefault(); // prevents the default behaviour of the form
+    axios.post("/like/{{userProfile._id}}").then(response => {
+      if (response.data) {
+        followspan.innerHTML = "Following";
+      } else {
+        followspan.innerHTML = "Follow";
+        return;
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+</script>
