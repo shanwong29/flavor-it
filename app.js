@@ -71,7 +71,7 @@ app.locals.title = "Flavor-it";
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 24 * 60 * 60 },
+    cookie: { maxAge: 24 * 60 * 60 * 60 },
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
