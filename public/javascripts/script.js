@@ -75,6 +75,7 @@ function createDelBtn(parent) {
   addElement(parent, "div", { class: "field-style form-group col-1" });
   newParent = parent.querySelectorAll("div")[3];
   addElement(newParent, "button", { class: "del-btn", type: "button" });
+  newParent.querySelector(".del-btn").innerText = `\u2715`;
   newParent.querySelector(".del-btn").onclick = deleteItem;
 }
 
