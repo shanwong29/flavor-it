@@ -66,7 +66,6 @@ router.post(
         filledIn: req.body,
         loggedIn: req.user
       });
-
       return;
     }
 
@@ -240,6 +239,101 @@ router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
       next(err);
     });
 });
+
+router.post(
+  "/:recipeId/update",
+  uploadCloud.single("imagePath"),
+  async (req, res, next) => {
+    const recipeId = req.params.recipeId;
+    let ingredients = [];
+    let warning = "";
+
+    // check if the required inputs are empty
+
+    if (!req.body.dishType) {
+      warning = "Please select Dish Type";
+    }
+
+    if (!req.body.method) {
+      warning = "Please provide the cooking methods";
+    }
+
+    if (req.body.name === "") {
+      warning = "Ingredient name can't be empty";
+    }
+    if (typeof req.body.name === "object") {
+      req.body.name.forEach(element => {
+        if (element === "") {
+          warning = "Ingredient name can't be empty";
+        }
+      });
+    }
+    if (!req.body.portions) {
+      warning = "Please enter portion(s)";
+    }
+
+    if (!req.body.preparationTime) {
+      warning = "Please enter preparation time";
+    }
+
+    if (!req.body.title) {
+      warning = "Recipe title can't be empty";
+    }
+
+    if (warning) {
+      res.render("recipe/recipe-form", {
+        warning,
+        filledIn: req.body,
+        loggedIn: req.user
+      });
+      return;
+    }
+
+    if (typeof req.body.name === "string") {
+      let obj = {
+        name: req.body.name.trim(),
+        qty: req.body.qty,
+        unit: req.body.unit
+      };
+      ingredients.push(obj);
+    } else {
+      req.body.name.forEach((element, index) => {
+        let obj = {
+          name: element.trim(),
+          qty: req.body.qty[index],
+          unit: req.body.unit[index]
+        };
+        ingredients.push(obj);
+      });
+    }
+
+    let title = req.body.title.trim();
+    let source = req.body.source.trim();
+    let method = req.body.method.trim().split("\n");
+
+    let recipe = await Recipe.findById(req.params.recipeId);
+
+    let recipeImagePath = recipe.image;
+    let imagePath = req.file ? req.file.url : recipeImagePath;
+
+    Recipe.findByIdAndUpdate(req.params.recipeId, {
+      title,
+      ingredients,
+      dishType: req.body.dishType,
+      preparationTime: req.body.preparationTime,
+      method,
+      portions: req.body.portions,
+      source,
+      image: imagePath
+    })
+      .then(() => {
+        res.redirect(`/recipe/${recipeId}`);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+);
 
 //delete recipe
 router.get("/:recipeId/delete", (req, res, next) => {

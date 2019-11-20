@@ -3,13 +3,13 @@
 </div>
 
 
-<form action="/recipe/create" method="POST" enctype="multipart/form-data">
+<form action="/recipe/{{recipe._id}}/update" method="POST" enctype="multipart/form-data">
 
   <div class="container-fluid recipe-layout-container">
     <div class="recipe-layout-top row">
       <div class="recipe-img-container col-md-5">
         <input id="image" type="file" name="imagePath">
-        <img src="{{recipe.image}}" alt="">
+
       </div>
 
       <div class="recipe-layout-right col-md-7">
@@ -62,8 +62,7 @@
 
           <div class="form-group col-12">
             <label for="source">Source / Additional Info: </label>
-            <textarea class="form-control" name="source" maxlength="200">{{recipe.source}}
-              </textarea>
+            <textarea class="form-control" name="source" maxlength="200">{{recipe.source}}</textarea>
             <p id="source-note">
               If you are not the original author of this recipe , enter the original author's name or source here to
               give
@@ -137,7 +136,7 @@
       <div id="method" class="col-md-6">
         <h3>Method: *</h3>
         <textarea class="form-control" name="method" rows="10"
-          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#each recipe.method}}{{this}}&#10;{{/each}}</textarea>
+          placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#each recipe.method}}{{this}}{{/each}}</textarea>
 
 
       </div>
@@ -149,7 +148,7 @@
   <br>
   <div class="form-row d-flex justify-content-center">
     <div class="rol">
-      <button class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-success">Submit</button>
     </div>
   </div>
   <br>
