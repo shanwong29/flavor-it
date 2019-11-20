@@ -95,28 +95,42 @@
         <div class="form-row">
           <h3 class="col-12">Ingredients: *</h3>
 
-          <div id="ingredient-box-parent" class="form-group col-5">
-            <input class="form-control" type="text" name="name" placeholder="e.g. Apple">
+          <div class="container-fluid" id="the-great-div">{{!--here is the big container--}}
+
+            {{!--below is the each row , form here, you need to create all--}}
+            <div class="row"> {{!--eachRowDiv--}}
+              <div class="field-style form-group col-5">
+                <input class="form-control" type="text" name="name" placeholder="e.g. Apple">
+              </div>
+
+              <div class="field-style form-group col-3">
+                <input class="form-control" type="number" name="qty" placeholder="qty">
+              </div>
+
+              <div class="field-style form-group col-3">
+                <select name="unit" class="form-control unit-selector">
+                  <option value="">unit</option>
+                  <option value="">N/A</option>
+                  <option value="gram">gram</option>
+                  <option value="ml">ml</option>
+                  <option value="teaspoon">teaspoon</option>
+                  <option value="tablespoon">tablespoon</option>
+                </select>
+              </div>
+
+              <div class="field-style form-group col-1">
+                <button id="add-ingredient-btn" type="button">&#43</button>
+              </div>
+            </div>
+
+            {{!-- till here --}}
+
+
+
+
+
           </div>
 
-          <div id="qty-box-parent" class="form-group col-2">
-            <input class="form-control" type="number" name="qty" placeholder="qty">
-          </div>
-
-          <div id="unit-box-parent" class="form-group col-3">
-            <select name="unit" class="form-control unit-selector">
-              <option value="">unit</option>
-              <option value="">N/A</option>
-              <option value="gram">gram</option>
-              <option value="ml">ml</option>
-              <option value="teaspoon">teaspoon</option>
-              <option value="tablespoon">tablespoon</option>
-            </select>
-          </div>
-
-          <div id="add&del-btn" class="form-group col-1">
-            <button id="add-ingredient-btn" type="button">&#43</button>
-          </div>
         </div>
       </div>
 

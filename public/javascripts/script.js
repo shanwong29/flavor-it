@@ -14,39 +14,44 @@ function addElement(parentClass, newEl, attrObj) {
   parentClass.appendChild(child);
 }
 
-const addIngredientBtn = document.getElementById("add-ingredient-btn");
+function createIngredientNameFleidDiv(parent) {
+  console.log("ingredientName Feleid");
+  let attr = { class: "field-style form-group col-5" };
+  addElement(parent, "div", attr);
+}
 
-addIngredientBtn.onclick = () => {
-  delBtn();
-  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
-  const qtyBoxParent = document.getElementById("qty-box-parent");
-  const selectParent = document.getElementById("unit-box-parent");
-  const delBtnParent = document.getElementById("add&del-btn");
-  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
+function createQtyFieldDiv(parent) {
+  console.log("QTY");
+  let attr = { class: "field-style form-group col-3" };
+  addElement(parent, "div", attr);
+}
 
-  const NameInputAttr = {
-    class: "form-control",
-    type: "text",
-    name: "name"
-  };
-  addElement(ingredientBoxParent, "input", NameInputAttr);
+function createUnitFieldDiv(parent) {
+  console.log("UNIT");
+  let attr = { class: "field-style form-group col-3" };
+  addElement(parent, "div", attr);
+}
 
-  const qtyInputAttr = {
-    class: "form-control",
-    type: "number",
-    name: "qty"
-  };
-  addElement(qtyBoxParent, "input", qtyInputAttr);
+function createIngredientNameInput(parent) {
+  let newParent = parent.querySelectorAll("div")[0];
+  let attr = { class: "form-control", type: "text", name: "name" };
+  addElement(newParent, "input", attr);
+}
 
-  let selectAttr = {
-    class: "form-control unit-selector",
-    name: "unit"
-  };
-  addElement(selectParent, "select", selectAttr);
+function createQtyFieldInput(parent) {
+  let newParent = parent.querySelectorAll("div")[1];
+  let attr = { class: "form-control", type: "number", name: "qty" };
+  addElement(newParent, "input", attr);
+}
 
-  let selectCollection = selectParent.getElementsByClassName("unit-selector");
-  let lastSelectEl = selectCollection[selectCollection.length - 1];
+function createUnitSelector(parent) {
+  let newParent = parent.querySelectorAll("div")[2];
+  let attr = { name: "unit", class: "form-control unit-selector" };
+  addElement(newParent, "select", attr);
+}
 
+function createUnitOptions(parent) {
+  let newParent = parent.querySelector("select");
   let optionAttr = {
     0: { value: "" },
     1: { value: "N/A" },
@@ -56,102 +61,42 @@ addIngredientBtn.onclick = () => {
     5: { value: "tablespoon" }
   };
 
-  for (
-    let numOfUnitOption = 0;
-    numOfUnitOption < Object.keys(optionAttr).length;
-    numOfUnitOption++
-  ) {
-    addElement(lastSelectEl, "option", optionAttr[numOfUnitOption]);
-    if (numOfUnitOption > 0) {
-      lastSelectEl.getElementsByTagName("option")[numOfUnitOption].innerText =
-        optionAttr[numOfUnitOption].value;
+  for (let i = 0; i < Object.keys(optionAttr).length; i++) {
+    addElement(newParent, "option", optionAttr[i]);
+    if (i > 0) {
+      newParent.getElementsByTagName("option")[i].innerText =
+        optionAttr[i].value;
     }
   }
-  lastSelectEl.getElementsByTagName("option")[0].innerText = "unit";
-
-  let delBtnAttr = {
-    type: "button",
-    class: "del-btn"
-  };
-  addElement(delBtnParent, "button", delBtnAttr);
-
-  const lastDelBtn =
-    ingredientBtnCollection[ingredientBtnCollection.length - 1];
-  lastDelBtn.innerHTML = "&#10799";
-
-  // for (i = 1; i < ingredientBtnCollection.length; i++) {
-  //   document.getElementById("add&del-btn").getElementsByTagName("button")[
-  //     i
-  //   ].onclick = deleteItem(event);
-};
-
-// function deleteItem(event) {
-//   // the first btn is the add btn
-//   // window.onload = () => {
-//   console.log("AAAAA");
-//   // const ingredientBoxParent = document.getElementById("ingredient-box-parent");
-
-//   for (i = 1; i < ingredientBtnCollection.length; i++) {
-//     document.getElementById("add&del-btn").getElementsByTagName("button")[
-//       i
-//     ].onclick = event => {
-//       document
-//         .querySelector(`#ingredient-box-parent :nth-child(${i})`)
-//         .remove();
-//     };
-
-// addEventListener("click", function() {
-// ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
-// });
-
-// };
-// }
-
-// window.onload = function() {
-//   for (var i = 1; i < ingredientBtnCollection.length; i++) {
-//     ingredientBtnCollection[i].onclick = delIngredientFunc;
-//   }
-// };
-
-// const delIngredients = [ingredientBoxParent, qtyBoxParent];
-// const delIngredientFunc = delBtn(ingredientBtnCollection, delIngredients);
-
-/*HERE******************** */
-
-// function delBtn(ingredientBtnCollection, targetNodeArr) {
-//   // the first btn is the add btn
-//   for (i = 1; i < ingredientBtnCollection.length; i++) {
-//     console.log("AAAAA");
-//     ingredientBtnCollection[i].onclick = function() {
-//       targetNodeArr.forEach(node => {
-//         node.removeChild(node.childNodes[i]);
-//       });
-//     };
-//   }
-// }
-
-// del btn function for ingredient list
-
-function delBtn() {
-  // the first btn is the add btn
-  // window.onload = () => {
-  console.log("AAAAA");
-  const ingredientBoxParent = document.getElementById("ingredient-box-parent");
-  const delBtnParent = document.getElementById("add&del-btn");
-  const ingredientBtnCollection = delBtnParent.getElementsByTagName("button");
-  for (i = 1; i < ingredientBtnCollection.length; i++) {
-    ingredientBtnCollection[i].addEventListener("click", function() {
-      document
-        .querySelector(`#ingredient-box-parent :nth-child(${i + 1})`)
-        .remove();
-      document.querySelector(`#qty-box-parent :nth-child(${i + 1})`).remove();
-      document.querySelector(`#unit-box-parent :nth-child(${i + 1})`).remove();
-      document
-        .getElementById("add&del-btn")
-        .getElementsByTagName("button")
-        [i].remove();
-      // ingredientBoxParent.removeChild(ingredientBoxParent.childNodes[i]);
-    });
-  }
-  // };document.getElementById("qty-box-parent");
+  newParent.getElementsByTagName("option")[0].innerText = "unit";
 }
+
+function createDelBtn(parent) {
+  addElement(parent, "div", { class: "field-style form-group col-1" });
+  newParent = parent.querySelectorAll("div")[3];
+  addElement(newParent, "button", { class: "del-btn", type: "button" });
+  newParent.querySelector(".del-btn").onclick = deleteItem;
+}
+
+function deleteItem(e) {
+  document
+    .getElementById("the-great-div")
+    .removeChild(e.currentTarget.parentNode.parentNode);
+}
+
+document.getElementById("add-ingredient-btn").onclick = () => {
+  let eachRowDiv = document.createElement("div");
+  eachRowDiv.setAttribute("class", "row");
+
+  console.log("AAA");
+  let parent = document.getElementById("the-great-div");
+  createIngredientNameFleidDiv(eachRowDiv);
+  createQtyFieldDiv(eachRowDiv);
+  createUnitFieldDiv(eachRowDiv);
+  createIngredientNameInput(eachRowDiv);
+  createQtyFieldInput(eachRowDiv);
+  createUnitSelector(eachRowDiv);
+  createUnitOptions(eachRowDiv);
+  createDelBtn(eachRowDiv);
+  parent.appendChild(eachRowDiv);
+};
