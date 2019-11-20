@@ -120,6 +120,7 @@ router.get("/:recipeId", (req, res, next) => {
     .populate("creator")
     .then(doc => {
       let isSameUser = false;
+      let isSourceFilled = false;
       if (req.user) {
         const user = req.user.username;
         const creator = doc.creator.username;
@@ -127,10 +128,16 @@ router.get("/:recipeId", (req, res, next) => {
           isSameUser = true;
         }
       }
+
+      if (doc.source) {
+        isSourceFilled = true;
+      }
+
       res.render("recipe/recipe-details", {
         recipe: doc,
         loggedIn: req.user,
-        isSameUser
+        isSameUser,
+        isSourceFilled
       });
     })
     .catch(err => {
