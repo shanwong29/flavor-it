@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-// const uploadCloud = require("../config/cloudinary");
+// Cloudinary
+const uploadCloud = require("../config/cloudinary");
 
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
@@ -133,6 +134,36 @@ router.post("/follow/:userId", (req, res, next) => {
           return;
         });
       }
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+// User Edit photo
+router.post(
+  "/:userId/edit",
+  uploadCloud.single("imagePath"),
+  loginCheck(),
+  (req, res, next) => {
+    const defaultUserImage =
+      "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";
+    let imagePath = req.file ? req.file.url : defaultUserImage;
+    User.findByIdAndUpdate(req.params.userId, { photo: imagePath })
+      .then(user => {
+        res.redirect(`/${user.username}`);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+);
+
+// User delete account
+router.get("/:userId/delete", loginCheck(), (req, res, next) => {
+  User.findByIdAndDelete(req.params.userId)
+    .then(user => {
+      res.redirect("/");
     })
     .catch(err => {
       next(err);

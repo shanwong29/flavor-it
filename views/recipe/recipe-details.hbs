@@ -118,6 +118,11 @@
 <br>
 
 <script>
+  // delete recipe
+  document.getElementById("del-recipe-btn").onclick = event => {
+    alert("Comfirm to delete this recipe.")
+  }
+
   // Like Button
   let likeButton = document.getElementById('like-button');
   likeButton.onclick = event => {
@@ -134,9 +139,4 @@
       console.log(err);
     })
   }
-  //
-  document.getElementById("del-recipe-btn").onclick = event => {
-    alert("Comfirm to delete this recipe.")
-  }
-
 </script>
