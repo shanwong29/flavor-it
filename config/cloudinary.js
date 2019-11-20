@@ -14,10 +14,10 @@ const storage = cloudinaryStorage({
   allowedFormats: ["jpg", "png"],
   transformation: [
     {
-      width: 250,
-      height: 250,
-      crop: "thumb",
-      gravity: "face"
+      width: 500,
+      height: 500,
+      crop: "scale"
+      // gravity: "face"
       // radius: "max",
       // background: "rgb:174b5e" // need to figure out if there's a way to add multiple formats. otherwise this wont work
     }

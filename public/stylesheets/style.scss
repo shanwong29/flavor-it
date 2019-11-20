@@ -224,3 +224,8 @@ body {
 .follow-btn-off {
   margin-left: 0.5rem;
 }
+
+[like="true"] {
+  background-color: brown;
+  color: white;
+}

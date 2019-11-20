@@ -3,6 +3,7 @@ const router = express.Router();
 const uploadCloud = require("../config/cloudinary");
 
 const Recipe = require("../models/Recipe");
+const User = require("../models/User");
 
 const loginCheck = () => {
   return (req, res, next) => {
@@ -14,10 +15,12 @@ const loginCheck = () => {
   };
 };
 
+// Recipe Create GET
 router.get("/create", loginCheck(), (req, res) => {
   res.render("recipe/recipe-form", { loggedIn: req.user });
 });
 
+// Recipe Create POST
 router.post(
   "/create",
   uploadCloud.single("imagePath"),
@@ -115,30 +118,111 @@ router.post(
   }
 );
 
+// Recipe Details
 router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
       let isSameUser = false;
       let isSourceFilled = false;
+      let isLiking = false;
+      if (doc.source) {
+        isSourceFilled = true;
+      }
       if (req.user) {
         const user = req.user.username;
         const creator = doc.creator.username;
         if (user === creator) {
           isSameUser = true;
         }
+        User.findById(req.user._id).then(user => {
+          user.likedRecipes.find(recipeId => {
+            if (recipeId.toString() == doc._id.toString()) {
+              isLiking = true;
+            }
+          });
+          res.render("recipe/recipe-details", {
+            recipe: doc,
+            loggedIn: req.user,
+            isSameUser,
+            isSourceFilled,
+            isLiking
+          });
+        });
+      } else {
+        res.render("recipe/recipe-details", {
+          recipe: doc,
+          loggedIn: req.user,
+          isSameUser,
+          isSourceFilled,
+          isLiking
+        });
       }
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
-      if (doc.source) {
-        isSourceFilled = true;
-      }
-
-      res.render("recipe/recipe-details", {
-        recipe: doc,
-        loggedIn: req.user,
-        isSameUser,
-        isSourceFilled
+// Like Recipe
+router.post("/like/:recipeId", (req, res, next) => {
+  const recipeId = req.params.recipeId;
+  const userLoggedId = req.user._id;
+  User.findById(userLoggedId)
+    .then(user => {
+      let isLiking = false;
+      user.likedRecipes.find(id => {
+        if (id == recipeId) {
+          isLiking = true;
+        }
       });
+      if (!isLiking) {
+        User.findByIdAndUpdate(
+          userLoggedId,
+          {
+            $push: { likedRecipes: recipeId }
+          },
+          {
+            new: true
+          }
+        ).then(response => {
+          Recipe.findByIdAndUpdate(
+            recipeId,
+            {
+              $inc: { likes: 1 }
+            },
+            {
+              new: true
+            }
+          ).then(recipe => {
+            res.json(isLiking);
+            return;
+          });
+        });
+      } else {
+        User.findByIdAndUpdate(
+          userLoggedId,
+          {
+            $pull: { likedRecipes: recipeId }
+          },
+          {
+            new: true
+          }
+        ).then(response => {
+          Recipe.findByIdAndUpdate(
+            recipeId,
+            {
+              $inc: { likes: -1 }
+            },
+            {
+              new: true
+            }
+          ).then(recipe => {
+            res.json(isLiking);
+            return;
+          });
+        });
+      }
     })
     .catch(err => {
       next(err);
@@ -168,60 +252,5 @@ router.get("/:recipeId/delete", (req, res, next) => {
       next(err);
     });
 });
+
 module.exports = router;
-
-// router.post(
-//   "/create",
-//   uploadCloud.single("imagePath"),
-//   loginCheck(),
-//   (req, res) => {
-//     if (!req.body.title) {
-//       res.render("recipe/recipe-form", {
-//         message: "Recipe name can't be empty"
-//       });
-//       return;
-//     }
-//     if (req.body.dishType === "") {
-//       res.render("recipe/recipe-form", {
-//         message: "Please select Dish Type"
-//       });
-//       return;
-//     }
-
-//     if (req.body.preparationTime === "") {
-//       res.render("recipe/recipe-form", {
-//         message: "Please enter preparation time"
-//       });
-//       return;
-//     }
-//     if (req.body.portions === "") {
-//       res.render("recipe/recipe-form", {
-//         message: "Please enter portion(s)"
-//       });
-//       return;
-//     }
-
-//     //check ingredient field
-//     if (req.body.name === "") {
-//       res.render("recipe/recipe-form", {
-//         message: "Ingredient name can't be empty"
-//       });
-//       return;
-//     }
-//     if (typeof req.body.name === "object") {
-//       req.body.name.forEach(element => {
-//         if (element === "") {
-//           res.render("recipe/recipe-form", {
-//             message: "Ingredient name can't be empty"
-//           });
-//         }
-//       });
-//       return;
-//     }
-
-//     if (req.body.method === "") {
-//       res.render("recipe/recipe-form", {
-//         message: "Please provide the cooking methods"
-//       });
-//       return;
-//     }

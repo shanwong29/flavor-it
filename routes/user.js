@@ -52,7 +52,7 @@ router.get("/:username", (req, res) => {
     });
 });
 
-router.post("/like/:userId", (req, res, next) => {
+router.post("/follow/:userId", (req, res, next) => {
   const userId = req.params.userId;
   const userLogged = req.user._id;
   if (userId == userLogged) {

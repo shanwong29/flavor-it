@@ -130,7 +130,7 @@
   let followspan = document.getElementById('follow-span');
   followButton.onclick = event => {
     event.preventDefault(); // prevents the default behaviour of the form
-    axios.post("/like/{{userProfile._id}}").then(response => {
+    axios.post("/follow/{{userProfile._id}}").then(response => {
       if (response.data) {
         followspan.innerHTML = "Following";
       } else {
