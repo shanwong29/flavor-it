@@ -75,7 +75,7 @@ body {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   padding: 5vh 2vw;
 
@@ -83,7 +83,7 @@ body {
     width: 17vw;
 
     text-align: center;
-    margin: 0 0 5vh;
+    margin: 0 2vw 5vh 0;
 
     background-color: #dc3545;
 

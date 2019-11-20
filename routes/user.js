@@ -15,6 +15,7 @@ const loginCheck = () => {
   };
 };
 
+// User Profile
 router.get("/:username", (req, res) => {
   let user = req.params.username;
   let diferentUser = true;
@@ -52,6 +53,44 @@ router.get("/:username", (req, res) => {
     });
 });
 
+// User following
+router.get("/following/:userName", (req, res, next) => {
+  const userName = req.params.userName;
+  User.findOne({ username: userName })
+    .populate("following")
+    .then(user => {
+      res.render("user/following", { userProfile: user });
+    })
+    .catch(err => console.log(err));
+});
+
+// User Recipes
+router.get("/recipes/:userName", (req, res, next) => {
+  const userName = req.params.userName;
+  User.findOne({ username: userName })
+    .then(user => {
+      Recipe.find({ creator: user._id }).then(recipes => {
+        res.render("user/recipes", { recipes, userProfile: user });
+      });
+    })
+    .catch(err => console.log(err));
+});
+
+// User Likes
+router.get("/likes/:userName", (req, res, next) => {
+  const userName = req.params.userName;
+  User.findOne({ username: userName })
+    .populate("likedRecipes")
+    .then(user => {
+      res.render("user/likes", {
+        recipes: user.likedRecipes,
+        userProfile: user
+      });
+    })
+    .catch(err => console.log(err));
+});
+
+// User follow POST
 router.post("/follow/:userId", (req, res, next) => {
   const userId = req.params.userId;
   const userLogged = req.user._id;
