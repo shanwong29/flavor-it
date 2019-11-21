@@ -8,7 +8,10 @@ const User = require("../models/User");
 router.get("/", (req, res, next) => {
   Recipe.find({})
     .then(recipes => {
-      res.render("index", { recipes, loggedIn: req.user });
+      const sortedRecipes = recipes.sort((a, b) => {
+        return b.likes - a.likes;
+      });
+      res.render("index", { recipes: sortedRecipes, loggedIn: req.user });
     })
     .catch(err => console.log(err));
 });

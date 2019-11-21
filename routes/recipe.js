@@ -147,7 +147,6 @@ router.get("/:recipeId", (req, res, next) => {
               isLiking = true;
             }
           });
-          console.log(doc.comments[0]);
           res.render("recipe/recipe-details", {
             recipe: doc,
             loggedIn: req.user,
@@ -360,7 +359,6 @@ router.get("/:recipeId/delete", (req, res, next) => {
 router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
-  console.log(author);
   Comment.create({
     content,
     author
@@ -386,7 +384,6 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           }
         })
         .then(recipe => {
-          console.log(recipe.comments[0]);
           res.json(recipe.comments);
         });
     })

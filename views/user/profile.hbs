@@ -5,16 +5,9 @@
 <div class="container-fluid recipe-layout-container">
 
   <div class="recipe-layout-top row">
-    {{#unless diferentUser}}
-    <div class="col-12 d-flex justify-content-end">
-      <a class="btn btn-outline-danger" id="delete-account" href="/{{userProfile._id}}/delete">&#10060; Delete
-        Account</a>
-    </div>
-    {{/unless}}
 
-
-    <div class="recipe-img-container col-md-4">
-      <img src="{{userProfile.photo}}" alt="user-photo" class="recipe-img">
+    <div class="user-img-container col-md-4">
+      <img src="{{userProfile.photo}}" alt="user-photo" class="user-img">
       {{#unless diferentUser}}
       <form action="/{{userProfile._id}}/edit" method="POST" enctype="multipart/form-data">
         <input class="btn btn-outline-info" id="image" type="file" name="imagePath" title="" style="font-size: 10px;">
@@ -23,123 +16,113 @@
       {{/unless}}
     </div>
 
-    <div class="recipe-layout-right col-md-8">
-
-      <div class="row">
-        <div class="col-12">
-          <h1>{{userProfile.username}}</h1>
-        </div>
+    <div class="col-md-8 user-title">
+      <div class="row align-items-center">
+        <h1 style="margin-right: 3vw;">{{userProfile.username}}</h1>
         {{#if loggedIn}}
         {{#if diferentUser}}
         {{#if isFollowing}}
-        <div class="recipe-lines col-12">
-          <button class="dish-tag-1" id="follow-button">
-            <span id="follow-span">Following</span>
-          </button>
-        </div>
+        <button class="btn btn-danger" id="follow-button">
+          <span id="follow-span">Following</span>
+        </button>
         {{else}}
-        <div class="recipe-lines col-12">
-          <button class="dish-tag-1" id="follow-button">
-            <span id="follow-span">Follow</span>
-          </button>
-        </div>
+        <button class="btn btn-outline-danger" id="follow-button">
+          <span id="follow-span">Follow</span>
+        </button>
         {{/if}}
         {{/if}}
         {{/if}}
+        {{#unless diferentUser}}
+        <a class="btn btn-outline-danger" id="delete-account" href="/{{userProfile._id}}/delete">
+          &#10060; Delete Account</a>
+        {{/unless}}
+      </div>
 
-
-        <div class="recipe-lines col-lg-3">
-          {{!-- <a href="/recipes/user/{{userRecipes._id}}"> --}}
-          <span id="dish-tag-1">User Recipes: {{userRecipes.length}}</span>
-          {{!-- </a> --}}
+      <div class="row d-flex align-items-center">
+        <div class="recipe-lines">
+          <span><strong>{{userRecipes.length}}</strong> Recipes</span>
         </div>
-
-        <div class="recipe-lines col-lg-3">
-          {{!-- <a href="/recipes/likes/{{userProfile._id}}"> --}}
-          <span id="dish-tag-1">Liked Recipes: {{userProfile.likedRecipes.length}}</span>
-          {{!-- </a> --}}
+        <div class="vl" style="border-left: 2px solid #ccc; height: 40px; margin: 0 2vw"></div>
+        <div class="recipe-lines">
+          <span><strong>{{userProfile.likedRecipes.length}}</strong> Likes</span>
         </div>
-
-        {{!-- <div class="recipe-lines col-lg-3">
-          <a href="/recipes/followers/{{userProfile.followers}}">
-            <span id="dish-tag-2">Followers: {{userProfile.followers.length}}</span>
-          </a>
-        </div> --}}
-
-        <div class="recipe-lines col-lg-3">
-          {{!-- <a href="/recipes/following/{{userProfile._id}}"> --}}
-          <span id="dish-tag-3">Following: {{userProfile.following.length}}</span>
-          {{!-- </a> --}}
+        <div class="vl" style="border-left: 2px solid #ccc; height: 40px; margin: 0 2vw"></div>
+        <div class="recipe-lines">
+          <span><strong>{{userProfile.following.length}}</strong> Following</span>
         </div>
       </div>
-    </div>
-  </div>
 
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="form-row recipe-layout-bottom">
-    <div class="col-md-12">
-      <div class="col-12 d-flex align-items-center">
-        <h1 class="col-10">User Recipes</h1>
-        <div class="col-2 d-flex justify-content-end">
-          <a class="btn btn-outline-info" href="/recipes/{{userProfile.username}}">See All</a>
-        </div>
-      </div>
-      <div class="flex-container">
-        {{#each userRecipes}}
-        <div class="each-recipe">
-          <a href="recipe/{{_id}}">
-            <img src="{{image}}">
-            <p>{{title}}</p>
-          </a>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="col-12 d-flex align-items-center">
-        <h1 class="col-10">Liked Recipes</h1>
-        <div class="col-2 d-flex justify-content-end">
-          <a class="btn btn-outline-info" href="/likes/{{userProfile.username}}">See All</a>
-        </div>
-      </div>
-      <div class="flex-container">
-        {{#each userProfile.likedRecipes}}
-        <div class="each-recipe">
-          <a href="recipe/{{this._id}}">
-            <img src="{{this.image}}">
-            <p>{{this.title}}</p>
-          </a>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-
-
-    <div class="col-md-12">
-      <div class="col-12 d-flex align-items-center">
-        <h1 class="col-10">Following</h1>
-        <div class="col-2 d-flex justify-content-end">
-          <a class="btn btn-outline-info" href="/following/{{userProfile.username}}">See All</a>
-        </div>
-      </div>
-      <div class="flex-container">
-        {{#each userProfile.following}}
-        <div class="each-recipe">
-          <a href="/{{username}}">
-            <img src="{{photo}}">
-            <p>{{username}}</p>
-          </a>
-        </div>
-        {{/each}}
-      </div>
     </div>
   </div>
 </div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="user-layout-recipes">
+
+  <div class="col-md-12">
+    <div class="row align-items-center">
+      <h1 class="col-10">User Recipes</h1>
+      <div class="col-2 d-flex justify-content-end">
+        <a class="btn btn-outline-info" href="/recipes/{{userProfile.username}}">See All</a>
+      </div>
+    </div>
+    <div class="flex-container">
+      {{#each userRecipes}}
+      <div class="each-recipe">
+        <a href="recipe/{{_id}}">
+          <img src="{{image}}">
+          <p>{{title}}</p>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="row align-items-center">
+      <h1 class="col-10">Liked Recipes</h1>
+      <div class="col-2 d-flex justify-content-end">
+        <a class="btn btn-outline-info" href="/likes/{{userProfile.username}}">See All</a>
+      </div>
+    </div>
+    <div class="flex-container">
+      {{#each userProfile.likedRecipes}}
+      <div class="each-recipe">
+        <a href="recipe/{{this._id}}">
+          <img src="{{this.image}}">
+          <p>{{this.title}}</p>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+
+  <div class="col-md-12">
+    <div class="row align-items-center">
+      <h1 class="col-10">Following</h1>
+      <div class="col-2 d-flex justify-content-end">
+        <a class="btn btn-outline-info" href="/following/{{userProfile.username}}">See All</a>
+      </div>
+    </div>
+    <div class="flex-container">
+      {{#each userProfile.following}}
+      <div class="each-recipe">
+        <a href="/{{username}}">
+          <img src="{{photo}}">
+          <p>{{username}}</p>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+</div>
+
 {{/if}}
 
 <script>
@@ -153,8 +136,10 @@
       axios.post("/follow/{{userProfile._id}}").then(response => {
         if (response.data) {
           followspan.innerHTML = "Following";
+          followButton.setAttribute("class", "btn btn-danger");
         } else {
           followspan.innerHTML = "Follow";
+          followButton.setAttribute("class", "btn btn-outline-danger");
           return;
         }
       }).catch(err => {

@@ -109,6 +109,25 @@ body {
   }
 }
 
+// USER profile
+.user-title {
+  margin-top: 5vh;
+}
+.user-img-container {
+  padding: 3vh 3vw;
+  .user-img {
+    border-radius: 50%;
+  }
+}
+.user-layout-recipes {
+  margin: 0 5vw;
+}
+
+//recipe-detail
+.recipe-img {
+  width: 100%;
+}
+
 //create-recipt-form
 .subpage-header,
 .recipe-details-header {
@@ -160,11 +179,6 @@ body {
   .warning-msg {
     color: red;
   }
-}
-
-//recipe-detail
-.recipe-img {
-  width: 100%;
 }
 
 .recipe-details-header {
