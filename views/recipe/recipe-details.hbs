@@ -9,7 +9,7 @@
     <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
       {{#if isSameUser}}
       <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
-      <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+      <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
         Recipe</a>
       {{/if}}
     </div>
@@ -63,16 +63,19 @@
           <button class="like-btn-off" like="true" id="like-button" title="Like and save the recipe">
             <span id="like-span">&#9829; Like</span>
           </button>
+          <h4 id="likes">{{recipe.likes}}</h4>
         </div>
         {{else}}
         <div class="recipe-lines col-12">
           <button class="like-btn-off" like="false" id="like-button" title="Like and save the recipe">
             <span id="like-span">&#9829; Like</span>
           </button>
+          <h4 id="likes">{{recipe.likes}}</h4>
         </div>
         {{/if}}
         {{/unless}}
         {{/if}}
+
       </div>
     </div>
   </div>
@@ -118,25 +121,33 @@
 <br>
 
 <script>
+  let deleteButton = document.getElementById("del-recipe-btn");
+  let likeButton = document.getElementById('like-button');
+  let likes = document.getElementById('likes');
+
+
   // delete recipe
-  document.getElementById("del-recipe-btn").onclick = event => {
-    alert("Comfirm to delete this recipe.")
+  if (deleteButton) {
+    deleteButton.onclick = () => {
+      alert("Comfirm to delete this recipe.")
+    }
   }
 
   // Like Button
-  let likeButton = document.getElementById('like-button');
-  likeButton.onclick = event => {
-    event.preventDefault(); // prevents the default behaviour of the form
-    axios.post("/recipe/like/{{recipe._id}}").then(response => {
-      console.log(response)
-      if (response.data) {
-        likeButton.setAttribute("like", "false");
-      } else {
-        likeButton.setAttribute("like", "true");
-        return;
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+  if (likeButton) {
+    likeButton.onclick = () => {
+      axios.post("/recipe/like/{{recipe._id}}").then(response => {
+        if (response.data.isLiking) {
+          likeButton.setAttribute("like", "false");
+          likes.innerHTML = response.data.recipe.likes;
+        } else {
+          likeButton.setAttribute("like", "true");
+          likes.innerHTML = response.data.recipe.likes;
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }
+
 </script>
