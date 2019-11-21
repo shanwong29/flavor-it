@@ -187,7 +187,15 @@
       }).then(response => {
         let commentContent = '<h2>Comments</h2>';
         response.data.forEach(comment => {
-          commentContent += `< h4 > ${comment.author.username}</h4 > <p>${comment.content}<p>`
+          commentContent += `
+          <div class="comment-container">
+            <div>
+              <img class="user-img" src="${comment.author.photo}" alt="">
+              <a href="/${comment.author.username}">${comment.author.username}</a>
+            </div>
+            <p>${comment.content}<p>
+          </div>`
+
         })
         document.getElementById("comment-box").innerHTML = commentContent;
         document.getElementById('comment').value = ""
