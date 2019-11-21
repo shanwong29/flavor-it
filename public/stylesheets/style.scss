@@ -280,12 +280,58 @@ body {
     color: black;
   }
 }
-@media (max-width: 576px) {
-  .flex-container {
-    justify-content: center;
-    .each-recipe {
-      width: 80vw;
-    }
+// LOGIN
+
+.login-form {
+  background-image: url("../images/bg-login.jpeg");
+  background-repeat: none;
+  background-size: cover;
+  height: 100vh;
+
+  text-align: center;
+  color: #dc3545;
+
+  .login-container {
+    width: 50vw;
+    padding-top: 10vh;
+  }
+  .input {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    border: 2px solid #dc3545;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.5s;
+  }
+  .input:focus {
+    width: 280px;
+    border-color: #ff4c45;
+  }
+
+  .button {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 0 auto 10px;
+    text-align: center;
+    border: 2px solid #dc3545;
+    padding: 14px 2vw;
+    outline: none;
+    color: #dc3545;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+
+  .button:hover {
+    background: #ff4c45;
+    color: white;
   }
 }
 
@@ -341,4 +387,30 @@ body {
   height: 11rem;
 
   padding: 5vh 2vw;
+}
+
+@media (max-width: 576px) {
+  .flex-container {
+    justify-content: center;
+    .each-recipe {
+      width: 80vw;
+    }
+  }
+
+  .top-home {
+    justify-content: flex-start;
+    .title-home {
+      height: 50vh;
+      margin-left: 10vw;
+      h1 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+      p {
+        display: none;
+      }
+    }
+  }
 }
