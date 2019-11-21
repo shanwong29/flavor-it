@@ -131,6 +131,7 @@ router.get("/:recipeId", (req, res, next) => {
       let isSameUser = false;
       let isSourceFilled = false;
       let isLiking = false;
+      let reversedComments = doc.comments.reverse();
 
       if (doc.source) {
         isSourceFilled = true;
@@ -147,13 +148,14 @@ router.get("/:recipeId", (req, res, next) => {
               isLiking = true;
             }
           });
-          console.log(doc.comments[0]);
+          // console.log(doc.comments[0]);
           res.render("recipe/recipe-details", {
             recipe: doc,
             loggedIn: req.user,
             isSameUser,
             isSourceFilled,
-            isLiking
+            isLiking,
+            reversedComments
           });
         });
       } else {
@@ -386,8 +388,7 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           }
         })
         .then(recipe => {
-          console.log(recipe.comments[0]);
-          res.json(recipe.comments);
+          res.json(recipe.comments.reverse());
         });
     })
     .catch(err => {

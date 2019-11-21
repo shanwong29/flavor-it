@@ -99,13 +99,13 @@
 
       <ul>
         {{#each recipe.ingredients}}
-        <li>{{this.name}} <span> {{this.qty}}</span> <span>{{this.unit}}</span></li>
+        <li>{{this.qty}} <span>{{this.unit}}</span> <span>{{this.name}}</span></li>
         {{/each}}
       </ul>
 
     </div>
 
-    <div id="method" class="col-md-8">
+    <div id="method" class="container col-md-8">
       <h3>Method:</h3>
 
       <ol>
@@ -120,12 +120,12 @@
     <div class="col-md-4">
       {{!-- for spacing --}}
     </div>
-    <div class="col-md-8" id="container">
+    <div class="col-md-8" id="comment-textarea-container">
       <form id="comment-form">
-        <label for="comment">Add a comment</label>
-        <input type="text" id="comment">
-        {{!-- <textarea name="comment" id="comment" cols="50" rows="5"></textarea>
-        <button id="add-comment">Add Comment</button> --}}
+        <input type="text" id="comment" placeholder="Add comments here....">
+
+        {{!-- <textarea name="comment" id="comment" placeholder="Text here..."></textarea>
+        <button></button> --}}
       </form>
 
     </div>
@@ -133,14 +133,20 @@
       {{!-- for spacing --}}
     </div>
     <div class="col-md-8" id="comment-box">
-      {{!-- {{#if recipe.comments}}
-      <h2>Comments</h2> --}}
+      {{#if reversedComments}}
+      {{#each reversedComments}}
+      <div class="each-comment-box m-3">
+        <div>
+          <img class="comment-user-img" src="{{author.photo}}" alt="">
+        </div>
+        <div class="ml-2">
+          <a href="/{{author.username}}">{{author.username}}</a>
+          <p>{{content}}</p>
+        </div>
+      </div>
 
-      {{#each recipe.comments}}
-      <img src="{{author.photo}}" alt="">
-      <a href="/{{author.username}}">{{author.username}}</a>
-      <p>{{content}}</p>
       {{/each}}
+      {{/if}}
     </div>
     {{/if}}
 
@@ -180,21 +186,24 @@
 
   //comment
   let comment = document.getElementById('comment-form')
+  //let comment = document.getElementById('add-comment')
   if (comment) {
     comment.onsubmit = event => {
       event.preventDefault();
       axios.post("/recipe/{{recipe._id}}/comment", {
         comment: document.getElementById('comment').value
       }).then(response => {
-        let commentContent = '<h2>Comments</h2>';
+        let commentContent = '';
         response.data.forEach(comment => {
           commentContent += `
           <div class="each-comment-container">
             <div>
-              <img class="user-img" src="${comment.author.photo}" alt="">
-              <a href="/${comment.author.username}">${comment.author.username}</a>
+              <img class="comment-user-img" src="${comment.author.photo}" alt="">
             </div>
-            <p>${comment.content}<p>
+            <div>
+              <a href="/${comment.author.username}">${comment.author.username}</a>
+              <p>${comment.content}<p>
+            </div>
           </div>`
 
         })
