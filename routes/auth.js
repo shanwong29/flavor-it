@@ -35,11 +35,6 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
     "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";
   let imagePath = req.file ? req.file.url : defaultUserImage;
 
-  // to upload the user photo
-  // const userPhoto = req.user.photo;
-  // let imagePath = req.file ? req.file.url : req.user.imagePath;
-  // console.log("imagePath: ", imagePath);
-
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
     return;
@@ -63,7 +58,7 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
     newUser
       .save()
       .then(() => {
-        res.redirect("/");
+        res.redirect("/auth/login");
       })
       .catch(err => {
         res.render("auth/signup", { message: "Something went wrong" });

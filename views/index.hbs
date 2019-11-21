@@ -4,7 +4,11 @@
     <h2>Your personals recipes</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nam cumque voluptatibus voluptatum molestias
       provident error doloremque? Ipsum.</p>
+    {{#if loggedIn}}
+    <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
+    {{else}}
     <a class="btn btn-outline-danger" href="/auth/signup">Create your account</a>
+    {{/if}}
   </div>
 </div>
 <br>
