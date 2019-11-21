@@ -16,8 +16,8 @@ const storage = cloudinaryStorage({
     {
       width: 500,
       height: 500,
-      crop: "scale"
-      // gravity: "face"
+      crop: "lfill",
+      gravity: "face"
       // radius: "max",
       // background: "rgb:174b5e" // need to figure out if there's a way to add multiple formats. otherwise this wont work
     }
