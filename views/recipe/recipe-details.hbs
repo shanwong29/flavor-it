@@ -133,11 +133,12 @@
       {{!-- for spacing --}}
     </div>
     <div class="col-md-8" id="comment-box">
-      {{#if recipe.comments}}
-      <h2>Comments</h2>
-      {{/if}}
+      {{!-- {{#if recipe.comments}}
+      <h2>Comments</h2> --}}
+
       {{#each recipe.comments}}
-      <h4>{{author.username}}</h4>
+      <img src="{{author.photo}}" alt="">
+      <a href="/{{author.username}}">{{author.username}}</a>
       <p>{{content}}</p>
       {{/each}}
     </div>
@@ -187,7 +188,15 @@
       }).then(response => {
         let commentContent = '<h2>Comments</h2>';
         response.data.forEach(comment => {
-          commentContent += `< h4 > ${comment.author.username}</h4 > <p>${comment.content}<p>`
+          commentContent += `
+          <div class="each-comment-container">
+            <div>
+              <img class="user-img" src="${comment.author.photo}" alt="">
+              <a href="/${comment.author.username}">${comment.author.username}</a>
+            </div>
+            <p>${comment.content}<p>
+          </div>`
+
         })
         document.getElementById("comment-box").innerHTML = commentContent;
         document.getElementById('comment').value = ""
