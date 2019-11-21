@@ -18,7 +18,6 @@ router.get("/search", (req, res, next) => {
   const searchInput = req.query.searchInput;
   const option = req.query.options;
   const dishType = req.query.dishType;
-
   if (option === "recipe" && dishType) {
     Recipe.find({
       $and: [{ title: new RegExp(searchInput, "gi") }, { dishType: dishType }]
@@ -28,17 +27,22 @@ router.get("/search", (req, res, next) => {
       })
       .catch(err => console.log(err));
   } else if (option === "recipe") {
-    Recipe.find({ title: new RegExp(searchInput, "gi") })
+    Recipe.find({
+      title: new RegExp(searchInput, "gi")
+    })
       .then(recipes => {
         res.render("search", { recipes, loggedIn: req.user });
       })
       .catch(err => console.log(err));
   } else {
-    User.find({ username: new RegExp(searchInput, "gi") })
+    User.find({
+      username: new RegExp(searchInput, "gi")
+    })
       .then(users => {
         res.render("search", { users, loggedIn: req.user });
       })
       .catch(err => console.log(err));
   }
 });
+
 module.exports = router;

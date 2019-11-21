@@ -202,7 +202,7 @@ router.post("/like/:recipeId", (req, res, next) => {
               new: true
             }
           ).then(recipe => {
-            res.json(isLiking);
+            res.json({ isLiking, recipe });
             return;
           });
         });
@@ -225,7 +225,8 @@ router.post("/like/:recipeId", (req, res, next) => {
               new: true
             }
           ).then(recipe => {
-            res.json(isLiking);
+            res.json({ isLiking, recipe });
+
             return;
           });
         });

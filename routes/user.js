@@ -60,7 +60,7 @@ router.get("/following/:userName", (req, res, next) => {
   User.findOne({ username: userName })
     .populate("following")
     .then(user => {
-      res.render("user/following", { userProfile: user });
+      res.render("user/following", { userProfile: user, loggedIn: req.user });
     })
     .catch(err => console.log(err));
 });
@@ -71,7 +71,11 @@ router.get("/recipes/:userName", (req, res, next) => {
   User.findOne({ username: userName })
     .then(user => {
       Recipe.find({ creator: user._id }).then(recipes => {
-        res.render("user/recipes", { recipes, userProfile: user });
+        res.render("user/recipes", {
+          recipes,
+          userProfile: user,
+          loggedIn: req.user
+        });
       });
     })
     .catch(err => console.log(err));
@@ -85,7 +89,8 @@ router.get("/likes/:userName", (req, res, next) => {
     .then(user => {
       res.render("user/likes", {
         recipes: user.likedRecipes,
-        userProfile: user
+        userProfile: user,
+        loggedIn: req.user
       });
     })
     .catch(err => console.log(err));
@@ -161,9 +166,11 @@ router.post(
 
 // User delete account
 router.get("/:userId/delete", loginCheck(), (req, res, next) => {
-  User.findByIdAndDelete(req.params.userId)
-    .then(user => {
-      res.redirect("/");
+  Recipe.deleteMany({ creator: req.params.userId })
+    .then(recipes => {
+      User.findByIdAndDelete(req.params.userId).then(user => {
+        res.redirect("/");
+      });
     })
     .catch(err => {
       next(err);

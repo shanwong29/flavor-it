@@ -9,7 +9,7 @@
     <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
       {{#if isSameUser}}
       <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
-      <a class="btn btn-outline-danger" id="del-recipe-btn" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+      <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
         Recipe</a>
       {{/if}}
     </div>
@@ -69,16 +69,19 @@
           <button class="like-btn-off" like="true" id="like-button" title="Like and save the recipe">
             <span id="like-span">&#9829; Like</span>
           </button>
+          <h4 id="likes">{{recipe.likes}}</h4>
         </div>
         {{else}}
         <div class="recipe-lines col-12">
           <button class="like-btn-off" like="false" id="like-button" title="Like and save the recipe">
             <span id="like-span">&#9829; Like</span>
           </button>
+          <h4 id="likes">{{recipe.likes}}</h4>
         </div>
         {{/if}}
         {{/unless}}
         {{/if}}
+
       </div>
     </div>
   </div>
@@ -146,21 +149,19 @@
 
 
 <script>
-
-
-
-
   // Like Button
   let likeButton = document.getElementById('like-button');
-  if (likeButton) {
+  let likes = document.getElementById('likes');
 
-    likeButton.onclick = event => {
+  if (likeButton) {
+    likeButton.onclick = () => {
       axios.post("/recipe/like/{{recipe._id}}").then(response => {
-        if (response.data) {
+        if (response.data.isLiking) {
           likeButton.setAttribute("like", "false");
+          likes.innerHTML = response.data.recipe.likes;
         } else {
           likeButton.setAttribute("like", "true");
-          return;
+          likes.innerHTML = response.data.recipe.likes;
         }
       }).catch(err => {
         console.log(err);
@@ -168,21 +169,23 @@
     }
   }
 
-
+  // delete recipe
+  let deleteRecipe = document.getElementById("del-recipe-btn")
+  if (deleteRecipe) {
+    deleteRecipe.onclick = event => {
+      alert("Comfirm to delete this recipe?")
+    }
+  }
 
   //comment
-
   let comment = document.getElementById('comment-form')
-
   if (comment) {
-
     comment.onsubmit = event => {
       event.preventDefault();
       axios.post("/recipe/{{recipe._id}}/comment", {
         comment: document.getElementById('comment').value
       }).then(response => {
         let commentContent = '<h2>Comments</h2>';
-
         response.data.forEach(comment => {
           commentContent += `< h4 > ${comment.author.username}</h4 > <p>${comment.content}<p>`
         })
@@ -193,16 +196,5 @@
       })
     }
   }
-
-
-  // delete recipe
-  let deleteRecipe = document.getElementById("del-recipe-btn")
-  if (deleteRecipe) {
-
-    deleteRecipe.onclick = event => {
-      alert("Comfirm to delete this recipe.")
-    }
-  }
-
 
 </script>
