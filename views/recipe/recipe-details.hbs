@@ -96,31 +96,35 @@
   </div>
 
 
-  <br>
-  <br>
-  <br>
-  <br>
+
 
   <div class="form-row recipe-layout-bottom">
-    <div class="col-md-4">
+    <div class="col-md-4 mt-5 mb-5">
 
       <h3>Ingredients: </h3>
 
       <ul>
         {{#each recipe.ingredients}}
-        <li>{{this.name}} <span> {{this.qty}}</span> <span>{{this.unit}}</span></li>
+        <div class="mt-3 mb-3">
+          <li>{{this.qty}} <span>{{this.unit}}</span> <span>{{this.name}}</span></li>
+        </div>
         {{/each}}
+
       </ul>
 
     </div>
 
-    <div id="method" class="col-md-8">
+    <div id="method" class="container col-md-8 mt-5 mb-5">
       <h3>Method:</h3>
 
       <ol>
+
         {{#each recipe.method}}
-        <li>{{this}}</li>
+        <div class="mt-4 mb-4">
+          <li>{{this}}</li>
+        </div>
         {{/each}}
+
       </ol>
 
     </div>
@@ -129,26 +133,35 @@
     <div class="col-md-4">
       {{!-- for spacing --}}
     </div>
-    <div class="col-md-8" id="container">
-      <form id="comment-form">
-        <label for="comment">Add a comment</label>
-        <input type="text" id="comment">
-        {{!-- <textarea name="comment" id="comment" cols="50" rows="5"></textarea>
-        <button id="add-comment">Add Comment</button> --}}
-      </form>
+    <div class="col-md-8 mt-5" id="comment-textarea-container">
+
+      <textarea name="comment" id="comment" placeholder="Text here..."></textarea>
+      <p class="warning-msg"></p>
+      <div class="d-flex justify-content-end">
+        <form id="comment-form">
+          <button class="btn btn-outline-danger">add comment</button>
+        </form>
+      </div>
 
     </div>
     <div class="col-md-4">
       {{!-- for spacing --}}
     </div>
     <div class="col-md-8" id="comment-box">
-      {{#if recipe.comments}}
-      <h2>Comments</h2>
-      {{/if}}
-      {{#each recipe.comments}}
-      <h4>{{author.username}}</h4>
-      <p>{{content}}</p>
+      {{#if reversedComments}}
+      {{#each reversedComments}}
+      <div class="each-comment-box m-3">
+        <div>
+          <img class="comment-user-img" src="{{author.photo}}" alt="">
+        </div>
+        <div class="ml-2">
+          <a href="/{{author.username}}">{{author.username}}</a>
+          <p>{{content}}</p>
+        </div>
+      </div>
+
       {{/each}}
+      {{/if}}
     </div>
     {{/if}}
 
@@ -188,15 +201,26 @@
 
   //comment
   let comment = document.getElementById('comment-form')
-  if (comment) {
-    comment.onsubmit = event => {
-      event.preventDefault();
+
+  comment.onclick = event => {
+    event.preventDefault();
+    if (document.getElementById('comment').value !== "") {
       axios.post("/recipe/{{recipe._id}}/comment", {
         comment: document.getElementById('comment').value
       }).then(response => {
-        let commentContent = '<h2>Comments</h2>';
+        let commentContent = '';
         response.data.forEach(comment => {
-          commentContent += `< h4 > ${comment.author.username}</h4 > <p>${comment.content}<p>`
+          commentContent += `
+            <div class="each-comment-box m-3">
+              <div>
+                <img class="comment-user-img" src="${comment.author.photo}" alt="">
+              </div>
+              <div class="ml-2">
+                <a href="/${comment.author.username}">${comment.author.username}</a>
+                <p>${comment.content}<p>
+              </div>
+            </div>`
+
         })
         document.getElementById("comment-box").innerHTML = commentContent;
         document.getElementById('comment').value = ""
