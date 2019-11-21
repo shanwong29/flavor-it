@@ -7,14 +7,15 @@ body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-#nav {
+.nav-menu {
   width: 100vw;
-  height: 7vh;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
-  a {
-    margin-left: 15px;
+  .navbar-brand {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
   }
 }
 
@@ -59,8 +60,8 @@ body {
 
 // SEARCH ROW
 .searchRow {
-  height: 7vh;
   display: flex;
+  margin-bottom: 8px;
   form {
     display: flex;
     align-items: center;
@@ -108,7 +109,6 @@ body {
     }
   }
 }
-
 .verticalLine {
   border-left: 2px solid #dc3545;
   height: 40px;
@@ -257,4 +257,13 @@ body {
 .field-style {
   margin: 0;
   padding: 0;
+}
+
+@media (max-width: 576px) {
+  .flex-container {
+    justify-content: center;
+    .each-recipe {
+      width: 80vw;
+    }
+  }
 }

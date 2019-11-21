@@ -32,7 +32,7 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   const defaultUserImage =
-    "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";
+    "https://res.cloudinary.com/jeffmoraes/image/upload/v1574348835/images/unknown-user.jpg.jpg";
   let imagePath = req.file ? req.file.url : defaultUserImage;
 
   if (username === "" || password === "") {
