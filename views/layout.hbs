@@ -13,10 +13,8 @@
 </head>
 
 <body>
-  <div class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-    <div>
-      <a class="navbar-brand" href="/">FLAVOR IT</a>
-    </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light nav-menu">
+    <a class="navbar-brand" href="/">FLAVOR IT</a>
 
     <div class="searchRow">
       <form action="/search" method="get" class="input-group btn-group">
@@ -43,31 +41,19 @@
       </form>
     </div>
 
+
     <div>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          {{#if loggedIn}}
-          <li class="nav-item">
-            <a class="btn btn-outline-success" href="/{{loggedIn.username}}">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
-          </li>
-          {{else}}
-          <li class="nav-item">
-            <a class="btn btn-outline-success" href="/auth/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-success" href="/auth/signup">Signup</a>
-          </li>
-          {{/if}}
-        </ul>
-      </div>
+      {{#if loggedIn}}
+      <a class="btn btn-outline-success" href="/{{loggedIn.username}}">Profile</a>
+      <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
+      <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
+      {{else}}
+      <a class="btn btn-outline-success" href="/auth/login">Login</a>
+      <a class="btn btn-outline-success" href="/auth/signup">Signup</a>
+      {{/if}}
     </div>
-  </div>
+
+  </nav>
   {{{body}}}
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
