@@ -361,10 +361,6 @@ router.get("/:recipeId/delete", (req, res, next) => {
 router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
-<<<<<<< HEAD
-=======
-
->>>>>>> recipe
   Comment.create({
     content,
     author
@@ -390,11 +386,7 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           }
         })
         .then(recipe => {
-<<<<<<< HEAD
-          res.json(recipe.comments);
-=======
           res.json(recipe.comments.reverse());
->>>>>>> recipe
         });
     })
     .catch(err => {
