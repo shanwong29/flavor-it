@@ -4,6 +4,7 @@ const uploadCloud = require("../config/cloudinary");
 
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 
 const loginCheck = () => {
   return (req, res, next) => {
@@ -121,10 +122,16 @@ router.post(
 router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
+    .populate({
+      path: "comments",
+      model: "Comment",
+      populate: { path: "author", model: "User" }
+    })
     .then(doc => {
       let isSameUser = false;
       let isSourceFilled = false;
       let isLiking = false;
+
       if (doc.source) {
         isSourceFilled = true;
       }
@@ -140,6 +147,7 @@ router.get("/:recipeId", (req, res, next) => {
               isLiking = true;
             }
           });
+          console.log(doc.comments[0]);
           res.render("recipe/recipe-details", {
             recipe: doc,
             loggedIn: req.user,
@@ -341,6 +349,45 @@ router.get("/:recipeId/delete", (req, res, next) => {
   Recipe.deleteOne(query)
     .then(() => {
       res.redirect("/");
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+//comment
+router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
+  const content = req.body.comment;
+  const author = req.user._id;
+  console.log(author);
+  Comment.create({
+    content,
+    author
+  })
+    .then(comment => {
+      return Recipe.findOneAndUpdate(
+        { _id: req.params.recipeId },
+        {
+          $push: {
+            comments: comment._id
+          }
+        },
+        {
+          new: true
+        }
+      )
+        .populate({
+          path: "comments",
+          model: "Comment",
+          populate: {
+            path: "author",
+            model: "User"
+          }
+        })
+        .then(recipe => {
+          console.log(recipe.comments[0]);
+          res.json(recipe.comments);
+        });
     })
     .catch(err => {
       next(err);

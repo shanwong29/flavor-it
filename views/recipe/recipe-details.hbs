@@ -31,7 +31,7 @@
           <span id="dish-tag-1">{{recipe.dishType}}</span>
         </div>
 
-        <div class="recipe-lines col-lg-5">
+        <div class="recipe-lines col-lg-4">
           <div class="d-inline">
             <span id="dish-tag-2">cooks in &nbsp;&nbsp; {{recipe.preparationTime}} min</span>
           </div>
@@ -49,12 +49,18 @@
         </div>
         {{/if}}
 
+
+
         <div class="recipe-lines col-12">
           <h6 id="creator">Creator:</h6>
+
           <a href="/{{recipe.creator.username}}">
             <h4>{{recipe.creator.username}}</h4>
           </a>
+
         </div>
+
+
 
         {{#if loggedIn}}
         {{#unless isSameUser}}
@@ -84,7 +90,7 @@
   <br>
 
   <div class="form-row recipe-layout-bottom">
-    <div class="col-md-6">
+    <div class="col-md-4">
 
       <h3>Ingredients: </h3>
 
@@ -96,7 +102,7 @@
 
     </div>
 
-    <div id="method" class="col-md-6">
+    <div id="method" class="col-md-8">
       <h3>Method:</h3>
 
       <ol>
@@ -107,36 +113,96 @@
 
     </div>
 
+    {{#if loggedIn}}
+    <div class="col-md-4">
+      {{!-- for spacing --}}
+    </div>
+    <div class="col-md-8" id="container">
+      <form id="comment-form">
+        <label for="comment">Add a comment</label>
+        <input type="text" id="comment">
+        {{!-- <textarea name="comment" id="comment" cols="50" rows="5"></textarea>
+        <button id="add-comment">Add Comment</button> --}}
+      </form>
+
+    </div>
+    <div class="col-md-4">
+      {{!-- for spacing --}}
+    </div>
+    <div class="col-md-8" id="comment-box">
+      {{#if recipe.comments}}
+      <h2>Comments</h2>
+      {{/if}}
+      {{#each recipe.comments}}
+      <h4>{{author.username}}</h4>
+      <p>{{content}}</p>
+      {{/each}}
+    </div>
+    {{/if}}
+
+
   </div>
 </div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 <script>
-  // delete recipe
-  document.getElementById("del-recipe-btn").onclick = event => {
-    alert("Comfirm to delete this recipe.")
-  }
+
+
+
 
   // Like Button
   let likeButton = document.getElementById('like-button');
-  likeButton.onclick = event => {
-    event.preventDefault(); // prevents the default behaviour of the form
-    axios.post("/recipe/like/{{recipe._id}}").then(response => {
-      console.log(response)
-      if (response.data) {
-        likeButton.setAttribute("like", "false");
-      } else {
-        likeButton.setAttribute("like", "true");
-        return;
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+  if (likeButton) {
+
+    likeButton.onclick = event => {
+      axios.post("/recipe/like/{{recipe._id}}").then(response => {
+        if (response.data) {
+          likeButton.setAttribute("like", "false");
+        } else {
+          likeButton.setAttribute("like", "true");
+          return;
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }
+
+
+
+  //comment
+
+  let comment = document.getElementById('comment-form')
+
+  if (comment) {
+
+    comment.onsubmit = event => {
+      event.preventDefault();
+      axios.post("/recipe/{{recipe._id}}/comment", {
+        comment: document.getElementById('comment').value
+      }).then(response => {
+        let commentContent = '<h2>Comments</h2>';
+
+        response.data.forEach(comment => {
+          commentContent += `< h4 > ${comment.author.username}</h4 > <p>${comment.content}<p>`
+        })
+        document.getElementById("comment-box").innerHTML = commentContent;
+        document.getElementById('comment').value = ""
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  }
+
+
+  // delete recipe
+  let deleteRecipe = document.getElementById("del-recipe-btn")
+  if (deleteRecipe) {
+
+    deleteRecipe.onclick = event => {
+      alert("Comfirm to delete this recipe.")
+    }
+  }
+
+
 </script>
