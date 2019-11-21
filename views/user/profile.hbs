@@ -6,19 +6,19 @@
 
   <div class="recipe-layout-top row">
 
-    <div class="user-img-container col-md-4">
+    <div class="user-img-container col-md-5">
       <img src="{{userProfile.photo}}" alt="user-photo" class="user-img">
       {{#unless diferentUser}}
       <form action="/{{userProfile._id}}/edit" method="POST" enctype="multipart/form-data">
-        <input class="btn btn-outline-info" id="image" type="file" name="imagePath" title="" style="font-size: 10px;">
-        <button class="btn btn-outline-info">Edit Photo</button>
+        <input id="image" type="file" name="imagePath" style="font-size: 10px; margin-top: 20px">
+        <button class="btn btn-outline-info btn-sm">Edit Photo</button>
       </form>
       {{/unless}}
     </div>
 
-    <div class="col-md-8 user-title">
+    <div class="col-md-7 user-title">
       <div class="row align-items-center">
-        <h1 style="margin-right: 3vw;">{{userProfile.username}}</h1>
+        <h1 style="margin: 4vh 3vw 4vh 0;">{{userProfile.username}}</h1>
         {{#if loggedIn}}
         {{#if diferentUser}}
         {{#if isFollowing}}
@@ -42,11 +42,11 @@
         <div class="recipe-lines">
           <span><strong>{{userRecipes.length}}</strong> Recipes</span>
         </div>
-        <div class="vl" style="border-left: 2px solid #ccc; height: 40px; margin: 0 2vw"></div>
+        <div class="verticalLine"></div>
         <div class="recipe-lines">
           <span><strong>{{userProfile.likedRecipes.length}}</strong> Likes</span>
         </div>
-        <div class="vl" style="border-left: 2px solid #ccc; height: 40px; margin: 0 2vw"></div>
+        <div class="verticalLine"></div>
         <div class="recipe-lines">
           <span><strong>{{userProfile.following.length}}</strong> Following</span>
         </div>

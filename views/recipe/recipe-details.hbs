@@ -6,83 +6,92 @@
 <div class="container-fluid recipe-layout-container">
 
   <div class="recipe-layout-top row">
-    <div class="col-12 d-flex justify-content-end" id="edit-del-btn-container">
-      {{#if isSameUser}}
-      <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
-      <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
-        Recipe</a>
-      {{/if}}
-    </div>
-
 
     <div class="recipe-img-container col-md-5">
       <img src="{{recipe.image}}" alt="recipe-image" class="recipe-img">
     </div>
 
-    <div class="recipe-layout-right col-md-7">
+    <div class="recipe-layout col-md-7">
+
+      <div class="row align-items-center justify-content-between recipe-title">
+        <h1>{{recipe.title}}</h1>
+        {{#if isSameUser}}
+        <div>
+          <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
+          <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+            Recipe</a>
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="row d-flex align-items-center">
+        <div class="recipe-lines">
+          <span class="dish-tag-1">{{recipe.dishType}}</span>
+        </div>
+        <div class="verticalLine"></div>
+        <div class="recipe-line">
+          <span>cooks in &nbsp;&nbsp; <strong>{{recipe.preparationTime}} min</strong></span>
+        </div>
+        <div class="verticalLine"></div>
+        <div class="recipe-line">
+          <span>&nbsp;&nbsp; <strong>{{recipe.portions}}</strong> serves</span>
+        </div>
+      </div>
+
+      <br>
+      <br>
+
+      {{!-- Source --}}
+      {{#if isSourceFilled}}
+      <div class="row">
+        <h6 class="strong">Source / Additional info: </h6>
+      </div>
+      <div class="row">
+        <p>{{recipe.source}}</p>
+      </div>
+      {{/if}}
+
+
+      <br>
+      <br>
 
       <div class="row">
-
-        <div class="col-12">
-          <h1>{{recipe.title}}</h1>
-        </div>
-
-        <div class="recipe-lines col-lg-3">
-          <span id="dish-tag-1">{{recipe.dishType}}</span>
-        </div>
-
-        <div class="recipe-lines col-lg-4">
-          <div class="d-inline">
-            <span id="dish-tag-2">cooks in &nbsp;&nbsp; {{recipe.preparationTime}} min</span>
-          </div>
-        </div>
-
-        <div class="recipe-lines col-lg-4">
-          <span id="dish-tag-3">serves &nbsp;&nbsp; {{recipe.portions}}</span>
-        </div>
-
-        {{#if isSourceFilled}}
-        <div class="recipe-lines col-12">
-
-          <h6 id="source">Source / Additional info: </h6>
-          <p>{{recipe.source}}</p>
-        </div>
-        {{/if}}
-
-
-
-        <div class="recipe-lines col-12">
-          <h6 id="creator">Creator:</h6>
-
-          <a href="/{{recipe.creator.username}}">
-            <h4>{{recipe.creator.username}}</h4>
-          </a>
-
-        </div>
-
-
-
-        {{#if loggedIn}}
-        {{#unless isSameUser}}
-        {{#if isLiking}}
-        <div class="recipe-lines col-12">
-          <button class="like-btn-off" like="true" id="like-button" title="Like and save the recipe">
-            <span id="like-span">&#9829; Like</span>
-          </button>
-          <h4 id="likes">{{recipe.likes}}</h4>
-        </div>
-        {{else}}
-        <div class="recipe-lines col-12">
-          <button class="like-btn-off" like="false" id="like-button" title="Like and save the recipe">
-            <span id="like-span">&#9829; Like</span>
-          </button>
-          <h4 id="likes">{{recipe.likes}}</h4>
-        </div>
-        {{/if}}
-        {{/unless}}
-        {{/if}}
-
+        <h6 class="strong">Creator:</h6>
       </div>
+      <div class="row">
+        <a href="/{{recipe.creator.username}}">
+          <a class="btn btn-outline-info" href="/{{recipe.creator.username}}">
+            {{recipe.creator.username}}</a>
+        </a>
+      </div>
+
+      <br>
+      <br>
+
+      {{#if loggedIn}}
+      {{#unless isSameUser}}
+      {{#if isLiking}}
+      <div class="row">
+        <h5 id="likes">{{recipe.likes}} Likes</h5>
+      </div>
+      <div class="row">
+        <button class="btn btn-danger" id="like-button" title="Like and save the recipe">
+          <span id="like-span">&#9829; Like</span>
+        </button>
+      </div>
+      {{else}}
+      <div class="row">
+        <h5 id="likes">{{recipe.likes}} Likes</h5>
+      </div>
+      <div class="row">
+        <button class="btn btn-outline-danger" id="like-button" title="Like and save the recipe">
+          <span id="like-span">&#9829; Like</span>
+        </button>
+      </div>
+      {{/if}}
+      {{/unless}}
+      {{/if}}
+
     </div>
   </div>
 
@@ -157,11 +166,11 @@
     likeButton.onclick = () => {
       axios.post("/recipe/like/{{recipe._id}}").then(response => {
         if (response.data.isLiking) {
-          likeButton.setAttribute("like", "false");
-          likes.innerHTML = response.data.recipe.likes;
+          likeButton.setAttribute("class", "btn btn-outline-danger");
+          likes.innerHTML = `<strong>${response.data.recipe.likes}</strong>` + " Likes";
         } else {
-          likeButton.setAttribute("like", "true");
-          likes.innerHTML = response.data.recipe.likes;
+          likeButton.setAttribute("class", "btn btn-danger");
+          likes.innerHTML = `<strong>${response.data.recipe.likes}</strong>` + " Likes";
         }
       }).catch(err => {
         console.log(err);

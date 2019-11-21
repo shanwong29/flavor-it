@@ -109,6 +109,12 @@ body {
   }
 }
 
+.verticalLine {
+  border-left: 2px solid #dc3545;
+  height: 40px;
+  margin: 0 2vw;
+}
+
 // USER profile
 .user-title {
   margin-top: 5vh;
@@ -117,6 +123,8 @@ body {
   padding: 3vh 3vw;
   .user-img {
     border-radius: 50%;
+    border: 2px solid #dc3545;
+    width: 100%;
   }
 }
 .user-layout-recipes {
@@ -152,7 +160,12 @@ body {
   h3 {
     font-style: italic;
   }
-
+  .recipe-layout {
+    padding: 4vh 4vw;
+    .recipe-title {
+      padding-bottom: 2vh;
+    }
+  }
   #source-note {
     font-size: 0.8rem;
   }
@@ -216,9 +229,7 @@ body {
   border-color: #1d3d31;
 }
 
-#source,
-#creator {
-  color: #965518;
+.strong {
   font-weight: 700;
 }
 
