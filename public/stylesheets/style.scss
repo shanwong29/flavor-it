@@ -86,7 +86,7 @@ body {
     text-align: center;
     margin: 0 2vw 5vh 0;
 
-    background-color: #dc3545;
+    background-color: #8c1c13;
 
     img {
       object-fit: cover;
@@ -102,7 +102,7 @@ body {
   }
 
   .each-recipe:hover {
-    background-color: #db1e2b;
+    background-color: #2c0703;
 
     a {
       text-decoration: none;
@@ -110,7 +110,7 @@ body {
   }
 }
 .verticalLine {
-  border-left: 2px solid #dc3545;
+  border-left: 2px solid #8c1c13;
   height: 40px;
   margin: 0 2vw;
 }
@@ -123,7 +123,6 @@ body {
   padding: 3vh 3vw;
   .user-img {
     border-radius: 50%;
-    border: 2px solid #dc3545;
     width: 100%;
   }
 }
@@ -215,18 +214,6 @@ body {
   border-radius: 5px;
   text-align: center;
   padding: 0.8rem 1rem;
-}
-
-#dish-tag-2 {
-  color: #212529;
-  background-color: #d5a021;
-  border-color: #d5a021;
-}
-
-#dish-tag-3 {
-  color: #bec5ad;
-  background-color: #1d3d31;
-  border-color: #1d3d31;
 }
 
 .strong {
@@ -412,5 +399,27 @@ body {
         display: none;
       }
     }
+  }
+}
+
+footer {
+  background-color: #efefef;
+  margin: 0;
+  padding: 1.7rem;
+
+  p {
+    margin: 0;
+  }
+
+  img {
+    width: 16px;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    color: #8c1c13;
+    text-decoration: none;
   }
 }
