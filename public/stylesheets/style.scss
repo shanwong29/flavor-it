@@ -78,7 +78,8 @@ body {
   flex-wrap: wrap;
   justify-content: flex-start;
 
-  padding: 5vh 2vw;
+  padding: 5vh 0;
+  padding-left: 2vw;
 
   .each-recipe {
     width: 17vw;
