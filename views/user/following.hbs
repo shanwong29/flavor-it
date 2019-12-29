@@ -2,11 +2,16 @@
   {{!-- for header img --}}
 </div>
 <div class="title">
-  <h1>{{userProfile.username}}</h1>
-  <h4>Following</h4>
+  <img src="{{userProfile.photo}}" alt="">
+  <div class="ml-2">
+    <a href="/{{userProfile.username}}">
+      <h1>{{userProfile.username}}</h1>
+    </a>
+    <h4>Following</h4>
+  </div>
 </div>
 <div class="flex-container">
-  {{#each userProfile.following}}
+  {{#each following}}
   <div class="each-recipe">
     <a href="/{{username}}">
       <img src="{{photo}}">
