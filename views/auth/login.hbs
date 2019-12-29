@@ -2,6 +2,10 @@
   <div class="login-container">
     <h1>Login</h1>
 
+    {{#if message }}
+    <div class="alert alert-danger">{{ message }}</div>
+    {{/if}}
+
     <form action="/auth/login" method="POST" id="form-container">
       {{!-- <label for="username">Username</label> --}}
       <input class="input" id="username" type="text" name="username" placeholder="Username">
@@ -10,10 +14,7 @@
 
       {{!-- <label for="password">Password</label> --}}
       <input class="input" id="password" type="password" name="password" placeholder="Your password">
-      <br>
-      {{#if message }}
-      <div class="error-message">{{ message }}</div>
-      {{/if}}
+
 
       <br><br>
 
