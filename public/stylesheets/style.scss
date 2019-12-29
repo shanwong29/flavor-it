@@ -71,6 +71,19 @@ body {
 // RECIPES
 .title {
   padding: 5vh 2vw 0;
+  display: flex;
+  img {
+    border-radius: 50%;
+    width: 7%;
+    height: 7%;
+  }
+  a {
+    text-decoration: none;
+    color: darkgray;
+  }
+  a:hover {
+    color: gray;
+  }
 }
 
 .flex-container {
@@ -380,6 +393,13 @@ body {
   // padding: 5vh 2vw;
 }
 
+.profile-span {
+  color: gray;
+  font-size: 1.4rem;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
 footer {
   background-color: #efefef;
   margin: 0;
@@ -404,9 +424,27 @@ footer {
 
 @media (max-width: 576px) {
   .flex-container {
-    justify-content: center;
+    // justify-content: center;
+    justify-content: start;
+    margin-left: 2vw;
     .each-recipe {
-      width: 80vw;
+      width: 45vw;
+      img {
+        height: 45vw;
+      }
+    }
+  }
+
+  .profile-container {
+    // justify-content: center;
+    justify-content: start;
+    margin-left: 0;
+    padding-left: 0;
+    .each-recipe {
+      width: 38vw;
+      img {
+        height: 40vw;
+      }
     }
   }
 
@@ -439,5 +477,11 @@ footer {
   .search-header {
     text-align: end;
     padding-right: 10vw;
+  }
+
+  .title > img {
+    border-radius: 50%;
+    width: 25%;
+    margin-left: 10px;
   }
 }
