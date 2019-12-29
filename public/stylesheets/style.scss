@@ -8,7 +8,7 @@ body {
 }
 
 .nav-menu {
-  width: 100vw;
+  // width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,7 +24,7 @@ body {
   background-image: url("../images/bg-home.png");
   background-size: cover;
 
-  width: 100vw;
+  // width: 100vw;
   height: 75vh;
 
   color: white;
@@ -142,10 +142,10 @@ body {
   background-image: url("../images/header-create-recipe.jpg");
   background-size: cover;
 
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
 }
 
 .subpage-title {
@@ -273,15 +273,18 @@ body {
 .login-form {
   background-image: url("../images/bg-login.jpeg");
   background-repeat: none;
+  background-position: center;
   background-size: cover;
-  height: 100vh;
+  height: 85vh;
 
   text-align: center;
   color: #dc3545;
 
   .login-container {
-    width: 50vw;
+    width: 40vw;
     padding-top: 10vh;
+    padding-left: 10vw;
+    margin: 0;
   }
   .input {
     border: 0;
@@ -293,7 +296,7 @@ body {
     padding: 14px 10px;
     width: 200px;
     outline: none;
-    color: white;
+    color: black;
     border-radius: 25px;
     transition: 0.5s;
   }
@@ -326,25 +329,25 @@ body {
 .profile-header {
   background-image: url("../images/halloween-header.jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
 }
 
 .recipe-detail-header {
   background-image: url("../images/header-steak.jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
 }
 
 .search-header {
   background-image: url("../images/BlogHeader.jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
   padding: 5vh 2vw;
@@ -353,28 +356,50 @@ body {
 .user-like-details {
   background-image: url("../images/abc (2).jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
 }
 
 .user-following {
   background-image: url("../images/greens.jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
 }
 
 .user-recipe {
   background-image: url("../images/header-vege.jpg");
   background-size: cover;
-  width: 100vw;
+  // width: 100vw;
   height: 11rem;
 
-  padding: 5vh 2vw;
+  // padding: 5vh 2vw;
+}
+
+footer {
+  background-color: #efefef;
+  margin: 0;
+  padding: 0.6rem;
+
+  p {
+    margin: 0.1rem 0;
+  }
+
+  img {
+    width: 16px;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    color: #8c1c13;
+    text-decoration: none;
+  }
 }
 
 @media (max-width: 576px) {
@@ -383,6 +408,15 @@ body {
     .each-recipe {
       width: 80vw;
     }
+  }
+
+  .login-form {
+    height: 80vh;
+  }
+
+  .login-form > .login-container {
+    width: 100vw;
+    padding: 10vw;
   }
 
   .top-home {
@@ -401,26 +435,9 @@ body {
       }
     }
   }
-}
 
-footer {
-  background-color: #efefef;
-  margin: 0;
-  padding: 1.7rem;
-
-  p {
-    margin: 0.3rem 0;
-  }
-
-  img {
-    width: 16px;
-  }
-  a {
-    text-decoration: none;
-    color: black;
-  }
-  a:hover {
-    color: #8c1c13;
-    text-decoration: none;
+  .search-header {
+    text-align: end;
+    padding-right: 10vw;
   }
 }
