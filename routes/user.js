@@ -42,13 +42,31 @@ router.get("/:username", (req, res) => {
       return userProfile;
     })
     .then(userProfile => {
+      let limitedCardNum = 4;
+
+      let likedRecipes = userProfile.likedRecipes.reverse();
+      if (likedRecipes.length > limitedCardNum) {
+        likedRecipes = likedRecipes.slice(0, limitedCardNum);
+      }
+
+      let following = userProfile.following.reverse();
+      if (following.length > limitedCardNum) {
+        following = following.slice(0, limitedCardNum);
+      }
       Recipe.find({ creator: userProfile._id }).then(userRecipes => {
+        let limitedUserRecipes = userRecipes.reverse();
+        if (limitedUserRecipes.length > limitedCardNum) {
+          limitedUserRecipes = limitedUserRecipes.slice(0, limitedCardNum);
+        }
         res.render("user/profile", {
           userProfile,
           userRecipes,
           diferentUser,
           isFollowing,
-          loggedIn: req.user
+          loggedIn: req.user,
+          limitedUserRecipes,
+          likedRecipes,
+          following
         });
       });
     });
@@ -60,7 +78,11 @@ router.get("/following/:userName", (req, res, next) => {
   User.findOne({ username: userName })
     .populate("following")
     .then(user => {
-      res.render("user/following", { userProfile: user, loggedIn: req.user });
+      res.render("user/following", {
+        userProfile: user,
+        loggedIn: req.user,
+        following: user.following.reverse()
+      });
     })
     .catch(err => console.log(err));
 });
@@ -72,7 +94,7 @@ router.get("/recipes/:userName", (req, res, next) => {
     .then(user => {
       Recipe.find({ creator: user._id }).then(recipes => {
         res.render("user/recipes", {
-          recipes,
+          recipes: recipes.reverse(),
           userProfile: user,
           loggedIn: req.user
         });
@@ -88,7 +110,7 @@ router.get("/likes/:userName", (req, res, next) => {
     .populate("likedRecipes")
     .then(user => {
       res.render("user/likes", {
-        recipes: user.likedRecipes,
+        recipes: user.likedRecipes.reverse(),
         userProfile: user,
         loggedIn: req.user
       });

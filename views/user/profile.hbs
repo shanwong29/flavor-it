@@ -44,7 +44,7 @@
         </div>
         <div class="verticalLine"></div>
         <div class="recipe-lines">
-          <span><strong>{{userProfile.likedRecipes.length}}</strong> Likes</span>
+          <span><strong>{{userProfile.likedRecipes.length}}</strong> Liked Recipes</span>
         </div>
         <div class="verticalLine"></div>
         <div class="recipe-lines">
@@ -65,13 +65,13 @@
 
   <div class="col-md-12">
     <div class="row align-items-center">
-      <h1 class="col-10">User Recipes</h1>
+      <h1 class="col-10">User Recipes <span class="profile-span">{{userRecipes.length}}</span></h1>
       <div class="col-2 d-flex justify-content-end">
         <a class="btn btn-outline-info" href="/recipes/{{userProfile.username}}">See All</a>
       </div>
     </div>
-    <div class="flex-container">
-      {{#each userRecipes}}
+    <div class="flex-container profile-container">
+      {{#each limitedUserRecipes}}
       <div class="each-recipe">
         <a href="recipe/{{_id}}">
           <img src="{{image}}">
@@ -84,13 +84,13 @@
 
   <div class="col-md-12">
     <div class="row align-items-center">
-      <h1 class="col-10">Liked Recipes</h1>
+      <h1 class="col-10">Liked Recipes <span class="profile-span">{{userProfile.likedRecipes.length}}</span></h1>
       <div class="col-2 d-flex justify-content-end">
         <a class="btn btn-outline-info" href="/likes/{{userProfile.username}}">See All</a>
       </div>
     </div>
-    <div class="flex-container">
-      {{#each userProfile.likedRecipes}}
+    <div class="flex-container profile-container ">
+      {{#each likedRecipes}}
       <div class="each-recipe">
         <a href="recipe/{{this._id}}">
           <img src="{{this.image}}">
@@ -104,13 +104,13 @@
 
   <div class="col-md-12">
     <div class="row align-items-center">
-      <h1 class="col-10">Following</h1>
+      <h1 class="col-10">Following <span class="profile-span">{{userProfile.following.length}}</span></h1>
       <div class="col-2 d-flex justify-content-end">
         <a class="btn btn-outline-info" href="/following/{{userProfile.username}}">See All</a>
       </div>
     </div>
-    <div class="flex-container">
-      {{#each userProfile.following}}
+    <div class="flex-container profile-container">
+      {{#each following}}
       <div class="each-recipe">
         <a href="/{{username}}">
           <img src="{{photo}}">
