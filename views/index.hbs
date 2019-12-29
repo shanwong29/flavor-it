@@ -2,7 +2,8 @@
   <div class="title-home">
     <h1>FLAVOR IT</h1>
     <h2>A real food lovers' community</h2>
-    <p>FLAVOR IT is a place for food lovers to share the favorite recipes&#10;and follow our food lovers.&#10;Here you
+    <p>FLAVOR IT is a place for food lovers to share their favorite recipes&#10;and follow other food lovers.&#10;Here
+      you
       can connect all food lovers in the world.</p>
     {{#if loggedIn}}
     <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
@@ -13,14 +14,14 @@
 </div>
 <br>
 <div class="title">
-  <h1>Recipes</h1>
+  <h1>Top 10 Popular Recipes</h1>
 </div>
 <div class="flex-container">
   {{#each recipes}}
   <div class="each-recipe">
     <a href="recipe/{{_id}}">
       <img src="{{image}}">
-      <p>{{title}}</p>
+      <p>{{title}} | &#9829; {{likes}}</p>
     </a>
   </div>
   {{/each}}

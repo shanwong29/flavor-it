@@ -7,11 +7,10 @@ const User = require("../models/User");
 /* GET home page */
 router.get("/", (req, res, next) => {
   Recipe.find({})
+    .sort({ likes: -1 })
+    .limit(10)
     .then(recipes => {
-      const sortedRecipes = recipes.sort((a, b) => {
-        return b.likes - a.likes;
-      });
-      res.render("index", { recipes: sortedRecipes, loggedIn: req.user });
+      res.render("index", { recipes, loggedIn: req.user });
     })
     .catch(err => console.log(err));
 });
@@ -26,7 +25,10 @@ router.get("/search", (req, res, next) => {
       $and: [{ title: new RegExp(searchInput, "gi") }, { dishType: dishType }]
     })
       .then(recipes => {
-        res.render("search", { recipes, loggedIn: req.user });
+        res.render("search", {
+          recipes: recipes.reverse(),
+          loggedIn: req.user
+        });
       })
       .catch(err => console.log(err));
   } else if (option === "recipe") {
@@ -34,7 +36,10 @@ router.get("/search", (req, res, next) => {
       title: new RegExp(searchInput, "gi")
     })
       .then(recipes => {
-        res.render("search", { recipes, loggedIn: req.user });
+        res.render("search", {
+          recipes: recipes.reverse(),
+          loggedIn: req.user
+        });
       })
       .catch(err => console.log(err));
   } else {
