@@ -36,13 +36,45 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
   let imagePath = req.file ? req.file.url : defaultUserImage;
 
   if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+    res.render("auth/signup", {
+      message: "please indicate username and password"
+    });
+    return;
+  }
+
+  let regex = /^[a-z0-9]+$/i;
+  let isValidUserName = regex.test(username);
+  console.log(username, isValidUserName);
+  if (!isValidUserName) {
+    res.render("auth/signup", {
+      message: "Username can only include english letters or numbers",
+      usernameInput: username
+    });
+    return;
+  }
+
+  if (username.length < 3 || username.length > 15) {
+    res.render("auth/signup", {
+      message: "Username can only has 3 - 15 characters",
+      usernameInput: username
+    });
+    return;
+  }
+
+  if (password.length < 6) {
+    res.render("auth/signup", {
+      message: "Password has at least 6 characters",
+      usernameInput: username
+    });
     return;
   }
 
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
+      res.render("auth/signup", {
+        message: "The username already exists",
+        usernameInput: username
+      });
       return;
     }
 
