@@ -8,8 +8,9 @@
   <div class="container-fluid recipe-layout-container">
     <div class="recipe-layout-top row mb-5">
       <div class="recipe-img-container col-md-5">
-        <input id="image" type="file" name="imagePath">
-        {{#if hasUploadedImage}}<img src="{{imgUrl}}" alt="">{{/if}}
+        <input id="image" type="file" name="imagePath" onchange="previewImg(event)">
+        <img src="https://res.cloudinary.com/dqrjpg3xc/image/upload/v1575651991/kiez/default-event-img.jpg.jpg"
+          class="output" alt="image preview">
       </div>
 
       <div class="recipe-layout-right col-md-7">
@@ -129,3 +130,4 @@
 </form>
 
 <script src="/javascripts/ingredient-input.js"></script>
+<script src="/javascripts/preview-img.js"></script>
