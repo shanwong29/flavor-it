@@ -7,7 +7,7 @@
 
   <div class="recipe-layout-top row">
 
-    <div class="recipe-img-container col-md-5">
+    <div class="recipe-img-container col-md-5 recipe-img-container-detail">
       <img src="{{recipe.image}}" alt="recipe-image" class="recipe-img">
     </div>
 
@@ -24,7 +24,7 @@
         {{/if}}
       </div>
 
-      <div class="row d-flex align-items-center">
+      <div class="row d-flex align-items-center mb-5">
         <div class="recipe-lines">
           <span class="dish-tag-1">{{recipe.dishType}}</span>
         </div>
@@ -38,9 +38,6 @@
         </div>
       </div>
 
-      <br>
-      <br>
-
       {{!-- Source --}}
       {{#if isSourceFilled}}
       <div class="row">
@@ -52,21 +49,18 @@
       {{/if}}
 
 
-      <br>
-      <br>
 
-      <div class="row">
+
+      <div class="row mt-4">
         <h6 class="strong">Creator:</h6>
       </div>
-      <div class="row">
-        <a href="/{{recipe.creator.username}}">
-          <a class="btn btn-outline-info" href="/{{recipe.creator.username}}">
-            {{recipe.creator.username}}</a>
+      <div class="row mb-5">
+        <a href="/{{recipe.creator.username}}" style="text-decoration: none; color:black; font-weight: bold;">
+          <img class="comment-user-img" src="{{recipe.creator.photo}}">
+          {{recipe.creator.username}}</a>
         </a>
       </div>
 
-      <br>
-      <br>
 
       {{#if loggedIn}}
       {{#unless isSameUser}}
@@ -201,16 +195,16 @@
 
   //comment
   let comment = document.getElementById('comment-form')
-
-  comment.onclick = event => {
-    event.preventDefault();
-    if (document.getElementById('comment').value !== "") {
-      axios.post("/recipe/{{recipe._id}}/comment", {
-        comment: document.getElementById('comment').value
-      }).then(response => {
-        let commentContent = '';
-        response.data.forEach(comment => {
-          commentContent += `
+  if (comment) {
+    comment.onclick = event => {
+      event.preventDefault();
+      if (document.getElementById('comment').value !== "") {
+        axios.post("/recipe/{{recipe._id}}/comment", {
+          comment: document.getElementById('comment').value
+        }).then(response => {
+          let commentContent = '';
+          response.data.forEach(comment => {
+            commentContent += `
             <div class="each-comment-box m-3">
               <div>
                 <img class="comment-user-img" src="${comment.author.photo}" alt="">
@@ -221,12 +215,13 @@
               </div>
             </div>`
 
+          })
+          document.getElementById("comment-box").innerHTML = commentContent;
+          document.getElementById('comment').value = ""
+        }).catch(err => {
+          console.log(err)
         })
-        document.getElementById("comment-box").innerHTML = commentContent;
-        document.getElementById('comment').value = ""
-      }).catch(err => {
-        console.log(err)
-      })
+      }
     }
   }
 

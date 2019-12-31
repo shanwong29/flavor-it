@@ -45,7 +45,7 @@
 
     <div>
       {{#if loggedIn}}
-      <a class="btn btn-outline-success" href="/{{loggedIn.username}}">Profile</a>
+      <a class="btn btn-outline-success" href="/{{loggedIn.username}}">{{loggedIn.username}}</a>
       <a class="btn btn-outline-info" href="/recipe/create">Create Recipe</a>
       <a class="btn btn-outline-danger" href="/auth/logout">Logout</a>
       {{else}}

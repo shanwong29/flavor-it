@@ -17,7 +17,7 @@ const loginCheck = () => {
 };
 
 // User Profile
-router.get("/:username", (req, res) => {
+router.get("/:username", (req, res, next) => {
   let user = req.params.username;
   let diferentUser = true;
   let isFollowing = false;
@@ -69,6 +69,9 @@ router.get("/:username", (req, res) => {
           following
         });
       });
+    })
+    .catch(err => {
+      next(err);
     });
 });
 
