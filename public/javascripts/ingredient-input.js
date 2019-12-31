@@ -23,13 +23,24 @@ function createUnitFieldDiv(parent) {
 
 function createIngredientNameInput(parent) {
   let newParent = parent.querySelectorAll("div")[0];
-  let attr = { class: "form-control", type: "text", name: "name" };
+  let attr = {
+    class: "form-control",
+    type: "text",
+    name: "name",
+    required: "required"
+  };
   addElement(newParent, "input", attr);
 }
 
 function createQtyFieldInput(parent) {
   let newParent = parent.querySelectorAll("div")[1];
-  let attr = { class: "form-control", type: "number", name: "qty" };
+  let attr = {
+    class: "form-control",
+    type: "number",
+    name: "qty",
+    placeholder: "qty",
+    min: "1"
+  };
   addElement(newParent, "input", attr);
 }
 
@@ -43,7 +54,7 @@ function createUnitOptions(parent) {
   let newParent = parent.querySelector("select");
   let optionAttr = {
     0: { value: "" },
-    1: { value: "N/A" },
+    1: { value: "" },
     2: { value: "gram" },
     3: { value: "ml" },
     4: { value: "teaspoon" },
@@ -52,12 +63,13 @@ function createUnitOptions(parent) {
 
   for (let i = 0; i < Object.keys(optionAttr).length; i++) {
     addElement(newParent, "option", optionAttr[i]);
-    if (i > 0) {
+    if (i > 1) {
       newParent.getElementsByTagName("option")[i].innerText =
         optionAttr[i].value;
     }
   }
   newParent.getElementsByTagName("option")[0].innerText = "unit";
+  newParent.getElementsByTagName("option")[1].innerText = "N/A";
 }
 
 function createDelBtn(parent) {
@@ -66,12 +78,6 @@ function createDelBtn(parent) {
   addElement(newParent, "button", { class: "del-btn", type: "button" });
   newParent.querySelector(".del-btn").innerText = `\u2715`;
   newParent.querySelector(".del-btn").onclick = deleteItem;
-}
-
-function deleteItem(e) {
-  document
-    .getElementById("the-great-div")
-    .removeChild(e.currentTarget.parentNode.parentNode);
 }
 
 document.getElementById("add-ingredient-btn").onclick = () => {
@@ -89,3 +95,17 @@ document.getElementById("add-ingredient-btn").onclick = () => {
   createDelBtn(eachRowDiv);
   parent.appendChild(eachRowDiv);
 };
+
+function deleteItem(e) {
+  document
+    .getElementById("the-great-div")
+    .removeChild(e.currentTarget.parentNode.parentNode);
+}
+
+let numOfOldIngredient = document.querySelectorAll(".old-gredient").length;
+
+for (let i = 0; i < numOfOldIngredient; i++) {
+  document
+    .querySelectorAll(".old-gredient")
+    [i].addEventListener("click", deleteItem, false);
+}

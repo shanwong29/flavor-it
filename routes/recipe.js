@@ -26,50 +26,7 @@ router.post(
   "/create",
   uploadCloud.single("imagePath"),
   loginCheck(),
-  (req, res) => {
-    let warning = "";
-
-    // check if the required inputs are empty
-
-    if (!req.body.dishType) {
-      warning = "Please select Dish Type";
-    }
-
-    if (!req.body.method) {
-      warning = "Please provide the cooking methods";
-    }
-
-    if (req.body.name === "") {
-      warning = "Ingredient name can't be empty";
-    }
-    if (typeof req.body.name === "object") {
-      req.body.name.forEach(element => {
-        if (element === "") {
-          warning = "Ingredient name can't be empty";
-        }
-      });
-    }
-    if (!req.body.portions) {
-      warning = "Please enter portion(s)";
-    }
-
-    if (!req.body.preparationTime) {
-      warning = "Please enter preparation time";
-    }
-
-    if (!req.body.title) {
-      warning = "Recipe title can't be empty";
-    }
-
-    if (warning) {
-      res.render("recipe/recipe-form", {
-        warning,
-        filledIn: req.body,
-        loggedIn: req.user
-      });
-      return;
-    }
-
+  (req, res, next) => {
     const defaultRecipeImage =
       "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087425/images/unknown-plate.png.png";
     let imagePath = req.file ? req.file.url : defaultRecipeImage;
@@ -113,7 +70,7 @@ router.post(
         res.redirect(`/recipe/${doc._id}`);
       })
       .catch(err => {
-        console.log(err);
+        next(err);
       });
   }
 );
@@ -137,9 +94,10 @@ router.get("/:recipeId", (req, res, next) => {
         isSourceFilled = true;
       }
       if (req.user) {
-        const user = req.user.username;
-        const creator = doc.creator.username;
-        if (user === creator) {
+        const user = req.user._id;
+        const creator = doc.creator._id;
+
+        if (user.toString() == creator.toString()) {
           isSameUser = true;
         }
         User.findById(req.user._id).then(user => {
@@ -243,7 +201,17 @@ router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
     .then(doc => {
-      res.render("recipe/recipe-update", { recipe: doc, loggedIn: req.user });
+      firstIngredient = doc.ingredients[0];
+      remainingIngredient = "";
+      if (doc.ingredients.length > 1) {
+        remainingIngredient = doc.ingredients.slice(1);
+      }
+      res.render("recipe/recipe-update", {
+        recipe: doc,
+        loggedIn: req.user,
+        firstIngredient,
+        remainingIngredient
+      });
     })
     .catch(err => {
       next(err);
@@ -256,48 +224,6 @@ router.post(
   async (req, res, next) => {
     const recipeId = req.params.recipeId;
     let ingredients = [];
-    let warning = "";
-
-    // check if the required inputs are empty
-
-    if (!req.body.dishType) {
-      warning = "Please select Dish Type";
-    }
-
-    if (!req.body.method) {
-      warning = "Please provide the cooking methods";
-    }
-
-    if (req.body.name === "") {
-      warning = "Ingredient name can't be empty";
-    }
-    if (typeof req.body.name === "object") {
-      req.body.name.forEach(element => {
-        if (element === "") {
-          warning = "Ingredient name can't be empty";
-        }
-      });
-    }
-    if (!req.body.portions) {
-      warning = "Please enter portion(s)";
-    }
-
-    if (!req.body.preparationTime) {
-      warning = "Please enter preparation time";
-    }
-
-    if (!req.body.title) {
-      warning = "Recipe title can't be empty";
-    }
-
-    if (warning) {
-      res.render("recipe/recipe-form", {
-        warning,
-        filledIn: req.body,
-        loggedIn: req.user
-      });
-      return;
-    }
 
     if (typeof req.body.name === "string") {
       let obj = {

@@ -6,9 +6,10 @@
 <form action="/recipe/{{recipe._id}}/update" method="POST" enctype="multipart/form-data">
 
   <div class="container-fluid recipe-layout-container">
-    <div class="recipe-layout-top row">
+    <div class="recipe-layout-top row mb-5">
       <div class="recipe-img-container col-md-5">
         <input id="image" type="file" name="imagePath">
+        <img src="{{recipe.image}}" alt="">
 
       </div>
 
@@ -16,24 +17,17 @@
 
         <div class="form-row">
 
-          <div>
-            {{#if message}}
-            <p class="warning-msg"> *{{message}}</p>
-            <br>
-            {{/if}}
-          </div>
-
           <div class="form-group col-12">
             <label for="title">Recipe Title: *</label>
-            <input class="form-control" type="text" name="title" placeholder="Title of Recipe" value={{recipe.title}}>
+            <input class="form-control" type="text" name="title" id="title" placeholder="Title of Recipe"
+              value={{recipe.title}} required>
           </div>
 
 
           <div class="form-group col-md-5">
-            <label>Dish Type: *</label>
-            <select class="form-control" id="dish-type-selector" name="dishType">
+            <label for="dishType">Dish Type: *</label>
+            <select class="form-control" id="dishType" name="dishType" required>
               <option value={{recipe.dishType}} selected="selected">{{recipe.dishType}}</option>>
-              <option value="">choose Dish Type</option>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
               <option value="Snacks">Snacks</option>
@@ -44,25 +38,29 @@
 
           <div class="form-group col-md-4">
             <div>
-              <label>Preparetion time: *</label>
+              <label for="preparationTime">Preparetion time: *</label>
             </div>
 
             <div class="row">
               <div class="col-8">
-                <input class="form-control" type="number" name="preparationTime" value={{recipe.preparationTime}}>
+                <input class="form-control" type="number" id="preparationTime" name="preparationTime" min="1"
+                  value={{recipe.preparationTime}} required>
               </div>
-              <span id="min">min</span>
+              <div class="min">
+                <span>min</span>
+              </div>
             </div>
           </div>
 
           <div class="form-group col-md-3">
             <label for="portions">Portion(s) *:</label>
-            <input class="form-control" type="number" name="portions" value={{recipe.portions}}>
+            <input class="form-control" type="number" name="portions" id="portions" min="1" value={{recipe.portions}}
+              required>
           </div>
 
           <div class="form-group col-12">
             <label for="source">Source / Additional Info: </label>
-            <textarea class="form-control" name="source" maxlength="200">{{recipe.source}}</textarea>
+            <textarea class="form-control" name="source" id="source" maxlength="200">{{recipe.source}}</textarea>
             <p id="source-note">
               If you are not the original author of this recipe , enter the original author's name or source here to
               give
@@ -70,45 +68,41 @@
             </p>
           </div>
 
-          <div class="col-3">
-
-          </div>
-
-          <div class="form-group col-8">
-            <div>
-              <label for="creator">Creator: </label>
-
-            </div>
+          <div class="form-group col-12">
+            <p>Creator: <strong>{{recipe.creator.username}}</strong></p>
           </div>
         </div>
       </div>
     </div>
 
-    <br>
-    <br>
-    <br>
-
-
     <div class="form-row recipe-layout-bottom">
-      <div class="col-md-6">
+      <div class="col-md-5 mb-5">
         <div class="form-row">
-          <h3 class="col-12">Ingredients: *</h3>
+          <label for="name">
+            <h3 class="col-12">Ingredients: *</h3>
+          </label>
 
           <div class="container-fluid" id="the-great-div">{{!--here is the big container--}}
 
             {{!--below is the each row , form here, you need to create all--}}
             <div class="row"> {{!--eachRowDiv--}}
               <div class="field-style form-group col-5">
-                <input class="form-control" type="text" name="name" placeholder="e.g. Apple">
+                <input class="form-control" type="text" name="name" id="name" placeholder="e.g. Apple"
+                  value={{firstIngredient.name}} required>
               </div>
 
               <div class="field-style form-group col-3">
-                <input class="form-control" type="number" name="qty" placeholder="qty">
+                <input class="form-control" type="number" name="qty" placeholder="qty" min="1"
+                  value={{firstIngredient.qty}}>
               </div>
 
               <div class="field-style form-group col-3">
                 <select name="unit" class="form-control unit-selector">
-                  <option value="">unit</option>
+                  {{#if firstIngredient.unit}}
+                  <option value="{{firstIngredient.unit}}" selected="selected">{{firstIngredient.unit}}</option>>
+                  {{else}}
+                  <option value="{{firstIngredient.unit}}" selected="selected">N/A</option>>
+                  {{/if}}
                   <option value="">N/A</option>
                   <option value="gram">gram</option>
                   <option value="ml">ml</option>
@@ -121,40 +115,65 @@
                 <button id="add-ingredient-btn" type="button">&#43</button>
               </div>
             </div>
-
             {{!-- till here --}}
 
+            {{#if remainingIngredient}}
+            {{#each remainingIngredient}}
+            <div class="row"> {{!--eachRowDiv--}}
+              <div class="field-style form-group col-5">
+                <input class="form-control" type="text" name="name" value={{this.name}} required>
+              </div>
 
+              <div class="field-style form-group col-3">
+                <input class="form-control" type="number" name="qty" min="1" placeholder="qty" value={{this.qty}}>
+              </div>
 
+              <div class="field-style form-group col-3">
+                <select name="unit" class="form-control unit-selector">
+                  {{#if this.unit}}
+                  <option value="{{this.unit}}" selected="selected">{{this.unit}}</option>>
+                  {{else}}
+                  <option value="{{this.unit}}" selected="selected">N/A</option>>
+                  {{/if}}
 
+                  <option value="">N/A</option>
+                  <option value="gram">gram</option>
+                  <option value="ml">ml</option>
+                  <option value="teaspoon">teaspoon</option>
+                  <option value="tablespoon">tablespoon</option>
+                </select>
+              </div>
+
+              <div class="field-style form-group col-1">
+                <button class="old-gredient" type="button">&#10005;</button>
+              </div>
+            </div>
+            {{/each}}
+            {{/if}}
 
           </div>
 
         </div>
       </div>
 
-      <div id="method" class="col-md-6">
-        <h3>Method: *</h3>
-        <textarea class="form-control" name="method" rows="10"
+      <div class="col-md-7" id="method-container-update">
+        <label for="method">
+          <h3>Method: *</h3>
+        </label>
+        <textarea class="form-control" name="method" id="method" rows="10" required
           placeholder='Use <<enter>> to seperate each steps. &#10;No need to use number or bullet points. &#10;&#10;format example: &#10;Preheat the oven to 200°C/400°F/gas 6. &#10;Peel and chop all the potatoes into rough 2cm chunks.'>{{#each recipe.method}}{{this}}{{/each}}</textarea>
-
-
       </div>
 
     </div>
   </div>
 
-  <br>
-  <br>
-  <div class="form-row d-flex justify-content-center">
+
+  <div class="form-row d-flex justify-content-center my-5">
     <div class="rol">
       <button type="submit" class="btn btn-success">Submit</button>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
+
 </form>
 
 <script src="/javascripts/ingredient-input.js"></script>
