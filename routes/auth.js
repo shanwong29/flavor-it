@@ -37,7 +37,8 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
 
   if (username === "" || password === "") {
     res.render("auth/signup", {
-      message: "please indicate username and password"
+      message: "Please fill in both username and password field",
+      usernameInput: username
     });
     return;
   }
@@ -55,7 +56,7 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
 
   if (username.length < 3 || username.length > 15) {
     res.render("auth/signup", {
-      message: "Username can only has 3 - 15 characters",
+      message: "The length of username should be 3 - 15 characters",
       usernameInput: username
     });
     return;
@@ -63,7 +64,7 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
 
   if (password.length < 6) {
     res.render("auth/signup", {
-      message: "Password has at least 6 characters",
+      message: "The password should contain at least 6 characters",
       usernameInput: username
     });
     return;
@@ -72,7 +73,7 @@ router.post("/signup", uploadCloud.single("imagePath"), (req, res, next) => {
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
       res.render("auth/signup", {
-        message: "The username already exists",
+        message: "This username already exists",
         usernameInput: username
       });
       return;

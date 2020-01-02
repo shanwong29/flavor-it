@@ -11,7 +11,7 @@
       {{#unless diferentUser}}
       <form action="/{{userProfile._id}}/edit" method="POST" enctype="multipart/form-data">
         <input id="image" type="file" name="imagePath" style="font-size: 10px; margin-top: 20px">
-        <button class="btn btn-outline-info btn-sm">Edit Photo</button>
+        <button class="btn btn-outline-info btn-sm">Update Photo</button>
       </form>
       {{/unless}}
     </div>
@@ -32,10 +32,10 @@
         {{/if}}
         {{/if}}
         {{/if}}
-        {{#unless diferentUser}}
+        {{!-- {{#unless diferentUser}}
         <a class="btn btn-outline-danger" id="delete-account" href="/{{userProfile._id}}/delete">
           &#10060; Delete Account</a>
-        {{/unless}}
+        {{/unless}} --}}
       </div>
 
       <div class="row d-flex align-items-center">

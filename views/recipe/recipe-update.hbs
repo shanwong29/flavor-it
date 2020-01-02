@@ -20,14 +20,14 @@
           <div class="form-group col-12">
             <label for="title">Recipe Title: *</label>
             <input class="form-control" type="text" name="title" id="title" placeholder="Title of Recipe"
-              value={{recipe.title}} required>
+              value="{{recipe.title}}" required>
           </div>
 
 
           <div class="form-group col-md-5">
             <label for="dishType">Dish Type: *</label>
             <select class="form-control" id="dishType" name="dishType" required>
-              <option value={{recipe.dishType}} selected="selected">{{recipe.dishType}}</option>>
+              <option value="{{recipe.dishType}}" selected="selected">{{recipe.dishType}}</option>>
               <option value="Mains">Mains</option>
               <option value="Breakfast">Breakfast</option>
               <option value="Snacks">Snacks</option>
@@ -88,7 +88,7 @@
             <div class="row"> {{!--eachRowDiv--}}
               <div class="field-style form-group col-5">
                 <input class="form-control" type="text" name="name" id="name" placeholder="e.g. Apple"
-                  value={{firstIngredient.name}} required>
+                  value="{{firstIngredient.name}}" required>
               </div>
 
               <div class="field-style form-group col-3">
@@ -121,7 +121,7 @@
             {{#each remainingIngredient}}
             <div class="row"> {{!--eachRowDiv--}}
               <div class="field-style form-group col-5">
-                <input class="form-control" type="text" name="name" value={{this.name}} required>
+                <input class="form-control" type="text" name="name" value="{{this.name}}" required>
               </div>
 
               <div class="field-style form-group col-3">
