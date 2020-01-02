@@ -147,7 +147,7 @@
     <div class="col-md-8" id="comment-box">
       {{#if reversedComments}}
       {{#each reversedComments}}
-      <div class="each-comment-box m-3">
+      <div class="each-comment-box">
         <div>
           <img class="comment-user-img" src="{{author.photo}}" alt="">
         </div>
@@ -158,10 +158,9 @@
           <button class="del-comment-btn" onclick="deleteComment('{{_id}}','{{../recipe._id}}')"><i class="fa fa-trash"
               aria-hidden="true"></i></button>
           {{/if}}
-          <p>{{content}}</p>
-          {{!-- {{#each content}}
-          <p class="mt-0">{{this}}</p>
-          {{/each}} --}}
+          {{#each content}}
+          <p class="mb-0">{{this}}</p>
+          {{/each}}
         </div>
       </div>
 
@@ -214,7 +213,7 @@
           comment: commentInput
         }).then(response => {
 
-          let commentContent = '';
+          let commentPartHtml = '';
           let recipeId = response.data._id;
           let commentsArr = response.data.comments;
 
@@ -224,20 +223,25 @@
               deleteCommentBtn = `<button class="del-comment-btn" onclick="deleteComment('${comment._id}','${recipeId}')"><i class="fa fa-trash"
               aria-hidden="true"></i></button>`
             }
-            commentContent += `
-            <div class="each-comment-box m-3">
+
+            let content = [...comment.content].map(el => {
+              return `<p class="mb-0">${el}</p>`
+            }).join('');
+
+            commentPartHtml += `
+            <div class="each-comment-box">
               <div>
                 <img class="comment-user-img" src="${comment.author.photo}" alt="">
               </div>
               <div class="ml-2">
                 <a href="/${comment.author.username}">${comment.author.username}</a>
                 ${deleteCommentBtn}
-                <p>${comment.content}<p>
+                ${content}
               </div>
             </div>`
 
           })
-          document.getElementById("comment-box").innerHTML = commentContent;
+          document.getElementById("comment-box").innerHTML = commentPartHtml;
           document.getElementById('comment').value = ""
         }).catch(err => {
           console.log(err)
@@ -254,31 +258,36 @@
       commentId,
       recipeId
     }).then(response => {
-      let commentContent = '';
+      let commentPartHtml = '';
       let recipeId = response.data._id;
       let commentsArr = response.data.comments;
 
       commentsArr.forEach(comment => {
+
         let deleteCommentBtn = ""
         if (comment.isSameCommentAuthor) {
           deleteCommentBtn = `<button class="del-comment-btn" onclick="deleteComment('${comment._id}','${recipeId}')"><i class="fa fa-trash"
               aria-hidden="true"></i></button>`
         }
 
-        commentContent += `
-            <div class="each-comment-box m-3">
+        let content = [...comment.content].map(el => {
+          return `<p class="mb-0">${el}</p>`
+        }).join('');
+
+        commentPartHtml += `
+            <div class="each-comment-box">
               <div>
                 <img class="comment-user-img" src="${comment.author.photo}" alt="">
               </div>
               <div class="ml-2">
                 <a href="/${comment.author.username}">${comment.author.username}</a>
                 ${deleteCommentBtn}
-                <p>${comment.content}<p>
+                ${content}
               </div>
             </div>`
 
       })
-      document.getElementById("comment-box").innerHTML = commentContent;
+      document.getElementById("comment-box").innerHTML = commentPartHtml;
       document.getElementById('comment').value = ""
     }).catch(err => {
       console.log(err)

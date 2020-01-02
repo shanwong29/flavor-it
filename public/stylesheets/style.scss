@@ -283,6 +283,7 @@ body {
 #comment-box {
   .each-comment-box {
     display: flex;
+    margin: 16px 16px 25px 16px;
   }
 
   a {
@@ -502,5 +503,11 @@ footer {
   #method-container-create,
   #method-container-update {
     padding-left: 2%;
+  }
+
+  #comment-box {
+    .each-comment-box {
+      margin: 16px 0px 25px 0px;
+    }
   }
 }

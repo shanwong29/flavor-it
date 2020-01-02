@@ -91,23 +91,16 @@ router.get("/:recipeId", (req, res, next) => {
 
       let reversedComments = JSON.parse(JSON.stringify(doc.comments.reverse()));
 
-      reversedComments.forEach(el => {
-        if (req.user._id.toString() === el.author._id.toString()) {
-          el.isSameCommentAuthor = true;
-        } else {
-          el.isSameCommentAuthor = false;
-        }
-      });
+      if (req.user) {
+        reversedComments.forEach(el => {
+          if (req.user._id.toString() === el.author._id.toString()) {
+            el.isSameCommentAuthor = true;
+          } else {
+            el.isSameCommentAuthor = false;
+          }
+        });
+      }
 
-      /****************************************  for comment line break trial
-      // let reversedComments = JSON.parse(JSON.stringify(doc.comments.reverse()));
-      // reversedComments.forEach(el => {
-      //   el.content = el.content.split("\n");
-      //   console.log("ell", el.content, typeof el.content);
-      // });
-
-      // console.log("Content", Arr);
-      *************************************/
       if (doc.source) {
         isSourceFilled = true;
       }
@@ -303,7 +296,7 @@ router.get("/:recipeId/delete", (req, res, next) => {
 
 //comment
 router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
-  const content = req.body.comment;
+  const content = req.body.comment.split("\n");
   const author = req.user._id;
   Comment.create({
     content,
