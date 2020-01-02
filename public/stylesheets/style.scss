@@ -203,7 +203,13 @@ body {
 
   .recipe-img-container-detail {
     background-color: white;
+    img {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
+
   .warning-msg {
     color: red;
   }
@@ -228,10 +234,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-#dish-tag-1,
-.dish-tag-1,
-#dish-tag-2,
-#dish-tag-3 {
+.dish-tag-1 {
   color: #212529;
   background-color: #f7d488;
   font-weight: 700;
@@ -293,6 +296,17 @@ body {
   width: 43px;
   border-radius: 50%;
 }
+
+.del-comment-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: gray;
+}
+.del-comment-btn:hover {
+  color: red;
+}
+
 // LOGIN
 
 .login-form {
@@ -416,6 +430,12 @@ footer {
   a:hover {
     color: #8c1c13;
     text-decoration: none;
+  }
+}
+
+@media (min-width: 576px) {
+  #ingredient-display {
+    padding-right: 30%;
   }
 }
 

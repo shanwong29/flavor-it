@@ -88,8 +88,26 @@ router.get("/:recipeId", (req, res, next) => {
       let isSameUser = false;
       let isSourceFilled = false;
       let isLiking = false;
-      let reversedComments = doc.comments.reverse();
 
+      let reversedComments = JSON.parse(JSON.stringify(doc.comments.reverse()));
+
+      reversedComments.forEach(el => {
+        if (req.user._id.toString() === el.author._id.toString()) {
+          el.isSameCommentAuthor = true;
+        } else {
+          el.isSameCommentAuthor = false;
+        }
+      });
+
+      /****************************************  for comment line break trial
+      // let reversedComments = JSON.parse(JSON.stringify(doc.comments.reverse()));
+      // reversedComments.forEach(el => {
+      //   el.content = el.content.split("\n");
+      //   console.log("ell", el.content, typeof el.content);
+      // });
+
+      // console.log("Content", Arr);
+      *************************************/
       if (doc.source) {
         isSourceFilled = true;
       }
@@ -292,8 +310,8 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
     author
   })
     .then(comment => {
-      return Recipe.findOneAndUpdate(
-        { _id: req.params.recipeId },
+      return Recipe.findByIdAndUpdate(
+        req.params.recipeId,
         {
           $push: {
             comments: comment._id
@@ -311,11 +329,62 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
             model: "User"
           }
         })
-        .then(recipe => {
-          res.json(recipe.comments.reverse());
+        .then(doc => {
+          let recipe = JSON.parse(JSON.stringify(doc));
+          recipe.comments.reverse().forEach(el => {
+            if (req.user._id.toString() === el.author._id.toString()) {
+              el.isSameCommentAuthor = true;
+            } else {
+              el.isSameCommentAuthor = false;
+            }
+          });
+          res.json(recipe);
         });
     })
     .catch(err => {
+      next(err);
+    });
+});
+
+router.post("/comment/:commentId/delete", (req, res, next) => {
+  recipeId = req.body.recipeId;
+  commentId = req.body.commentId;
+
+  Recipe.findByIdAndUpdate(
+    recipeId,
+    {
+      $pull: { comments: commentId }
+    },
+    {
+      new: true
+    }
+  )
+    .populate({
+      path: "comments",
+      model: "Comment",
+      populate: { path: "author", model: "User" }
+    })
+    .then(doc => {
+      let recipe = JSON.parse(JSON.stringify(doc));
+      recipe.comments.reverse().forEach(el => {
+        if (req.user._id.toString() === el.author._id.toString()) {
+          el.isSameCommentAuthor = true;
+        } else {
+          el.isSameCommentAuthor = false;
+        }
+      });
+      res.json(recipe);
+
+      return Comment.deleteOne({ _id: commentId })
+        .then(doc => {
+          console.log("deleled comment?", doc);
+        })
+        .catch(err => {
+          next(err);
+        });
+    })
+    .catch(err => {
+      console.log(err);
       next(err);
     });
 });

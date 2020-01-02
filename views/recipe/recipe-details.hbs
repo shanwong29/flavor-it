@@ -4,6 +4,13 @@
 
 
 <div class="container-fluid recipe-layout-container">
+  {{#if isSameUser}}
+  <div style="display:flex; justify-content:flex-end;">
+    <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
+    {{!-- <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+      Recipe</a> --}}
+  </div>
+  {{/if}}
 
   <div class="recipe-layout-top row">
 
@@ -15,13 +22,6 @@
 
       <div class="row align-items-center justify-content-between recipe-title">
         <h1>{{recipe.title}}</h1>
-        {{#if isSameUser}}
-        <div>
-          <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
-          <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
-            Recipe</a>
-        </div>
-        {{/if}}
       </div>
 
       <div class="row d-flex align-items-center mb-5">
@@ -34,7 +34,7 @@
         </div>
         <div class="verticalLine"></div>
         <div class="recipe-line">
-          <span>&nbsp;&nbsp; serves &nbsp;<strong>{{recipe.portions}}</strong></span>
+          <span>&nbsp;serves &nbsp;<strong>{{recipe.portions}}</strong></span>
         </div>
       </div>
 
@@ -48,44 +48,48 @@
       </div>
       {{/if}}
 
+      <div class="row my-5">
+        <div class="col-6 p-0">
+          <h6 class="strong">Creator:</h6>
+          <a href="/{{recipe.creator.username}}" style="text-decoration: none; color:black; font-weight: bold;">
+            <img class="comment-user-img" src="{{recipe.creator.photo}}">
+            {{recipe.creator.username}}</a>
+          </a>
+        </div>
 
+        <div class="col-6">
 
+          {{#if loggedIn}}
+          {{#if isSameUser}}
+          <div class="row pt-4">
+            <h5 id="likes"><span style="color:#DC3545">&#9829; </span>{{recipe.likes}} Likes</h5>
+          </div>
+          {{/if}}
+          {{#unless isSameUser}}
+          {{#if isLiking}}
+          <div class="row">
+            <h6 id="likes"><strong>{{recipe.likes}}</strong> Likes</h6>
+          </div>
+          <div class="row">
+            <button class="btn btn-danger" id="like-button" title="Like and save the recipe">
+              <span id="like-span">&#9829; Like</span>
+            </button>
+          </div>
+          {{else}}
+          <div class="row">
+            <h6 id="likes"><strong>{{recipe.likes}}</strong> Likes</h5>
+          </div>
 
-      <div class="row mt-4">
-        <h6 class="strong">Creator:</h6>
+          <div class="row">
+            <button class="btn btn-outline-danger" id="like-button" title="Like and save the recipe">
+              <span id="like-span">&#9829; Like</span>
+            </button>
+          </div>
+          {{/if}}
+          {{/unless}}
+          {{/if}}
+        </div>
       </div>
-      <div class="row mb-5">
-        <a href="/{{recipe.creator.username}}" style="text-decoration: none; color:black; font-weight: bold;">
-          <img class="comment-user-img" src="{{recipe.creator.photo}}">
-          {{recipe.creator.username}}</a>
-        </a>
-      </div>
-
-
-      {{#if loggedIn}}
-      {{#unless isSameUser}}
-      {{#if isLiking}}
-      <div class="row">
-        <h5 id="likes">{{recipe.likes}} Likes</h5>
-      </div>
-      <div class="row">
-        <button class="btn btn-danger" id="like-button" title="Like and save the recipe">
-          <span id="like-span">&#9829; Like</span>
-        </button>
-      </div>
-      {{else}}
-      <div class="row">
-        <h5 id="likes">{{recipe.likes}} Likes</h5>
-      </div>
-      <div class="row">
-        <button class="btn btn-outline-danger" id="like-button" title="Like and save the recipe">
-          <span id="like-span">&#9829; Like</span>
-        </button>
-      </div>
-      {{/if}}
-      {{/unless}}
-      {{/if}}
-
     </div>
   </div>
 
@@ -93,13 +97,13 @@
 
 
   <div class="form-row recipe-layout-bottom">
-    <div class="col-md-4 mt-5 mb-5">
+    <div class="col-md-4 my-5">
 
       <h3>Ingredients: </h3>
 
       <ul>
         {{#each recipe.ingredients}}
-        <div class="mt-3 mb-3">
+        <div class="my-3" id="ingredient-display">
           <li>{{this.qty}} <span>{{this.unit}}</span> <span>{{this.name}}</span></li>
         </div>
         {{/each}}
@@ -108,13 +112,13 @@
 
     </div>
 
-    <div id="method" class="container col-md-8 mt-5 mb-5">
+    <div id="method" class="container col-md-8 my-5">
       <h3>Method:</h3>
 
       <ol>
 
         {{#each recipe.method}}
-        <div class="mt-4 mb-4">
+        <div class="my-4">
           <li>{{this}}</li>
         </div>
         {{/each}}
@@ -131,10 +135,9 @@
 
       <textarea name="comment" id="comment" placeholder="Text here..."></textarea>
       <p class="warning-msg"></p>
-      <div class="d-flex justify-content-end">
-        <form id="comment-form">
-          <button class="btn btn-outline-danger">add comment</button>
-        </form>
+
+      <div class="d-flex justify-content-end" id="comment-btn">
+        <button class="btn btn-outline-danger">add comment</button>
       </div>
 
     </div>
@@ -150,7 +153,15 @@
         </div>
         <div class="ml-2">
           <a href="/{{author.username}}">{{author.username}}</a>
+
+          {{#if isSameCommentAuthor}}
+          <button class="del-comment-btn" onclick="deleteComment('{{_id}}','{{../recipe._id}}')"><i class="fa fa-trash"
+              aria-hidden="true"></i></button>
+          {{/if}}
           <p>{{content}}</p>
+          {{!-- {{#each content}}
+          <p class="mt-0">{{this}}</p>
+          {{/each}} --}}
         </div>
       </div>
 
@@ -159,9 +170,9 @@
     </div>
     {{/if}}
 
-
   </div>
 </div>
+
 
 
 <script>
@@ -194,16 +205,25 @@
   }
 
   //comment
-  let comment = document.getElementById('comment-form')
-  if (comment) {
-    comment.onclick = event => {
-      event.preventDefault();
-      if (document.getElementById('comment').value !== "") {
+  let commentBtn = document.getElementById('comment-btn')
+  if (commentBtn) {
+    commentBtn.onclick = event => {
+      let commentInput = document.getElementById('comment').value.trim(" ");
+      if (commentInput) {
         axios.post("/recipe/{{recipe._id}}/comment", {
-          comment: document.getElementById('comment').value
+          comment: commentInput
         }).then(response => {
+
           let commentContent = '';
-          response.data.forEach(comment => {
+          let recipeId = response.data._id;
+          let commentsArr = response.data.comments;
+
+          commentsArr.forEach(comment => {
+            let deleteCommentBtn = ""
+            if (comment.isSameCommentAuthor) {
+              deleteCommentBtn = `<button class="del-comment-btn" onclick="deleteComment('${comment._id}','${recipeId}')"><i class="fa fa-trash"
+              aria-hidden="true"></i></button>`
+            }
             commentContent += `
             <div class="each-comment-box m-3">
               <div>
@@ -211,6 +231,7 @@
               </div>
               <div class="ml-2">
                 <a href="/${comment.author.username}">${comment.author.username}</a>
+                ${deleteCommentBtn}
                 <p>${comment.content}<p>
               </div>
             </div>`
@@ -224,5 +245,47 @@
       }
     }
   }
+
+  //delete Comment
+
+  deleteComment = (commentId, recipeId) => {
+
+    axios.post(`/recipe/comment/${commentId}/delete`, {
+      commentId,
+      recipeId
+    }).then(response => {
+      let commentContent = '';
+      let recipeId = response.data._id;
+      let commentsArr = response.data.comments;
+
+      commentsArr.forEach(comment => {
+        let deleteCommentBtn = ""
+        if (comment.isSameCommentAuthor) {
+          deleteCommentBtn = `<button class="del-comment-btn" onclick="deleteComment('${comment._id}','${recipeId}')"><i class="fa fa-trash"
+              aria-hidden="true"></i></button>`
+        }
+
+        commentContent += `
+            <div class="each-comment-box m-3">
+              <div>
+                <img class="comment-user-img" src="${comment.author.photo}" alt="">
+              </div>
+              <div class="ml-2">
+                <a href="/${comment.author.username}">${comment.author.username}</a>
+                ${deleteCommentBtn}
+                <p>${comment.content}<p>
+              </div>
+            </div>`
+
+      })
+      document.getElementById("comment-box").innerHTML = commentContent;
+      document.getElementById('comment').value = ""
+    }).catch(err => {
+      console.log(err)
+    })
+
+  }
+
+
 
 </script>
