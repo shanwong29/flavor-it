@@ -1,40 +1,74 @@
-let previewImg = function(event) {
+let previewImg = function() {
   let limitinByte = 1000000;
   let limitInMb = limitinByte / 1000000;
+  let allowedFormats = ["image/png", "image/jpeg"];
+  let formatMatched = false;
 
-  if (event.target.files[0].size > limitinByte) {
-    let imageInput = document.getElementById("image");
+  let chosenFile = event.target.files[0];
+  let originalImg = event.target.getAttribute("data-arg1");
+
+  let parent = document.querySelector("#image-input-div");
+  let imageInput = document.getElementById("image");
+  let output = document.querySelector(".output");
+  let warning = document.getElementById("image-warning");
+
+  let warningAttr = {
+    id: "image-warning",
+    style: "color:red; background-color: white",
+    class: "mb-0 pb-1"
+  };
+
+  let inputAttr = {
+    id: "image",
+    type: "file",
+    name: "imagePath",
+    "data-arg1": originalImg,
+    onchange: "previewImg()"
+  };
+
+  if (!chosenFile) {
+    output.setAttribute("src", originalImg);
+    return;
+  }
+
+  allowedFormats.forEach(format => {
+    if (format === chosenFile.type) {
+      formatMatched = true;
+      return;
+    }
+  });
+
+  if (formatMatched === false) {
+    addElement(parent, "p", warningAttr);
+    document.getElementById(
+      "image-warning"
+    ).innerText = `* Image format should be jpeg or png`;
+
     imageInput.parentNode.removeChild(imageInput);
+    addElement(parent, "input", inputAttr);
 
-    let parent = document.querySelector("#image-input-div");
+    output.setAttribute("src", originalImg);
 
-    let warningAttr = {
-      id: "image-warning",
-      style: "color:red; background-color: white",
-      class: "mb-0 pb-1"
-    };
+    return;
+  }
 
-    let inputAttr = {
-      id: "image",
-      type: "file",
-      name: "imagePath",
-      onchange: "previewImg(event)"
-    };
-
+  if (chosenFile.size > limitinByte) {
     addElement(parent, "p", warningAttr);
     document.getElementById(
       "image-warning"
     ).innerText = `* Image size should be less than ${limitInMb}MB`;
 
+    imageInput.parentNode.removeChild(imageInput);
     addElement(parent, "input", inputAttr);
+
+    output.setAttribute("src", originalImg);
 
     return;
   }
 
-  let warning = document.getElementById("image-warning");
   if (warning) {
     warning.parentNode.removeChild(warning);
   }
-  let output = document.querySelector(".output");
-  output.src = URL.createObjectURL(event.target.files[0]);
+
+  output.src = URL.createObjectURL(chosenFile);
 };

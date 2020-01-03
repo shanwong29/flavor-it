@@ -9,7 +9,7 @@
     <div class="recipe-layout-top row mb-5">
       <div class="recipe-img-container col-md-5">
         <div id="image-input-div">
-          <input id="image" type="file" name="imagePath" onchange="previewImg(event)">
+          <input id="image" type="file" name="imagePath" data-arg1="{{recipe.image}}" onchange="previewImg()">
         </div>
         <img src="{{recipe.image}}" class="output" alt="recipe-img">
 

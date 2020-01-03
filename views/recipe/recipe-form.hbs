@@ -9,7 +9,9 @@
     <div class="recipe-layout-top row mb-5">
       <div class="recipe-img-container col-md-5">
         <div id="image-input-div">
-          <input id="image" type="file" name="imagePath" onchange="previewImg(event)">
+          <input id="image" type="file" name="imagePath"
+            data-arg1="https://res.cloudinary.com/dqrjpg3xc/image/upload/v1575651991/kiez/default-event-img.jpg.jpg"
+            onchange="previewImg()">
         </div>
         <img src="https://res.cloudinary.com/dqrjpg3xc/image/upload/v1575651991/kiez/default-event-img.jpg.jpg"
           class="output" alt="image preview">
