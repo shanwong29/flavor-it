@@ -7,11 +7,15 @@
   <div class="recipe-layout-top row">
 
     <div class="user-img-container col-md-5">
-      <img src="{{userProfile.photo}}" alt="user-photo" class="user-img">
+      <img id="imgOutput" src="{{userProfile.photo}}" alt="user-photo" class="user-img">
       {{#unless diferentUser}}
-      <form action="/{{userProfile._id}}/edit" method="POST" enctype="multipart/form-data">
-        <input id="image" type="file" name="imagePath" style="font-size: 10px; margin-top: 20px">
-        <button class="btn btn-outline-info btn-sm">Update Photo</button>
+      <form action="/{{userProfile._id}}/edit" method="POST" enctype="multipart/form-data" id="image-input-form">
+        <span id="image-input-div">
+          <input id="image" type="file" name="imagePath" data-arg1="{{userProfile.photo}}" onchange="userImgCheck()"
+            style="font-size: 13px; margin-top: 10px; width: 60%;">
+        </span>
+        <button class="btn btn-outline-info btn-sm" id="upload-user-image-btn" style="visibility:hidden;">Update
+          Photo</button>
       </form>
       {{/unless}}
     </div>
@@ -156,3 +160,4 @@
   }
 
 </script>
+<script src="/javascripts/preview-img.js"></script>
