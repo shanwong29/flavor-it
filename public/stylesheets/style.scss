@@ -283,7 +283,7 @@ body {
 #comment-box {
   .each-comment-box {
     display: flex;
-    margin: 16px 16px 25px 16px;
+    margin: 25px 16px;
   }
 
   a {
@@ -452,6 +452,12 @@ footer {
     }
   }
 
+  .title > h1 {
+    padding-left: 5%;
+    margin: 0;
+    font-size: 26px;
+  }
+
   .profile-container {
     justify-content: start;
     margin-left: 0;
@@ -462,6 +468,10 @@ footer {
         height: 40vw;
       }
     }
+  }
+
+  .user-layout-recipes > div > div > h1 {
+    font-size: 26px;
   }
 
   .login-form {
