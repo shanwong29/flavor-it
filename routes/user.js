@@ -190,16 +190,16 @@ router.post(
 );
 
 // User delete account
-router.get("/:userId/delete", loginCheck(), (req, res, next) => {
-  Recipe.deleteMany({ creator: req.params.userId })
-    .then(recipes => {
-      User.findByIdAndDelete(req.params.userId).then(user => {
-        res.redirect("/");
-      });
-    })
-    .catch(err => {
-      next(err);
-    });
-});
+// router.get("/:userId/delete", loginCheck(), (req, res, next) => {
+//   Recipe.deleteMany({ creator: req.params.userId })
+//     .then(recipes => {
+//       User.findByIdAndDelete(req.params.userId).then(user => {
+//         res.redirect("/");
+//       });
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
 
 module.exports = router;

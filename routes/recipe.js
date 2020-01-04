@@ -283,16 +283,16 @@ router.post(
 );
 
 //delete recipe
-router.get("/:recipeId/delete", (req, res, next) => {
-  const query = { _id: req.params.recipeId };
-  Recipe.deleteOne(query)
-    .then(() => {
-      res.redirect("/");
-    })
-    .catch(err => {
-      next(err);
-    });
-});
+// router.get("/:recipeId/delete", (req, res, next) => {
+//   const query = { _id: req.params.recipeId };
+//   Recipe.deleteOne(query)
+//     .then(() => {
+//       res.redirect("/");
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
 
 //comment
 router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
