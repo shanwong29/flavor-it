@@ -52,6 +52,3 @@ npm run dev
 * axios
 * Cloudinary
 
-## License
-
-This project is licensed under the MIT License.
