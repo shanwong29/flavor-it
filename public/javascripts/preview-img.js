@@ -1,8 +1,8 @@
 let allowedFormats = ["image/png", "image/jpeg"];
 let wrongFormatWarningMsg = `* Image format should be jpeg or png`;
 
-let limitinByte = 1000000;
-let limitInMb = limitinByte / 1000000; //1MB
+let limitinByte = 5000000;
+let limitInMb = limitinByte / 1000000; //5MB
 let fileSizeTooBigWarningMsg = `* Image size should be less than ${limitInMb}MB`;
 
 let formatChecker = function(chosenFile) {
