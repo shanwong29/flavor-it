@@ -173,8 +173,8 @@ router.post("/follow/:userId", (req, res, next) => {
 // User Edit photo
 router.post(
   "/:userId/edit",
-  uploadCloud.single("imagePath"),
   loginCheck(),
+  uploadCloud.single("imagePath"),
   (req, res, next) => {
     const defaultUserImage =
       "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";

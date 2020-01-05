@@ -19,7 +19,8 @@ const schemaRecipe = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
   preparationTime: {
     type: Number,
@@ -30,7 +31,8 @@ const schemaRecipe = new Schema({
     required: true
   },
   portions: {
-    type: Number
+    type: Number,
+    required: true
   },
   likes: {
     type: Number,

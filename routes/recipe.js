@@ -24,8 +24,8 @@ router.get("/create", loginCheck(), (req, res) => {
 // Recipe Create POST
 router.post(
   "/create",
-  uploadCloud.single("imagePath"),
   loginCheck(),
+  uploadCloud.single("imagePath"),
   (req, res, next) => {
     const defaultRecipeImage =
       "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087425/images/unknown-plate.png.png";
@@ -231,6 +231,7 @@ router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
 
 router.post(
   "/:recipeId/update",
+  loginCheck(),
   uploadCloud.single("imagePath"),
   async (req, res, next) => {
     const recipeId = req.params.recipeId;
@@ -339,7 +340,7 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
     });
 });
 
-router.post("/comment/:commentId/delete", (req, res, next) => {
+router.post("/comment/:commentId/delete", loginCheck(), (req, res, next) => {
   recipeId = req.body.recipeId;
   commentId = req.body.commentId;
 
