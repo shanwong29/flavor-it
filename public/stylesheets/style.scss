@@ -5,6 +5,9 @@
 
 body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 4rem;
 }
 
 .nav-menu {
@@ -413,9 +416,12 @@ body {
 }
 
 footer {
-  background-color: #efefef;
+  background-color: #f8f9fa;
   margin: 0;
   padding: 0.6rem;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 
   p {
     margin: 0.1rem 0;
@@ -462,14 +468,18 @@ footer {
     justify-content: start;
     margin-left: 0;
     padding-left: 0;
+
     .each-recipe {
-      width: 38vw;
+      width: 42vw;
       img {
-        height: 40vw;
+        height: 42vw;
       }
     }
   }
-
+  .user-layout-recipes {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .user-layout-recipes > div > div > h1 {
     font-size: 26px;
   }
