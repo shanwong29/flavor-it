@@ -7,6 +7,7 @@ const User = require("../models/User");
 /* GET home page */
 router.get("/", (req, res, next) => {
   Recipe.find({})
+    // .sort({ _id: -1 })
     .sort({ likes: -1 })
     .limit(10)
     .then(recipes => {
@@ -24,9 +25,10 @@ router.get("/search", (req, res, next) => {
     Recipe.find({
       $and: [{ title: new RegExp(searchInput, "gi") }, { dishType: dishType }]
     })
+      .sort({ _id: -1 })
       .then(recipes => {
         res.render("search", {
-          recipes: recipes.reverse(),
+          recipes,
           loggedIn: req.user
         });
       })
@@ -35,9 +37,10 @@ router.get("/search", (req, res, next) => {
     Recipe.find({
       title: new RegExp(searchInput, "gi")
     })
+      .sort({ _id: -1 })
       .then(recipes => {
         res.render("search", {
-          recipes: recipes.reverse(),
+          recipes,
           loggedIn: req.user
         });
       })
@@ -46,6 +49,7 @@ router.get("/search", (req, res, next) => {
     User.find({
       username: new RegExp(searchInput, "gi")
     })
+      .sort({ _id: 1 })
       .then(users => {
         res.render("search", { users, loggedIn: req.user });
       })
