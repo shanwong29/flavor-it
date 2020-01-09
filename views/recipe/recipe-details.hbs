@@ -7,8 +7,8 @@
   {{#if isSameUser}}
   <div style="display:flex; justify-content:flex-end;">
     <a class="btn btn-outline-info" href="/recipe/{{recipe._id}}/edit"> &#9998; Edit Recipe</a>
-    {{!-- <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
-      Recipe</a> --}}
+    <a id="del-recipe-btn" class="btn btn-outline-danger" href="/recipe/{{recipe._id}}/delete"> &#10060; Delete
+      Recipe</a>
   </div>
   {{/if}}
 
@@ -196,12 +196,12 @@
   }
 
   // delete recipe
-  let deleteRecipe = document.getElementById("del-recipe-btn")
+  /*let deleteRecipe = document.getElementById("del-recipe-btn")
   if (deleteRecipe) {
     deleteRecipe.onclick = event => {
-      alert("delete this recipe.")
+      document.getElementById("del-recipe-btn").style.visibility = "visible"
     }
-  }
+  }*/
 
   //comment
   let commentBtn = document.getElementById('comment-btn')

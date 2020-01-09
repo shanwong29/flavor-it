@@ -284,16 +284,38 @@ router.post(
 );
 
 //delete recipe
-// router.get("/:recipeId/delete", (req, res, next) => {
-//   const query = { _id: req.params.recipeId };
-//   Recipe.deleteOne(query)
-//     .then(() => {
-//       res.redirect("/");
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
+router.get("/:recipeId/delete", loginCheck(), async (req, res, next) => {
+  const recipeId = req.params.recipeId;
+
+  let recipe = await Recipe.findById(recipeId).populate("creator");
+
+  let creator = recipe.creator.username;
+
+  let deleteDocFromUserLikedRecipes = User.updateMany(
+    {},
+    {
+      $pull: { likedRecipes: recipeId }
+    },
+    { multi: true },
+
+    (err, numberAffected) => {
+      console.log("number affected", numberAffected);
+    }
+  );
+
+  deleteDocFromUserLikedRecipes.then(() => {
+    console.log("users likedRecipes field updated");
+
+    Recipe.deleteOne({ _id: recipeId })
+      .then(doc => {
+        console.log("recipe deleted", doc);
+        res.redirect(`/recipes/${creator}`);
+      })
+      .catch(err => {
+        next(err);
+      });
+  });
+});
 
 //comment
 router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
