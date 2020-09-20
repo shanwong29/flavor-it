@@ -15,14 +15,15 @@ const flash = require("connect-flash");
 
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost/flavor-it", {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .then(x => {
+  .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
     );
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("Error connecting to mongo", err);
   });
 
@@ -45,7 +46,7 @@ app.use(
   require("node-sass-middleware")({
     src: path.join(__dirname, "public"),
     dest: path.join(__dirname, "public"),
-    sourceMap: true
+    sourceMap: true,
   })
 );
 
@@ -75,8 +76,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-      mongooseConnection: mongoose.connection
-    })
+      mongooseConnection: mongoose.connection,
+    }),
   })
 );
 

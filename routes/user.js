@@ -11,7 +11,7 @@ const loginCheck = () => {
     if (req.user) {
       next();
     } else {
-      res.redirect("/");
+      res.redirect("/auth/login");
     }
   };
 };
@@ -25,14 +25,14 @@ router.get("/:username", (req, res, next) => {
   User.findOne({ username: user })
     .populate("likedRecipes")
     .populate("following")
-    .then(userProfile => {
+    .then((userProfile) => {
       if (req.user) {
         if (req.user.username === userProfile.username) {
           diferentUser = false;
         }
         let userProfileId = userProfile._id;
-        User.findById(req.user._id).then(user => {
-          user.following.find(id => {
+        User.findById(req.user._id).then((user) => {
+          user.following.find((id) => {
             if (id.toString() == userProfileId.toString()) {
               isFollowing = true;
             }
@@ -41,7 +41,7 @@ router.get("/:username", (req, res, next) => {
       }
       return userProfile;
     })
-    .then(userProfile => {
+    .then((userProfile) => {
       let limitedCardNum = 4;
 
       let likedRecipes = userProfile.likedRecipes.reverse();
@@ -53,7 +53,7 @@ router.get("/:username", (req, res, next) => {
       if (following.length > limitedCardNum) {
         following = following.slice(0, limitedCardNum);
       }
-      Recipe.find({ creator: userProfile._id }).then(userRecipes => {
+      Recipe.find({ creator: userProfile._id }).then((userRecipes) => {
         let limitedUserRecipes = userRecipes.reverse();
         if (limitedUserRecipes.length > limitedCardNum) {
           limitedUserRecipes = limitedUserRecipes.slice(0, limitedCardNum);
@@ -66,63 +66,63 @@ router.get("/:username", (req, res, next) => {
           loggedIn: req.user,
           limitedUserRecipes,
           likedRecipes,
-          following
+          following,
         });
       });
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
 
 // User following
-router.get("/following/:userName", (req, res, next) => {
+router.get("/following/:userName", loginCheck(), (req, res, next) => {
   const userName = req.params.userName;
   User.findOne({ username: userName })
     .populate("following")
-    .then(user => {
+    .then((user) => {
       res.render("user/following", {
         userProfile: user,
         loggedIn: req.user,
-        following: user.following.reverse()
+        following: user.following.reverse(),
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // User Recipes
-router.get("/recipes/:userName", (req, res, next) => {
+router.get("/recipes/:userName", loginCheck(), (req, res, next) => {
   const userName = req.params.userName;
   User.findOne({ username: userName })
-    .then(user => {
-      Recipe.find({ creator: user._id }).then(recipes => {
+    .then((user) => {
+      Recipe.find({ creator: user._id }).then((recipes) => {
         res.render("user/recipes", {
           recipes: recipes.reverse(),
           userProfile: user,
-          loggedIn: req.user
+          loggedIn: req.user,
         });
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // User Likes
-router.get("/likes/:userName", (req, res, next) => {
+router.get("/likes/:userName", loginCheck(), (req, res, next) => {
   const userName = req.params.userName;
   User.findOne({ username: userName })
     .populate("likedRecipes")
-    .then(user => {
+    .then((user) => {
       res.render("user/likes", {
         recipes: user.likedRecipes.reverse(),
         userProfile: user,
-        loggedIn: req.user
+        loggedIn: req.user,
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // User follow POST
-router.post("/follow/:userId", (req, res, next) => {
+router.post("/follow/:userId", loginCheck(), (req, res, next) => {
   const userId = req.params.userId;
   const userLogged = req.user._id;
   if (userId == userLogged) {
@@ -130,9 +130,9 @@ router.post("/follow/:userId", (req, res, next) => {
     return;
   }
   User.findById(userLogged)
-    .then(user => {
+    .then((user) => {
       let isNotFollowing = true;
-      user.following.find(id => {
+      user.following.find((id) => {
         if (id == userId) {
           isNotFollowing = false;
         }
@@ -141,12 +141,12 @@ router.post("/follow/:userId", (req, res, next) => {
         User.findByIdAndUpdate(
           userLogged,
           {
-            $push: { following: userId }
+            $push: { following: userId },
           },
           {
-            new: true
+            new: true,
           }
-        ).then(user => {
+        ).then((user) => {
           res.json(isNotFollowing);
           return;
         });
@@ -154,18 +154,18 @@ router.post("/follow/:userId", (req, res, next) => {
         User.findByIdAndUpdate(
           userLogged,
           {
-            $pull: { following: userId }
+            $pull: { following: userId },
           },
           {
-            new: true
+            new: true,
           }
-        ).then(user => {
+        ).then((user) => {
           res.json(isNotFollowing);
           return;
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
@@ -180,10 +180,10 @@ router.post(
       "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";
     let imagePath = req.file ? req.file.url : defaultUserImage;
     User.findByIdAndUpdate(req.params.userId, { photo: imagePath })
-      .then(user => {
+      .then((user) => {
         res.redirect(`/${user.username}`);
       })
-      .catch(err => {
+      .catch((err) => {
         next(err);
       });
   }

@@ -11,7 +11,7 @@ const loginCheck = () => {
     if (req.user) {
       next();
     } else {
-      res.redirect("/");
+      res.redirect("/auth/login");
     }
   };
 };
@@ -37,7 +37,7 @@ router.post(
       let obj = {
         name: req.body.name.trim(),
         qty: req.body.qty,
-        unit: req.body.unit
+        unit: req.body.unit,
       };
       ingredients.push(obj);
     } else {
@@ -45,7 +45,7 @@ router.post(
         let obj = {
           name: element.trim(),
           qty: req.body.qty[index],
-          unit: req.body.unit[index]
+          unit: req.body.unit[index],
         };
         ingredients.push(obj);
       });
@@ -64,12 +64,12 @@ router.post(
       portions: req.body.portions,
       source,
       image: imagePath,
-      creator: req.user._id
+      creator: req.user._id,
     })
-      .then(doc => {
+      .then((doc) => {
         res.redirect(`/recipe/${doc._id}`);
       })
-      .catch(err => {
+      .catch((err) => {
         next(err);
       });
   }
@@ -82,9 +82,9 @@ router.get("/:recipeId", (req, res, next) => {
     .populate({
       path: "comments",
       model: "Comment",
-      populate: { path: "author", model: "User" }
+      populate: { path: "author", model: "User" },
     })
-    .then(doc => {
+    .then((doc) => {
       let isSameUser = false;
       let isSourceFilled = false;
       let isLiking = false;
@@ -92,7 +92,7 @@ router.get("/:recipeId", (req, res, next) => {
       let reversedComments = JSON.parse(JSON.stringify(doc.comments.reverse()));
 
       if (req.user) {
-        reversedComments.forEach(el => {
+        reversedComments.forEach((el) => {
           if (req.user._id.toString() === el.author._id.toString()) {
             el.isSameCommentAuthor = true;
           } else {
@@ -111,8 +111,8 @@ router.get("/:recipeId", (req, res, next) => {
         if (user.toString() == creator.toString()) {
           isSameUser = true;
         }
-        User.findById(req.user._id).then(user => {
-          user.likedRecipes.find(recipeId => {
+        User.findById(req.user._id).then((user) => {
+          user.likedRecipes.find((recipeId) => {
             if (recipeId.toString() == doc._id.toString()) {
               isLiking = true;
             }
@@ -123,7 +123,7 @@ router.get("/:recipeId", (req, res, next) => {
             isSameUser,
             isSourceFilled,
             isLiking,
-            reversedComments
+            reversedComments,
           });
         });
       } else {
@@ -132,23 +132,23 @@ router.get("/:recipeId", (req, res, next) => {
           loggedIn: req.user,
           isSameUser,
           isSourceFilled,
-          isLiking
+          isLiking,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
 
 // Like Recipe
-router.post("/like/:recipeId", (req, res, next) => {
+router.post("/like/:recipeId", loginCheck(), (req, res, next) => {
   const recipeId = req.params.recipeId;
   const userLoggedId = req.user._id;
   User.findById(userLoggedId)
-    .then(user => {
+    .then((user) => {
       let isLiking = false;
-      user.likedRecipes.find(id => {
+      user.likedRecipes.find((id) => {
         if (id == recipeId) {
           isLiking = true;
         }
@@ -157,21 +157,21 @@ router.post("/like/:recipeId", (req, res, next) => {
         User.findByIdAndUpdate(
           userLoggedId,
           {
-            $push: { likedRecipes: recipeId }
+            $push: { likedRecipes: recipeId },
           },
           {
-            new: true
+            new: true,
           }
-        ).then(response => {
+        ).then((response) => {
           Recipe.findByIdAndUpdate(
             recipeId,
             {
-              $inc: { likes: 1 }
+              $inc: { likes: 1 },
             },
             {
-              new: true
+              new: true,
             }
-          ).then(recipe => {
+          ).then((recipe) => {
             res.json({ isLiking, recipe });
             return;
           });
@@ -180,21 +180,21 @@ router.post("/like/:recipeId", (req, res, next) => {
         User.findByIdAndUpdate(
           userLoggedId,
           {
-            $pull: { likedRecipes: recipeId }
+            $pull: { likedRecipes: recipeId },
           },
           {
-            new: true
+            new: true,
           }
-        ).then(response => {
+        ).then((response) => {
           Recipe.findByIdAndUpdate(
             recipeId,
             {
-              $inc: { likes: -1 }
+              $inc: { likes: -1 },
             },
             {
-              new: true
+              new: true,
             }
-          ).then(recipe => {
+          ).then((recipe) => {
             res.json({ isLiking, recipe });
 
             return;
@@ -202,7 +202,7 @@ router.post("/like/:recipeId", (req, res, next) => {
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
@@ -211,7 +211,7 @@ router.post("/like/:recipeId", (req, res, next) => {
 router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
   Recipe.findById(req.params.recipeId)
     .populate("creator")
-    .then(doc => {
+    .then((doc) => {
       firstIngredient = doc.ingredients[0];
       remainingIngredient = "";
       if (doc.ingredients.length > 1) {
@@ -221,10 +221,10 @@ router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
         recipe: doc,
         loggedIn: req.user,
         firstIngredient,
-        remainingIngredient
+        remainingIngredient,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
@@ -241,7 +241,7 @@ router.post(
       let obj = {
         name: req.body.name.trim(),
         qty: req.body.qty,
-        unit: req.body.unit
+        unit: req.body.unit,
       };
       ingredients.push(obj);
     } else {
@@ -249,7 +249,7 @@ router.post(
         let obj = {
           name: element.trim(),
           qty: req.body.qty[index],
-          unit: req.body.unit[index]
+          unit: req.body.unit[index],
         };
         ingredients.push(obj);
       });
@@ -272,12 +272,12 @@ router.post(
       method,
       portions: req.body.portions,
       source,
-      image: imagePath
+      image: imagePath,
     })
       .then(() => {
         res.redirect(`/recipe/${recipeId}`);
       })
-      .catch(err => {
+      .catch((err) => {
         next(err);
       });
   }
@@ -294,7 +294,7 @@ router.get("/:recipeId/delete", loginCheck(), async (req, res, next) => {
   let deleteDocFromUserLikedRecipes = User.updateMany(
     {},
     {
-      $pull: { likedRecipes: recipeId }
+      $pull: { likedRecipes: recipeId },
     },
     { multi: true },
 
@@ -307,11 +307,10 @@ router.get("/:recipeId/delete", loginCheck(), async (req, res, next) => {
     console.log("users likedRecipes field updated");
 
     Recipe.deleteOne({ _id: recipeId })
-      .then(doc => {
-        console.log("recipe deleted", doc);
+      .then((doc) => {
         res.redirect(`/recipes/${creator}`);
       })
-      .catch(err => {
+      .catch((err) => {
         next(err);
       });
   });
@@ -323,18 +322,18 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
   const author = req.user._id;
   Comment.create({
     content,
-    author
+    author,
   })
-    .then(comment => {
+    .then((comment) => {
       return Recipe.findByIdAndUpdate(
         req.params.recipeId,
         {
           $push: {
-            comments: comment._id
-          }
+            comments: comment._id,
+          },
         },
         {
-          new: true
+          new: true,
         }
       )
         .populate({
@@ -342,12 +341,12 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           model: "Comment",
           populate: {
             path: "author",
-            model: "User"
-          }
+            model: "User",
+          },
         })
-        .then(doc => {
+        .then((doc) => {
           let recipe = JSON.parse(JSON.stringify(doc));
-          recipe.comments.reverse().forEach(el => {
+          recipe.comments.reverse().forEach((el) => {
             if (req.user._id.toString() === el.author._id.toString()) {
               el.isSameCommentAuthor = true;
             } else {
@@ -357,7 +356,7 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           res.json(recipe);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       next(err);
     });
 });
@@ -369,20 +368,20 @@ router.post("/comment/:commentId/delete", loginCheck(), (req, res, next) => {
   Recipe.findByIdAndUpdate(
     recipeId,
     {
-      $pull: { comments: commentId }
+      $pull: { comments: commentId },
     },
     {
-      new: true
+      new: true,
     }
   )
     .populate({
       path: "comments",
       model: "Comment",
-      populate: { path: "author", model: "User" }
+      populate: { path: "author", model: "User" },
     })
-    .then(doc => {
+    .then((doc) => {
       let recipe = JSON.parse(JSON.stringify(doc));
-      recipe.comments.reverse().forEach(el => {
+      recipe.comments.reverse().forEach((el) => {
         if (req.user._id.toString() === el.author._id.toString()) {
           el.isSameCommentAuthor = true;
         } else {
@@ -392,14 +391,14 @@ router.post("/comment/:commentId/delete", loginCheck(), (req, res, next) => {
       res.json(recipe);
 
       return Comment.deleteOne({ _id: commentId })
-        .then(doc => {
+        .then((doc) => {
           console.log("deleled comment?", doc);
         })
-        .catch(err => {
+        .catch((err) => {
           next(err);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       next(err);
     });
