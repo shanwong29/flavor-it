@@ -78,11 +78,11 @@ router.post(
 // Recipe Details
 router.get("/:recipeId", (req, res, next) => {
   Recipe.findById(req.params.recipeId)
-    .populate("creator")
+    .populate("creator", "username photo")
     .populate({
       path: "comments",
       model: "Comment",
-      populate: { path: "author", model: "User" },
+      populate: { path: "author", select: "username photo" },
     })
     .then((doc) => {
       let isSameUser = false;
@@ -210,19 +210,23 @@ router.post("/like/:recipeId", loginCheck(), (req, res, next) => {
 //update recipe
 router.get("/:recipeId/edit", loginCheck(), (req, res, next) => {
   Recipe.findById(req.params.recipeId)
-    .populate("creator")
+    .populate("creator", "username photo")
     .then((doc) => {
-      firstIngredient = doc.ingredients[0];
-      remainingIngredient = "";
-      if (doc.ingredients.length > 1) {
-        remainingIngredient = doc.ingredients.slice(1);
+      if (doc.creator._id.toString() !== req.user.id) {
+        res.redirect(`/recipe/${req.params.recipeId}`);
+      } else {
+        firstIngredient = doc.ingredients[0];
+        remainingIngredient = "";
+        if (doc.ingredients.length > 1) {
+          remainingIngredient = doc.ingredients.slice(1);
+        }
+        res.render("recipe/recipe-update", {
+          recipe: doc,
+          loggedIn: req.user,
+          firstIngredient,
+          remainingIngredient,
+        });
       }
-      res.render("recipe/recipe-update", {
-        recipe: doc,
-        loggedIn: req.user,
-        firstIngredient,
-        remainingIngredient,
-      });
     })
     .catch((err) => {
       next(err);
@@ -260,7 +264,9 @@ router.post(
     let method = req.body.method.trim().split("\n");
 
     let recipe = await Recipe.findById(req.params.recipeId);
-
+    if (recipe.creator._id.toString() !== req.user.id) {
+      return res.json("You are not allowed to edit other's recipe.");
+    }
     let recipeImagePath = recipe.image;
     let imagePath = req.file ? req.file.url : recipeImagePath;
 
@@ -288,6 +294,10 @@ router.get("/:recipeId/delete", loginCheck(), async (req, res, next) => {
   const recipeId = req.params.recipeId;
 
   let recipe = await Recipe.findById(recipeId).populate("creator");
+
+  if (recipe.creator._id.toString() !== req.user.id) {
+    return res.json("You cannot delete other's recipes.");
+  }
 
   let creator = recipe.creator.username;
 
@@ -341,7 +351,7 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
           model: "Comment",
           populate: {
             path: "author",
-            model: "User",
+            select: "username photo",
           },
         })
         .then((doc) => {
@@ -361,47 +371,56 @@ router.post("/:recipeId/comment", loginCheck(), (req, res, next) => {
     });
 });
 
-router.post("/comment/:commentId/delete", loginCheck(), (req, res, next) => {
-  recipeId = req.body.recipeId;
-  commentId = req.body.commentId;
+router.post(
+  "/comment/:commentId/delete",
+  loginCheck(),
+  async (req, res, next) => {
+    recipeId = req.body.recipeId;
+    commentId = req.body.commentId;
 
-  Recipe.findByIdAndUpdate(
-    recipeId,
-    {
-      $pull: { comments: commentId },
-    },
-    {
-      new: true,
+    const comment = await Comment.findById(commentId);
+    if (comment.author.toString() !== req.user.id) {
+      throw "You cannot delete other's comment.";
     }
-  )
-    .populate({
-      path: "comments",
-      model: "Comment",
-      populate: { path: "author", model: "User" },
-    })
-    .then((doc) => {
-      let recipe = JSON.parse(JSON.stringify(doc));
-      recipe.comments.reverse().forEach((el) => {
-        if (req.user._id.toString() === el.author._id.toString()) {
-          el.isSameCommentAuthor = true;
-        } else {
-          el.isSameCommentAuthor = false;
-        }
-      });
-      res.json(recipe);
 
-      return Comment.deleteOne({ _id: commentId })
-        .then((doc) => {
-          console.log("deleled comment?", doc);
-        })
-        .catch((err) => {
-          next(err);
+    Recipe.findByIdAndUpdate(
+      recipeId,
+      {
+        $pull: { comments: commentId },
+      },
+      {
+        new: true,
+      }
+    )
+      .populate({
+        path: "comments",
+        model: "Comment",
+        populate: { path: "author", select: "username photo" },
+      })
+      .then((doc) => {
+        let recipe = JSON.parse(JSON.stringify(doc));
+        recipe.comments.reverse().forEach((el) => {
+          if (req.user._id.toString() === el.author._id.toString()) {
+            el.isSameCommentAuthor = true;
+          } else {
+            el.isSameCommentAuthor = false;
+          }
         });
-    })
-    .catch((err) => {
-      console.log(err);
-      next(err);
-    });
-});
+        res.json(recipe);
+
+        return Comment.deleteOne({ _id: commentId })
+          .then((doc) => {
+            console.log("deleled comment?", doc);
+          })
+          .catch((err) => {
+            next(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        next(err);
+      });
+  }
+);
 
 module.exports = router;

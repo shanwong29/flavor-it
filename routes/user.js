@@ -23,8 +23,8 @@ router.get("/:username", (req, res, next) => {
   let isFollowing = false;
 
   User.findOne({ username: user })
-    .populate("likedRecipes")
-    .populate("following")
+    .populate("likedRecipes", "title image")
+    .populate("following", "username photo")
     .then((userProfile) => {
       if (req.user) {
         if (req.user.username === userProfile.username) {
@@ -79,7 +79,7 @@ router.get("/:username", (req, res, next) => {
 router.get("/following/:userName", loginCheck(), (req, res, next) => {
   const userName = req.params.userName;
   User.findOne({ username: userName })
-    .populate("following")
+    .populate("following", "username photo")
     .then((user) => {
       res.render("user/following", {
         userProfile: user,
@@ -110,7 +110,7 @@ router.get("/recipes/:userName", loginCheck(), (req, res, next) => {
 router.get("/likes/:userName", loginCheck(), (req, res, next) => {
   const userName = req.params.userName;
   User.findOne({ username: userName })
-    .populate("likedRecipes")
+    .populate("likedRecipes", "title image")
     .then((user) => {
       res.render("user/likes", {
         recipes: user.likedRecipes.reverse(),
@@ -176,6 +176,9 @@ router.post(
   loginCheck(),
   uploadCloud.single("imagePath"),
   (req, res, next) => {
+    if (req.params.userId !== req.user.id) {
+      return res.json({ message: "You can only edit your own profile photo" });
+    }
     const defaultUserImage =
       "http://res.cloudinary.com/jeffmoraes/image/upload/v1574087867/images/unknown-user.jpg.jpg";
     let imagePath = req.file ? req.file.url : defaultUserImage;
